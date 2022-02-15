@@ -76,12 +76,14 @@ curve(
 
 # Adapted from https://stackoverflow.com/questions/32613119/plot-the-median-confidence-interval-of-a-bootstrap-output-in-ggplot2
 # nlsBoot
-curveBoot <- nlsBoot(fit, niter = 1000)
+curveBoot <- nlstools::nlsBoot(fit, niter = 1000)
 # plot(curveBoot)
 
 # Matrix with the bootstrapped parameter estimates
 Theta_mat <- curveBoot$coefboot
-fun <- function(x, theta) theta["A"] * cos(2 * pi * ((x - theta["x_0"]) / theta["z"])) + theta["M"]
+fun <- function(x, theta) {
+  theta["A"] * cos(2 * pi * ((x - theta["x_0"]) / theta["z"])) + theta["M"]
+}
 
 # Points where to evaluate the model
 x_eval <- seq(min(d$X), max(d$X), length.out = 100)
@@ -143,7 +145,9 @@ p1 <- ggplot(data = Estims_plot, aes(x = x, y = median_est, ymin = ci_lower_est,
   )
 print(p1)
 
-ggsave(paste("tooth_seq_FINAL_", isodata$specimen[1], ".pdf", sep = ""), p1,
+ggsave(
+  file.path("plots", paste("tooth_seq_FINAL_", isodata$specimen[1], ".pdf", sep = "")),
+  p1,
   width = 55, height = 40, units = c("cm"), scale = .35, useDingbats = FALSE
 )
 
@@ -159,13 +163,19 @@ ggsave(paste("tooth_seq_FINAL_", isodata$specimen[1], ".pdf", sep = ""), p1,
 ######
 # Find the min and max (period) of the fitted curve within the range of xdata first then outside it
 
-if (optimize(FD1, interval = c(min(xdata), max(xdata)))$minimum != optimize(FD1, interval = c(-40, 0))$minimum) {
+min_in_data <- optimize(FD1, interval = c(min(xdata), max(xdata)))$minimum
+min_in_range <- optimize(FD1, interval = c(-40, 0))$minimum
+
+if (min_in_data != min_in_range) {
   curvemin <- optimize(FD1, interval = c(-60, 0))
 } else {
   curvemin <- optimize(FD1, interval = c(min(xdata), max(xdata)))
 }
 
-if (optimize(FD1, interval = c(min(xdata), max(xdata)), maximum = TRUE)$maximum != optimize(FD1, interval = c(-40, 0), maximum = TRUE)$maximum) {
+max_in_data <- optimize(FD1, interval = c(min(xdata), max(xdata)), maximum = TRUE)$maximum
+max_in_range <- optimize(FD1, interval = c(-40, 0), maximum = TRUE)$maximum
+
+if (max_in_data != max_in_range) {
   curvemax <- optimize(FD1, interval = c(-60, 0), maximum = TRUE)
 } else {
   curvemax <- optimize(FD1, interval = c(min(xdata), max(xdata)), maximum = TRUE)
