@@ -8,33 +8,29 @@ library(ggrepel)
 library(broom)
 library(corrr)
 
-# Set working directory
-setwd("~/Dropbox (MPI SHH)/Margins or Nodes/Chap tooth SIA/Comparative data/")
-
 # Load data
-file = "T032_C_O_meas.csv"
-data = read.csv(file)
-data.whole = data
-ydata=data$d18O
-xdata=data$measure*-1 # data$Increment_ is a vector of the the increments offset against 32 max increments of tooth TRH-14
+file <- "data/T032_C_O_meas.csv"
+isodata <- read.csv(file)
+ydata=isodata$d18O
+xdata=isodata$measure*-1 # isodata$Increment_ is a vector of the the increments offset against 32 max increments of tooth TRH-14
 
 # Correct for Seuss effect if sample is modern
-if(data$chronology[1]=="modern"){
-  data$d13C = data$d13C + 1.5
+if(isodata$chronology[1]=="modern"){
+  isodata$d13C = isodata$d13C + 1.5
 }
 cdata=data$d13C
 
 
-# Build simple base-r plot to show data and visualize adjustments to cosine fitting parameters
+# Build simple base-r plot to show isodata and visualize adjustments to cosine fitting parameters
 par(las=1) 
 par(mar=c(4.5,4.5,4.5,3.5))
-xlimit = c(-45,1) #To be used if data$increment_rej feeds xdata
+xlimit = c(-45,1) #To be used if isodata$increment_rej feeds xdata
 ylimit = c(-17,3)
 
 # Set the plot title
 num_samples = c(length(xdata))
-title = paste(data$specimen[1]," - ",data$taxon[1]," - ",data$element[1]," - ",num_samples,"samples")
-subtitle = paste(data$site[1]," - ",data$phase[1]," - ",data$period[1]," - ",data$chronology[1])
+title = paste(isodata$specimen[1]," - ",isodata$taxon[1]," - ",isodata$element[1]," - ",num_samples,"samples")
+subtitle = paste(isodata$site[1]," - ",isodata$phase[1]," - ",isodata$period[1]," - ",isodata$chronology[1])
 
 # Plot the data
 plot(xdata,ydata,xlim=xlimit,ylim=ylimit,pch=19, col = "dark blue",cex = 1.8, xlab="Occlusal surface       -->       REJ", ylab="‰", cex.lab=1.5, main=title, cex.main= 2.2, axes = FALSE, cex.lab = 2.2, mar = c(5, 2, 4, 2) + 0.2)
@@ -44,7 +40,7 @@ mtext(subtitle,outer=T,side=3,line=-5,cex=1.9)
 
 # Make the axes
 #axis(side = 1, at = seq(-1,35, by = 1), lwd = 2, cex.axis = 1.6, labels = F)
-axis(side = 1, at = seq(-45,1, by = 1), lwd = 2, cex.axis = 1.6, labels = F) #To be used if data$increment_rej feeds xdata
+axis(side = 1, at = seq(-45,1, by = 1), lwd = 2, cex.axis = 1.6, labels = F) #To be used if isodata$increment_rej feeds xdata
 axis(side = 2, at = seq(-16,3, by = 1), lwd = 2, cex.axis = 2.2)
 #axis(side = 3, at = seq(-14,-3, by = 1), lwd = 2, cex.axis = 1.4)
 
@@ -52,7 +48,7 @@ axis(side = 2, at = seq(-16,3, by = 1), lwd = 2, cex.axis = 2.2)
 labels = c(expression(delta^{{18}}*"O"),expression(delta^{{13}}*"C"))
 #legend(16,6,legend = labels, pch = c(19,19), col = c("dark blue","dark green"),bty = "n", horiz = T, cex = 2.2, x.intersp = .3, text.width = 1.8, xjust = 0.5)
 
-#To be used if data$increment_rej feeds xdata:
+#To be used if isodata$increment_rej feeds xdata:
 legend(-24,10,legend = labels, pch = c(19,19), col = c("dark blue","dark green"),bty = "n", horiz = T, cex = 2.2, x.intersp = .3, text.width = 1.8, xjust = 0.5)
 
 d <<- data.frame(X=xdata,Y=ydata)
@@ -122,8 +118,8 @@ p1 <- ggplot(data = Estims_plot, aes(x = x, y = median_est, ymin = ci_lower_est,
         plot.title = element_text(size=20),
         plot.subtitle = element_text(size=18)) +
   
-  ggtitle(paste(data.whole$site[1]," - ",data.whole$period[1]," - ",data.whole$chronology[1]), 
-          subtitle = paste(data.whole$specimen[1]," - ",data.whole$taxon[1]," - ",data.whole$element[1])) +
+  ggtitle(paste(isodata$site[1]," - ",isodata$period[1]," - ",isodata$chronology[1]), 
+          subtitle = paste(isodata$specimen[1]," - ",isodata$taxon[1]," - ",isodata$element[1])) +
   
   scale_y_continuous(expand=c(0,0),limits=c(-14, 2),
                      breaks = seq(-14, 2,by = 2),name="‰ (VPDB)", 
@@ -141,7 +137,7 @@ p1 <- ggplot(data = Estims_plot, aes(x = x, y = median_est, ymin = ci_lower_est,
                      labels = c("δ18O", "δ13C"))
 print(p1)
 
-ggsave(paste("tooth_seq_FINAL_",data.whole$specimen[1],".pdf",sep=""), p1,
+ggsave(paste("tooth_seq_FINAL_",isodata$specimen[1],".pdf",sep=""), p1,
        width = 55, height = 40, units = c("cm"), scale = .35, useDingbats=FALSE)  
 
 
@@ -173,7 +169,7 @@ curvemin$minimum
 #This depends on whether the max is after the min, either add or substract accordingly
 curveperiod=abs(curvemax$maximum-curvemin$minimum)
 curveperiod
-data$curveperiod=curveperiod
+isodata$curveperiod=curveperiod
 
 #Convert xdata to Julian days and set min temp day to Jan 15th
 julian=((xdata-curvemin$minimum)/(curveperiod/180))+15
@@ -194,10 +190,10 @@ for(i in 1:length(julian)){
     julian[i]=julian[i]-365
   }
 }
-data$julian=julian
-data$birth=birth
+isodata$julian=julian
+isodata$birth=birth
 
-write.csv(data,file=paste("julian/",data$specimen[1],"-julian.csv",sep=""), row.names=FALSE)
+write.csv(isodata,file=paste("julian/",isodata$specimen[1],"-julian.csv",sep=""), row.names=FALSE)
 
 
 #######################################
