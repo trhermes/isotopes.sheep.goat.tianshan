@@ -1,7 +1,7 @@
 # A function to build a simple base-r plot to show isodata
 # and visualize adjustments to cosine fitting parameters
 
-simple_iso_plot <- function(xdata, ydata, cdata){
+simple_iso_plot <- function(xdata, ydata, cdata, FD1){
 
   par(las = 1)
   par(mar = c(4.5, 4.5, 4.5, 3.5))
@@ -97,6 +97,16 @@ simple_iso_plot <- function(xdata, ydata, cdata){
     x.intersp = .3,
     text.width = 1.8,
     xjust = 0.5
+  )
+  
+  # if data$increment_rej feeds xdata:
+  curve(
+    FD1,
+    from = min(xdata - 10, na.rm = T), to = max(xdata + 15, na.rm = T),
+    n = 36,
+    add = T,
+    lty = "dashed",
+    lwd = 3
   )
 
 }

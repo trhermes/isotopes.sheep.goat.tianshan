@@ -8,21 +8,55 @@ library(ggrepel)
 library(broom)
 library(corrr)
 
-# Load data
-file <- "data/T032_C_O_meas.csv"
-isodata <- readr::read_csv(file)
-ydata <- isodata$d18O
-xdata <- -isodata$measure # isodata$Increment_ is a vector of the the increments offset against 32 max increments of tooth TRH-14
+source("code/fit_curve.R")
+source("code/plot_single_tooth_with_fitted_curve.R")
+
+# Find data
+isodata_path <- "data/input/isodata"
+isodata_files_paths <- list.files(isodata_path, full.names = T)
+
+# Read data
+isodata_list <- purrr::map(isodata_files_paths, readr::read_csv)
 
 # Correct for Seuss effect if sample is modern
-if (isodata$chronology[1] == "modern") {
-  isodata$d13C <- isodata$d13C + 1.5
-}
-cdata <- isodata$d13C
+isodata_list_seuss_corrected <- purrr::map(isodata_list, function(isodata) {
+  if (isodata$chronology[1] == "modern") {
+    isodata$d13C <- isodata$d13C + 1.5
+  }
+  return(isodata)
+})
 
-################################
+# Fit curve for every isodata file
+fitted_curves <- purrr::map(isodata_list_seuss_corrected, function(isodata) {
+  #ydata <- isodata$d18O
+  #xdata <- -isodata$measure # isodata$Increment_ is a vector of the the increments offset against 32 max increments of tooth TRH-14
+  #cdata <- isodata$d13C
+  fit_curve(data.frame(X = -isodata$measure, Y = isodata$d18O))
+})
+
+# plot for debugging
+# source("code/simple_iso_plot.R")
+# simple_iso_plot(d$X, d$Y, isodata$d13C, FD1)
+
+purrr::map2(
+  isodata_list_seuss_corrected,
+  fitted_curves,
+  function(isodata, estim_mat) {
+    plot_single_curve_with_fitted_curve(
+      data.frame(X = -isodata$measure, Y = isodata$d18O),
+      estim_mat
+    )
+  }
+)
 
 
+
+
+ggsave(
+  file.path("plots", paste("tooth_seq_FINAL_", isodata$specimen[1], ".pdf", sep = "")),
+  p1,
+  width = 55, height = 40, units = c("cm"), scale = .35, useDingbats = FALSE
+)
 
 
 
