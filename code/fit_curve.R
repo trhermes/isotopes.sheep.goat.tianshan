@@ -1,7 +1,8 @@
 # Fit a curve to the d18O values
-fit_curve <- function(d) {
+fit_curve <- function(isodata) {
   
-  d <<- d # due to a bug in nls, d must be in the global environment
+  # due to a bug in nls, d must be in the global environment
+  d <<- data.frame(X = -isodata$measure, Y = isodata$d18O)
   
   # fit cos curve model
   fit <- stats::nls(
@@ -41,8 +42,6 @@ fit_curve <- function(d) {
   #   control = minpack.lm::nls.lm.control(maxiter = 1024)
   # )
     
-  FD1 <- function(x) { stats::predict(fit, data.frame(X = x))}
-  
   # get error bar for the fitted curve
   # adapted from https://stackoverflow.com/questions/32613119/plot-the-median-confidence-interval-of-a-bootstrap-output-in-ggplot2
   curveBoot <- nlstools::nlsBoot(fit, niter = 1000)
@@ -70,6 +69,10 @@ fit_curve <- function(d) {
     })))
   )
   
-  return(estim_mat)
+  # prepare output list
+  return(list(
+    fit = fit,
+    estim_mat = estim_mat
+  ))
 
 }

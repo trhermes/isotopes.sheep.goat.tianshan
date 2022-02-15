@@ -13,21 +13,28 @@ isodata_path <- "data/input/isodata"
 isodata_files_paths <- list.files(isodata_path, full.names = T)
 
 # Read data
-isodata_list <- purrr::map(isodata_files_paths, readr::read_csv)
+isodata_list <- purrr::map(
+  isodata_files_paths,
+  readr::read_csv
+)
 
 # Correct for Seuss effect if sample is modern
-isodata_list_seuss_corrected <- purrr::map(isodata_list, function(isodata) {
-  if (isodata$chronology[1] == "modern") {
-    isodata$d13C <- isodata$d13C + 1.5
+isodata_list_seuss_corrected <- purrr::map(
+  isodata_list, 
+  function(isodata) {
+    if (isodata$chronology[1] == "modern") {
+      isodata$d13C <- isodata$d13C + 1.5
+    }
+    return(isodata)
   }
-  return(isodata)
-})
+)
 
 # Fit curve for every isodata file
 source("code/fit_curve.R")
-fitted_curves <- purrr::map(isodata_list_seuss_corrected, function(isodata) {
-  fit_curve(data.frame(X = -isodata$measure, Y = isodata$d18O))
-})
+fitted_curves <- purrr::map(
+  isodata_list_seuss_corrected, 
+  fit_curve
+)
 
 # plot for debugging
 # source("code/simple_iso_plot.R")
@@ -35,11 +42,11 @@ fitted_curves <- purrr::map(isodata_list_seuss_corrected, function(isodata) {
 
 # plot fitted curves
 source("code/plot_single_tooth_with_fitted_curve.R")
-purrr::map2(
+purrr::walk2(
   isodata_list_seuss_corrected,
   fitted_curves,
-  function(isodata, estim_mat) {
-    p <- plot_single_curve_with_fitted_curve(isodata, estim_mat)
+  function(isodata, fitted_curve) {
+    p <- plot_single_curve_with_fitted_curve(isodata, fitted_curve$estim_mat)
     ggsave(
       file.path("plots", paste("tooth_seq_FINAL_", isodata$specimen[1], ".pdf", sep = "")),
       p, width = 55, height = 40, units = c("cm"), scale = .35, useDingbats = FALSE
@@ -47,51 +54,54 @@ purrr::map2(
   }
 )
 
-
-
-
-
-
-
-
-######
-######
-######
 # Calculate how much tooth distance is represented in the period of the fitted curve using data pointa
 # If data point do not include min and max values, they must be obtained by extrapolation
-######
-######
-######
-# Find the min and max (period) of the fitted curve within the range of xdata first then outside it
 
-min_in_data <- optimize(FD1, interval = c(min(xdata), max(xdata)))$minimum
-min_in_range <- optimize(FD1, interval = c(-40, 0))$minimum
+purrr::map2(
+  isodata_list_seuss_corrected,
+  fitted_curves,
+  function(isodata, fitted_curve) {
+    
+    FD1 = function(x) { stats::predict(
+      fitted_curve$fit,
+      data.frame(X = x)
+    ) }
+    
+    # Find the min and max (period) of the fitted curve within the range of xdata first then outside it
+    covered_range <- range(-isodata$measure)
+    total_range   <- c(-40, 0)
+    super_range   <- c(-60, 0) # TODO: why are total_range and super_range different?
+    tolerance     <- 0.1
+    
+    # Optimize returns two values. The min or max, and the objective. The objective
+    # is the value of curve, whereas the min or max are the x values of where they are
+    # curveminmax=c(curvemin$minimum,curvemax$maximum)
+    min_in_covered <- optimize(FD1, interval = covered_range)$minimum
+    min_in_total   <- optimize(FD1, interval = total_range)$minimum
+    max_in_covered <- optimize(FD1, interval = covered_range, maximum = TRUE)$maximum
+    max_in_total   <- optimize(FD1, interval = total_range, maximum = TRUE)$maximum
+    
+    curvemin <- if (abs(min_in_covered - min_in_total) > tolerance) {
+      optimize(FD1, interval = super_range)$minimum
+    } else {
+      min_in_covered
+    }
+    
+    curvemax <- if (abs(max_in_covered - max_in_total) > tolerance) {
+      optimize(FD1, interval = super_range, maximum = TRUE)$maximum
+    } else {
+      max_in_covered
+    }
+    
+    # This depends on whether the max is after the min, either add or substract accordingly
+    curveperiod <- abs(curvemax - curvemin)
+    
+    return(curveperiod)
+  }
+)
 
-if (min_in_data != min_in_range) {
-  curvemin <- optimize(FD1, interval = c(-60, 0))
-} else {
-  curvemin <- optimize(FD1, interval = c(min(xdata), max(xdata)))
-}
 
-max_in_data <- optimize(FD1, interval = c(min(xdata), max(xdata)), maximum = TRUE)$maximum
-max_in_range <- optimize(FD1, interval = c(-40, 0), maximum = TRUE)$maximum
 
-if (max_in_data != max_in_range) {
-  curvemax <- optimize(FD1, interval = c(-60, 0), maximum = TRUE)
-} else {
-  curvemax <- optimize(FD1, interval = c(min(xdata), max(xdata)), maximum = TRUE)
-}
-
-curvemax$maximum
-curvemin$minimum
-
-# Optimize returns two values. The min or max, and the objective. The objective
-# is the value of curve, whereas the min or max are the x values of where they are
-# curveminmax=c(curvemin$minimum,curvemax$maximum)
-# This depends on whether the max is after the min, either add or substract accordingly
-curveperiod <- abs(curvemax$maximum - curvemin$minimum)
-curveperiod
-isodata$curveperiod <- curveperiod
 
 # Convert xdata to Julian days and set min temp day to Jan 15th
 julian <- ((xdata - curvemin$minimum) / (curveperiod / 180)) + 15
