@@ -25,15 +25,25 @@ cdata <- isodata$d13C
 # simple exploration plot
 simple_iso_plot(xdata, ydata, cdata)
 
-
-
-d <<- data.frame(X = xdata, Y = ydata)
-
 ################################
+
 # Fit a curve to the d18O values
+d <- data.frame(X = xdata, Y = ydata)
 e <- 2.71
+
 # Oringal: start=list(A=2,M=-5,x_0=1,z=30
-fit <- nls(Y ~ A * cos(2 * pi * ((X - x_0) / z)) + M, data = d, start = list(A = 5, M = 5, x_0 = -20, z = 25), nls.control(maxiter = 100000)) # If curve is offset from data adjust x_0 variable first then try A
+fit <- stats::nls(
+  Y ~ A * cos(2 * pi * ((X - x_0) / z)) + M,
+  data = d,
+  start = list(
+    A = 5,
+    M = 5,
+    x_0 = -20,
+    z = 25
+  ),
+  nls.control(maxiter = 100000)
+) # If curve is offset from data adjust x_0 variable first then try A
+
 fitdata <- as.data.frame(summary(fit)$coefficients)
 fitdata
 estimate <- fitdata$Estimate
@@ -50,7 +60,15 @@ FD1 <- function(x, y) {
 # curve(FD1, from=-25,to=max(xdata,na.rm=T), n=36, add=T, lty = "dashed", lwd = 3)
 
 # if data$increment_rej feeds xdata:
-curve(FD1, from = min(xdata - 10, na.rm = T), to = max(xdata + 15, na.rm = T), n = 36, add = T, lty = "dashed", lwd = 3)
+curve(
+  FD1,
+  from = min(xdata - 10, na.rm = T), to = max(xdata + 15, na.rm = T),
+  n = 36,
+  add = T,
+  lty = "dashed",
+  lwd = 3
+)
+
 
 ###############################################
 ###############################################
