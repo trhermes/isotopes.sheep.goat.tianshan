@@ -22,7 +22,7 @@ isodata_list <- purrr::map(
 isodata_list_seuss_corrected <- purrr::map(
   isodata_list, 
   function(isodata) {
-    if (isodata$chronology[1] == "modern") {
+    if (!is.na(isodata$chronology[1]) & isodata$chronology[1] == "modern") {
       isodata$d13C <- isodata$d13C + 1.5
     }
     return(isodata)
@@ -31,9 +31,13 @@ isodata_list_seuss_corrected <- purrr::map(
 
 # Fit curve for every isodata file
 source("code/fit_curve.R")
-fitted_curves <- purrr::map(
-  isodata_list_seuss_corrected, 
-  fit_curve
+fitted_curves <- purrr::map2(
+  isodata_files_paths,
+  isodata_list_seuss_corrected,
+  function(filepath, isodata) {
+    message("Trying to fit: ", filepath)
+    fit_curve(isodata)
+  }
 )
 
 # plot for debugging
