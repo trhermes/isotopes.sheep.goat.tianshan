@@ -13,10 +13,11 @@ fit_curve <- function(isodata) {
   # 
   # # A: Amplitude
   # # x_0: phase
-  # # z: frequency
+  # # z: period
   # # M: y-axis offset
   # plot(x, FD1(x, 5, 10, 45, -5))
   # points(d, col = "red")
+  # plot(x, FD1(x, 5, -10, 45, -5))
   
   # cos curve fitting starting parameters and search range
   low_1   <- low2 <- list(A = 0,  x_0 = 0,  z = 20, M = -20)

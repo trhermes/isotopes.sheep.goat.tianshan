@@ -58,10 +58,10 @@ purrr::walk2(
   }
 )
 
-# Calculate how much tooth distance is represented in the period of the fitted curve using data pointa
+# Calculate how much tooth distance is represented in the period of the fitted curve
 # If data point do not include min and max values, they must be obtained by extrapolation
 
-purrr::map2(
+curve_periods <- purrr::map2(
   isodata_list_seuss_corrected,
   fitted_curves,
   function(isodata, fitted_curve) {
@@ -104,8 +104,31 @@ purrr::map2(
   }
 )
 
+curve_periods <- purrr::map2(
+  isodata_list_seuss_corrected,
+  fitted_curves,
+  function(isodata, fitted_curve) {
+    # curve parameters
+    period <- fitted_curve$fit$m$getPars()[["z"]]
+    phase_shift <- fitted_curve$fit$m$getPars()[["x_0"]]
+    # positions
+    oldest_meas_point <- min(-isodata$measure)
+    youngest_meas_point <- max(-isodata$measure)
+    # ranges
+    tooth_length <- abs(oldest_meas_point - youngest_meas_point)
+    length_of_year_in_mm <- period
+    tooth_life_in_years <- tooth_length/length_of_year_in_mm
+    # derived values
+    fifteenth_jan_pos_mm <- -period/2 + phase_shift
+    mm_per_day <- tooth_life_in_years/365
+    
+    # plot(-50:10, FD1(-50:10, fitted_curve$fit$m$getPars()[["A"]], fitted_curve$fit$m$getPars()[["x_0"]], fitted_curve$fit$m$getPars()[["z"]], fitted_curve$fit$m$getPars()[["M"]]))
+  }
+)
 
+mm_pos_to_julian <- function()
 
+#curve_periods[[1]] -> curveperiod
 
 # Convert xdata to Julian days and set min temp day to Jan 15th
 julian <- ((xdata - curvemin$minimum) / (curveperiod / 180)) + 15
