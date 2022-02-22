@@ -52,50 +52,9 @@ purrr::walk2(
 # Calculate how much tooth distance is represented in the period of the fitted curve
 # If data point do not include min and max values, they must be obtained by extrapolation
 
-curve_periods <- purrr::map2(
-  isodata_list_seuss_corrected,
-  fitted_curves,
-  function(isodata, fitted_curve) {
-    
-    FD1 = function(x) { stats::predict(
-      fitted_curve$fit,
-      data.frame(X = x)
-    ) }
-    
-    # Find the min and max (period) of the fitted curve within the range of xdata first then outside it
-    covered_range <- range(-isodata$measure)
-    total_range   <- c(-40, 0)
-    super_range   <- c(-60, 0) # TODO: why are total_range and super_range different?
-    tolerance     <- 0.1
-    
-    # Optimize returns two values. The min or max, and the objective. The objective
-    # is the value of curve, whereas the min or max are the x values of where they are
-    # curveminmax=c(curvemin$minimum,curvemax$maximum)
-    min_in_covered <- optimize(FD1, interval = covered_range)$minimum
-    min_in_total   <- optimize(FD1, interval = total_range)$minimum
-    max_in_covered <- optimize(FD1, interval = covered_range, maximum = TRUE)$maximum
-    max_in_total   <- optimize(FD1, interval = total_range, maximum = TRUE)$maximum
-    
-    curvemin <- if (abs(min_in_covered - min_in_total) > tolerance) {
-      optimize(FD1, interval = super_range)$minimum
-    } else {
-      min_in_covered
-    }
-    
-    curvemax <- if (abs(max_in_covered - max_in_total) > tolerance) {
-      optimize(FD1, interval = super_range, maximum = TRUE)$maximum
-    } else {
-      max_in_covered
-    }
-    
-    # This depends on whether the max is after the min, either add or substract accordingly
-    curveperiod <- abs(curvemax - curvemin)
-    
-    return(curveperiod)
-  }
-)
+recycle_year <- function(x) { x %% 365 }
 
-curve_periods <- purrr::map2(
+time_and_birth <- purrr::map2(
   isodata_list_seuss_corrected,
   fitted_curves,
   function(isodata, fitted_curve) {
@@ -108,46 +67,29 @@ curve_periods <- purrr::map2(
     tooth_length <- abs(oldest_meas_point - youngest_meas_point)
     length_of_year_in_mm <- period
     tooth_life_in_years <- tooth_length/length_of_year_in_mm
-    # adjust curve to year
-    one_arbitrary_fifteenth_jan_pos <- -period/2 + phase_shift
-    multiple_fift_jan_pos <- one_arbitrary_fifteenth_jan_pos + seq(-5,3,1) * length_of_year_in_mm
-    fift_jan_before_birth <- multiple_fift_jan_pos[
-      tail(which(multiple_fift_jan_pos < oldest_meas_point), n = 1)
+    # adjust curve to year by equating the minimum value of the curve with the 15th of january
+    one_min_pos <- -period / 2 + phase_shift
+    multi_min_pos <- one_min_pos + seq(-5,3,1) * period
+    fift_jan_before_birth <- multi_min_pos[
+      tail(which(multi_min_pos < oldest_meas_point), n = 1)
     ]
     # derive sampling days in julian calender format
     distance_fift_jan_before_birth_to_measure <- abs(fift_jan_before_birth - (-isodata$measure))
-    day_sampled_in_julian_calender <- 15 + distance_fifteenth_jan_before_birth_to_measure/length_of_year_in_mm * 365 - 365
-    
-    # plot(-50:10, FD1(-50:10, fitted_curve$fit$m$getPars()[["A"]], fitted_curve$fit$m$getPars()[["x_0"]], fitted_curve$fit$m$getPars()[["z"]], fitted_curve$fit$m$getPars()[["M"]]))
+    day_sampled_in_julian_calender <- 15 + distance_fift_jan_before_birth_to_measure/length_of_year_in_mm * 365 - 365
+    julian <- recycle_year(day_sampled_in_julian_calender)
+    # calculate birth value (proxy for birth season)
+    one_max_pos <- phase_shift
+    multi_max_pos <- one_max_pos + seq(-5,3,1) * period
+    last_max <- multi_max_pos[
+      tail(which(multi_max_pos < 0), n = 1)
+    ]
+    birth <- abs(last_max) / period
+    # compile output
+    list(julian, birth)
   }
 )
 
-mm_pos_to_julian <- function()
-
-#curve_periods[[1]] -> curveperiod
-
-# Convert xdata to Julian days and set min temp day to Jan 15th
-julian <- ((xdata - curvemin$minimum) / (curveperiod / 180)) + 15
-
-# https://doi.org/10.1111/j.1475-4754.2011.00624.x
-birth <- abs(curvemax$maximum / (2 * curveperiod))
-
-# Because the min and max may fall outside of the range of xdata, birth may be greater than 1
-# if so, then simply subtract 1 to get a value between 0 and 1
-if (birth > 1) {
-  birth <- birth - 1
-}
-
-for (i in 1:length(julian)) {
-  if (julian[i] <= 1) {
-    julian[i] <- julian[i] + 365
-  }
-  if (julian[i] >= 366) {
-    julian[i] <- julian[i] - 365
-  }
-}
-isodata$julian <- julian
-isodata$birth <- birth
+###
 
 write.csv(isodata, file = paste("julian/", isodata$specimen[1], "-julian.csv", sep = ""), row.names = FALSE)
 
