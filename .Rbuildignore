@@ -1,0 +1,5 @@
+^plots$
+^data$
+^code$
+^.*\.Rproj$
+^\.Rproj\.user$

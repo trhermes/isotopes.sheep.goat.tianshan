@@ -1,13 +1,3 @@
-library(bayesboot)
-library(nlstools)
-library(ggplot2)
-library(dplyr)
-library(tidyr)
-library(readr)
-library(ggrepel)
-library(broom)
-library(corrr)
-
 # Find data
 isodata_path <- "data/input/isodata"
 isodata_files_paths <- list.files(isodata_path, full.names = T)

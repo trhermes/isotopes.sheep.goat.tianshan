@@ -1,0 +1,17 @@
+Package: placeholder
+Title: This is a placeholder.
+Version: 0.0.1
+Depends: R (>= 4.1.0)
+Imports:
+    bayesboot (>= 0.2.2),
+    broom (>= 0.7.12),
+    corrr (>= 0.4.3),
+    dplyr (>= 1.0.7),
+    ggplot2 (>= 3.3.5),
+    ggrepel (>= 0.9.1),
+    nlstools (>= 2.0-0),
+    purrr (>= 0.3.4),
+    readr (>= 2.1.2),
+    stats (>= 4.1.2),
+    tibble (>= 3.1.6),
+    tidyr (>= 1.1.4)
