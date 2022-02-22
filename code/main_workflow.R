@@ -5,7 +5,8 @@ isodata_files_paths <- list.files(isodata_path, full.names = T)
 # Read data
 isodata_list <- purrr::map(
   isodata_files_paths,
-  readr::read_csv
+  readr::read_csv,
+  col_types = readr::cols()
 )
 
 # Correct for Seuss effect if sample is modern
