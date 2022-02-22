@@ -102,16 +102,21 @@ curve_periods <- purrr::map2(
     # curve parameters
     period <- fitted_curve$fit$m$getPars()[["z"]]
     phase_shift <- fitted_curve$fit$m$getPars()[["x_0"]]
-    # positions
+    # tooth life parameters
     oldest_meas_point <- min(-isodata$measure)
     youngest_meas_point <- max(-isodata$measure)
-    # ranges
     tooth_length <- abs(oldest_meas_point - youngest_meas_point)
     length_of_year_in_mm <- period
     tooth_life_in_years <- tooth_length/length_of_year_in_mm
-    # derived values
-    fifteenth_jan_pos_mm <- -period/2 + phase_shift
-    mm_per_day <- tooth_life_in_years/365
+    # adjust curve to year
+    one_arbitrary_fifteenth_jan_pos <- -period/2 + phase_shift
+    multiple_fift_jan_pos <- one_arbitrary_fifteenth_jan_pos + seq(-5,3,1) * length_of_year_in_mm
+    fift_jan_before_birth <- multiple_fift_jan_pos[
+      tail(which(multiple_fift_jan_pos < oldest_meas_point), n = 1)
+    ]
+    # derive sampling days in julian calender
+    distance_fift_jan_before_birth_to_measure <- abs(fift_jan_before_birth - (-isodata$measure))
+    day_sampled_in_julian_calender <- 15 + distance_fifteenth_jan_before_birth_to_measure/length_of_year_in_mm * 365 - 365
     
     # plot(-50:10, FD1(-50:10, fitted_curve$fit$m$getPars()[["A"]], fitted_curve$fit$m$getPars()[["x_0"]], fitted_curve$fit$m$getPars()[["z"]], fitted_curve$fit$m$getPars()[["M"]]))
   }
