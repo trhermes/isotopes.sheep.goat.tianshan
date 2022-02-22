@@ -39,13 +39,18 @@ plot_single_curve_with_fitted_curve <- function(isodata, estim_mat) {
       subtitle = paste(isodata$specimen[1], " - ", isodata$taxon[1], " - ", isodata$element[1])
     ) +
     scale_y_continuous(
-      expand = c(0, 0), limits = c(-14, 2),
+      expand = c(0, 0),
       breaks = seq(-14, 2, by = 2), name = "‰ (VPDB)",
       minor_breaks = NULL
     ) +
     scale_x_continuous(
-      expand = c(0, 0), limits = c(-40, 0), labels = c("40", "30", "20", "10", "0"),
+      expand = c(0, 0),
+      labels = c("40", "30", "20", "10", "0"),
       name = c("Distance from root-enamel junction (mm)")
+    ) +
+    coord_cartesian(
+      xlim = c(-40, 0),
+      ylim = c(-15, 2)
     ) +
     scale_color_manual(
       name = "",
