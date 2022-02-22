@@ -58,15 +58,10 @@ time_and_birth <- purrr::map2(
   isodata_list_seuss_corrected,
   fitted_curves,
   function(isodata, fitted_curve) {
-    # curve parameters
-    period <- fitted_curve$fit$m$getPars()[["z"]]
+    # basic parameters
+    period <- fitted_curve$fit$m$getPars()[["z"]] # identical to the length of one year in mm
     phase_shift <- fitted_curve$fit$m$getPars()[["x_0"]]
-    # tooth life parameters
     oldest_meas_point <- min(-isodata$measure)
-    youngest_meas_point <- max(-isodata$measure)
-    tooth_length <- abs(oldest_meas_point - youngest_meas_point)
-    length_of_year_in_mm <- period
-    tooth_life_in_years <- tooth_length/length_of_year_in_mm
     # adjust curve to year by equating the minimum value of the curve with the 15th of january
     one_min_pos <- -period / 2 + phase_shift
     multi_min_pos <- one_min_pos + seq(-5,3,1) * period
@@ -74,8 +69,8 @@ time_and_birth <- purrr::map2(
       tail(which(multi_min_pos < oldest_meas_point), n = 1)
     ]
     # derive sampling days in julian calender format
-    distance_fift_jan_before_birth_to_measure <- abs(fift_jan_before_birth - (-isodata$measure))
-    day_sampled_in_julian_calender <- 15 + distance_fift_jan_before_birth_to_measure/length_of_year_in_mm * 365 - 365
+    distance_to_fift_jan <- abs(fift_jan_before_birth - (-isodata$measure))
+    day_sampled_in_julian_calender <- -365 + 15 + distance_to_fift_jan/period * 365
     julian <- recycle_year(day_sampled_in_julian_calender)
     # calculate birth value (proxy for birth season)
     one_max_pos <- phase_shift
@@ -85,7 +80,10 @@ time_and_birth <- purrr::map2(
     ]
     birth <- abs(last_max) / period
     # compile output
-    list(julian, birth)
+    list(
+      julian = julian,
+      birth = birth
+    )
   }
 )
 
