@@ -114,7 +114,7 @@ curve_periods <- purrr::map2(
     fift_jan_before_birth <- multiple_fift_jan_pos[
       tail(which(multiple_fift_jan_pos < oldest_meas_point), n = 1)
     ]
-    # derive sampling days in julian calender
+    # derive sampling days in julian calender format
     distance_fift_jan_before_birth_to_measure <- abs(fift_jan_before_birth - (-isodata$measure))
     day_sampled_in_julian_calender <- 15 + distance_fifteenth_jan_before_birth_to_measure/length_of_year_in_mm * 365 - 365
     
@@ -129,6 +129,7 @@ mm_pos_to_julian <- function()
 # Convert xdata to Julian days and set min temp day to Jan 15th
 julian <- ((xdata - curvemin$minimum) / (curveperiod / 180)) + 15
 
+# https://doi.org/10.1111/j.1475-4754.2011.00624.x
 birth <- abs(curvemax$maximum / (2 * curveperiod))
 
 # Because the min and max may fall outside of the range of xdata, birth may be greater than 1
