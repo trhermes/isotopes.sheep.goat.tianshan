@@ -52,8 +52,6 @@ purrr::walk2(
 # Calculate how much tooth distance is represented in the period of the fitted curve
 # If data point do not include min and max values, they must be obtained by extrapolation
 
-recycle_year <- function(x) { x %% 365 }
-
 time_and_birth <- purrr::map2(
   isodata_list_seuss_corrected,
   fitted_curves,
@@ -71,7 +69,7 @@ time_and_birth <- purrr::map2(
     # derive sampling days in julian calender format
     distance_to_fift_jan <- abs(fift_jan_before_birth - (-isodata$measure))
     day_sampled_in_julian_calender <- -365 + 15 + distance_to_fift_jan/period * 365
-    julian <- recycle_year(day_sampled_in_julian_calender)
+    julian <- day_sampled_in_julian_calender %% 365 # recycle year
     # calculate birth value (proxy for birth season)
     one_max_pos <- phase_shift
     multi_max_pos <- one_max_pos + seq(-5,3,1) * period
