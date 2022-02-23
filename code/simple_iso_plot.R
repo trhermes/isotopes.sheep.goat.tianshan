@@ -103,7 +103,7 @@ simple_iso_plot <- function(xdata, ydata, cdata, FD1){
   curve(
     FD1,
     from = min(xdata - 10, na.rm = T), to = max(xdata + 15, na.rm = T),
-    n = 36,
+    n = 100,
     add = T,
     lty = "dashed",
     lwd = 3

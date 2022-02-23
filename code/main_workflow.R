@@ -3,7 +3,10 @@ isodata_path <- "data/input/isodata"
 isodata_files_paths <- list.files(isodata_path, full.names = T)
 
 # Read data
-specimen_overview_table <- readr::read_csv("data/input/specimen.csv")
+specimen_overview_table <- readr::read_csv(
+  "data/input/specimen.csv",
+  col_types = readr::cols()
+)
 isodata_list_only_measures <- purrr::map(
   isodata_files_paths,
   readr::read_csv,
@@ -45,10 +48,6 @@ fitted_curves <- furrr::future_map(
     fit_curve(isodata)
   }
 )
-
-# plot for debugging
-# source("code/simple_iso_plot.R")
-# simple_iso_plot(d$X, d$Y, isodata$d13C, FD1)
 
 # plot fitted curves
 source("code/plot_single_tooth_with_fitted_curve.R")
