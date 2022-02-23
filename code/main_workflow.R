@@ -34,17 +34,13 @@ isodata_list_seuss_corrected <- purrr::map(
 )
 
 # Fit curve for every isodata file
-# (parallelized with furrr)
 source("code/fit_curve.R")
-future::plan(future::multisession, workers = 6) # workers is the number of CPU cores
-fitted_curves <- furrr::future_map(
+fitted_curves <- purrr::map(
   isodata_list_seuss_corrected,
   function(isodata) {
-    # for debugging with a sequential purrr::map
-    #message("Trying to fit specimen: ", isodata$specimen[1]) 
+    message("Trying to fit specimen: ", isodata$specimen[1]) 
     fit_curve(isodata)
-  },
-  .options = furrr::furrr_options(seed = TRUE)
+  }
 )
 
 # Plot fitted curves
