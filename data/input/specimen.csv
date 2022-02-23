@@ -1,0 +1,35 @@
+specimen,comperative,overall_length,site,element,symmetry,taxon,phase,period,chronology
+CHP01,FALSE,32.7,Chap,M/2,right,caprine,2,Final Bronze Age,1065-825 cal BC
+CHP02,FALSE,36.9,Chap,M/2,right,caprine,2,Final Bronze Age,1065-825 cal BC
+CHP03,FALSE,25.7,Chap,M/3,right,caprine,2,Final Bronze Age,1065-825 cal BC
+CHP04,FALSE,36.2,Chap,M/2,right,caprine,2,Final Bronze Age,1065-825 cal BC
+CHP05,FALSE,23,Chap,M/3,left,caprine,2,Final Bronze Age,1065-825 cal BC
+CHP06,FALSE,39.8,Chap,M/3,left,caprine,2,Final Bronze Age,1065-825 cal BC
+CHP07,FALSE,26.1,Chap,M/2,left,caprine,2,Final Bronze Age,1065-825 cal BC
+CHP08,FALSE,36.2,Chap,M/2,left,caprine,2,Final Bronze Age,1065-825 cal BC
+CHP09,FALSE,25,Chap,M/3,right,caprine,2,Final Bronze Age,1065-825 cal BC
+CHP10,FALSE,21,Chap,M/2,right,caprine,2,Final Bronze Age,1065-825 cal BC
+IBX01,FALSE,34.3,Jeti-Oguz,M/2,left,ibex,modern,modern,modern
+IBX02,FALSE,41.8,Jeti-Oguz,M/3,left,ibex,modern,modern,modern
+IBX03,FALSE,43.7,Jeti-Oguz,M/3,right,ibex,modern,modern,modern
+IBX04,FALSE,30.7,Jeti-Oguz,M/2,right,ibex,modern,modern,modern
+5571,TRUE,,Kent,M/2,,caprine,,Final Bronze Age,
+5572,TRUE,,Kent,M/2,,caprine,,Final Bronze Age,
+5573,TRUE,,Kent,M/2,,caprine,,Final Bronze Age,
+5574,TRUE,,Kent,M/2,,caprine,,Final Bronze Age,
+5575,TRUE,,Kent,M/2,,caprine,,Final Bronze Age,
+5576,TRUE,,Kent,M/2,,caprine,,Final Bronze Age,
+5577,TRUE,,Kent,M/2,,caprine,,Final Bronze Age,
+5578,TRUE,,Kent,M/2,,caprine,,Final Bronze Age,
+5579,TRUE,,Kent,M/2,,caprine,,Final Bronze Age,
+5580,TRUE,,Kent,M/2,,caprine,,Final Bronze Age,
+5584,TRUE,,Turgen,M/2,,caprine,,Final Bronze Age,
+5586,TRUE,,Turgen,M/2,,caprine,,Final Bronze Age,
+5587,TRUE,,Turgen,M/2,,caprine,,Final Bronze Age,
+5588,TRUE,,Turgen,M/2,,caprine,,Final Bronze Age,
+5589,TRUE,,Turgen,M/2,,caprine,,Final Bronze Age,
+T032,TRUE,,Begash,M/2,left,caprine,2,Late Bronze Age,1660-975 cal BC
+T113,TRUE,38.61,Begash,M/2,left,caprine,2,Late Bronze Age,1660-975 cal BC
+T114,TRUE,37.6,Begash,M/2,right,caprine,2,Late Bronze Age,1660-975 cal BC
+T115,TRUE,31.08,Begash,M/2,left,caprine,2,Late Bronze Age,1660-975 cal BC
+T129,TRUE,,Begash,M/2,right,red deer,6,Historic,cal AD 1680-1900

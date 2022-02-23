@@ -39,6 +39,7 @@ vignettes/*.pdf
 .Renviron
 
 # others
-data/
+/data/*
+!/data/input/
 plots/
 tables/
