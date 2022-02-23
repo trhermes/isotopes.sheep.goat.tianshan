@@ -134,28 +134,22 @@ isodata_julian <- purrr::map2(
 #write.csv(isodata, file = paste("julian/", isodata$specimen[1], "-julian.csv", sep = ""), row.names = FALSE)
 
 library(magrittr)
+library(ggplot2)
 
-all_data_comp <- dplyr::bind_rows(isodata_time_and_birth)
-
-#######################################
-#######################################
-#######################################
-
-# Combine julian CSVs into one file for Chap and comparative data
-# all_data_comp <- list.files(path = "~/Dropbox (MPI SHH)/Margins or Nodes/Chap tooth SIA/01-data/julian/", full.names = TRUE) %>%
-#   lapply(read_csv, col_types = cols(specimen = "c", phase = "c")) %>%
-#   bind_rows()
+all_data_comp <- isodata_julian %>%
+  dplyr::bind_rows() %>%
+  dplyr::left_join(
+    specimen_overview_birth,
+    by = "specimen"
+  )
 
 # Write table (Table 1)
-write.csv(all_data_comp, "tables/Table_S3.csv", row.names = F, quote = F) # TODO: long floats should be rounded
-
+#write.csv(all_data_comp, "tables/Table_S3.csv", row.names = F, quote = F) # TODO: long floats should be rounded
 
 # Make df with only Chap data
-all_data <- all_data_comp %>% filter(site == "Chap" | site == "Jeti-Oguz")
+all_data <- all_data_comp %>% dplyr::filter(site %in% c("Chap", "Jeti-Oguz"))
+
 # Generate summary stats figures and tables
-#
-#
-#
 
 # d18O boxplot for new data
 d18O_box <- ggplot(all_data, aes(x = d18O, y = taxon)) +
@@ -171,83 +165,125 @@ d13C_box <- ggplot(all_data, aes(x = d13C, y = taxon)) +
 
 # Summary stats table for new data
 sum_stats <- all_data_comp %>%
-  select(d13C, d18O, site) %>%
-  group_by(site) %>%
-  summarize(across(starts_with("d"), list(mean = mean, sd = sd, min = min, max = max)))
+  dplyr::select(d13C, d18O, site) %>%
+  dplyr::group_by(site) %>%
+  dplyr::summarize(
+    dplyr::across(
+      tidyselect::starts_with("d"),
+      list(mean = mean, sd = stats::sd, min = min, max = max)
+    )
+  )
 
 # Count unique teeth per site
 counts <- all_data_comp %>%
-  select(specimen, site, increment) %>%
-  group_by(site) %>%
-  summarize(n_teeth = n_distinct(specimen), n_increment = n())
+  dplyr::select(specimen, site, increment) %>%
+  dplyr::group_by(site) %>%
+  dplyr::summarize(
+    n_teeth = dplyr::n_distinct(specimen),
+    n_increment = dplyr::n()
+  )
 
 # Combine sum_stats and counts
-sum_stats_final <- cbind(sum_stats, counts) %>%
-  select(-10) %>% # Remove second instance of "site" by its index
-  arrange(match(site, c("Chap", "Jeti-Oguz", "Bayan-Zherek", "Begash", "Dali", "Kent", "Turgen"))) %>%
-  mutate_if(is.numeric, round, digits = 2)
+sum_stats_final <- sum_stats %>%
+  dplyr::left_join(counts, by = "site") %>%
+  dplyr::arrange(match(site, c("Chap", "Jeti-Oguz", "Bayan-Zherek", "Begash", "Dali", "Kent", "Turgen"))) %>%
+  dplyr::mutate(
+    dplyr::across(
+      tidyselect:::where(is.numeric),
+      round, digits = 2
+    )
+  )
 
 # Write table (Table 1)
-write.csv(sum_stats_final, "../Figures/Chap_tooth_summary_stats.txt", row.names = F, quote = F)
+#write.csv(sum_stats_final, "../Figures/Chap_tooth_summary_stats.txt", row.names = F, quote = F)
 
 # Average isotopic change per tooth
 iso_change <- all_data_comp %>%
-  select(d13C, d18O, site, specimen) %>%
-  group_by(specimen, site) %>%
-  summarize(across(starts_with("d"), list(mean = mean, sd = sd, min = min, max = max))) %>%
-  mutate(d13c_range = d13C_max - d13C_min)
+  dplyr::select(d13C, d18O, site, specimen) %>%
+  dplyr::group_by(specimen, site) %>%
+  dplyr::summarize(
+    dplyr::across(
+      tidyselect::starts_with("d"), 
+      list(mean = mean, sd = sd, min = min, max = max)
+    ),
+    .groups = "drop"
+  ) %>%
+  dplyr::mutate(d13c_range = d13C_max - d13C_min)
 
 # Min and max isotope range per site
 site_iso_change <- iso_change %>%
-  select(d13c_range, site) %>%
-  group_by(site) %>%
-  summarize(across(starts_with("d"), list(min = min, max = max)))
-write.csv(site_iso_change, "../Figures/Table S4 - individual min and max d13C ranges per site.csv", row.names = F, quote = F)
+  dplyr::select(d13c_range, site) %>%
+  dplyr::group_by(site) %>%
+  dplyr::summarize(
+    dplyr::across(
+      tidyselect::starts_with("d"),
+      list(min = min, max = max)
+    )
+  )
+
+#write.csv(site_iso_change, "../Figures/Table S4 - individual min and max d13C ranges per site.csv", row.names = F, quote = F)
 
 # Pearson's r correlation test between d13C and d18O values for each tooth
 # Informed from https://dominicroye.github.io/en/2019/tidy-correlation-tests-in-r/
-cor_fun <- function(df) cor.test(df$d13C, df$d18O, method = "pearson") %>% tidy()
+cor_fun <- function(df) { cor.test(df$d13C, df$d18O, method = "pearson") %>% broom::tidy() }
 corr_tests <- all_data_comp %>%
-  select(d13C, d18O, specimen, site) %>%
-  group_nest(specimen, site) %>%
-  mutate(model = map(data, cor_fun)) %>%
-  select(-data) %>%
-  unnest(cols = c(model)) %>%
-  mutate(significant = ifelse(p.value <= .05, "pass", "fail")) %>%
-  select(specimen, site, Pearson_r = estimate, conf.low, conf.high, test_stat = statistic, df = parameter, p.value, significant, -method, -alternative) %>%
-  mutate(across(where(is.numeric), round, 4))
-write.csv(corr_tests, "../Figures/Table S5 - pearsons r between d13C and d18O values per tooth.csv", row.names = F, quote = F)
+  dplyr::select(d13C, d18O, specimen, site) %>%
+  dplyr::group_nest(specimen, site) %>%
+  dplyr::mutate(model = purrr::map(data, cor_fun)) %>%
+  dplyr::select(-data) %>%
+  tidyr::unnest(cols = c(model)) %>%
+  dplyr::mutate(
+    significant = ifelse(p.value <= .05, "pass", "fail")
+  ) %>%
+  dplyr::transmute(
+    specimen,
+    site,
+    Pearson_r = estimate,
+    conf.low, conf.high,
+    test_stat = statistic,
+    df = parameter,
+    p.value, significant
+  ) %>%
+  dplyr::mutate(
+    dplyr::across(
+      tidyselect:::where(is.numeric),
+      round, digits = 4
+    )
+  )
+
+#write.csv(corr_tests, "../Figures/Table S5 - pearsons r between d13C and d18O values per tooth.csv", row.names = F, quote = F)
 
 # Count pass and fail
-corr_tests %>% count(significant)
+corr_tests %>% dplyr::count(significant)
 
 # Plot the isotopic data per tooth x~y
 corr_tests_plot <- all_data_comp %>%
-  select(d13C, d18O, specimen, site) %>%
-  group_nest(specimen, site) %>%
-  mutate(., model = map(data, cor_fun)) %>%
-  select(-model) %>%
-  unnest() %>%
-  ggplot(aes(d13C, d18O)) +
-  geom_point() +
-  xlim(-15, 0) +
-  theme_bw() +
-  coord_fixed() +
-  facet_wrap(~ specimen + site)
-ggsave("../Figures/Fig S1 - scatter plots of d13C and d18O values by tooth.pdf", corr_tests_plot,
-  dpi = 300,
-  width = 20, height = 30, units = c("cm"), scale = .85
-)
+  dplyr::select(d13C, d18O, specimen, site) %>%
+  ggplot() +
+    geom_point(mapping = aes(d13C, d18O)) +
+    xlim(-15, 0) +
+    theme_bw() +
+    coord_fixed() +
+    facet_wrap(~ specimen + site)
+
+# ggsave("../Figures/Fig S1 - scatter plots of d13C and d18O values by tooth.pdf", corr_tests_plot,
+#   dpi = 300,
+#   width = 20, height = 30, units = c("cm"), scale = .85
+# )
 
 # Birth seasonality chart for all sites -- all_data_comp
-birth <- all_data_comp %>%
-  filter(element == "M/2", increment == 1) %>%
-  distinct(increment, specimen, .keep_all = T)
-birth$site <- factor(birth$site, levels = c("Chap", "Jeti-Oguz", "Bayan-Zherek", "Begash", "Dali", "Kent", "Turgen"))
+birth <- specimen_overview_birth %>%
+  dplyr::filter(element == "M/2") %>%
+  dplyr::mutate(
+    site = factor(
+      site,
+      levels = c("Chap", "Jeti-Oguz", "Bayan-Zherek", "Begash", "Dali", "Kent", "Turgen")
+    )
+  )
 
 birth_plot <- ggplot(birth, aes(site, birth)) +
   geom_point(size = 2) +
-  geom_label_repel(aes(label = specimen), force = 10, nudge_x = 0.3, size = 1.8) +
+  ggrepel::geom_label_repel(aes(label = specimen), force = 10, nudge_x = 0.3, size = 1.8) +
   coord_flip() +
   theme_bw() +
   scale_y_continuous(
@@ -256,7 +292,6 @@ birth_plot <- ggplot(birth, aes(site, birth)) +
     minor_breaks = NULL
   ) +
   scale_x_discrete(limits = rev(levels(birth$site)), name = "")
-print(birth_plot)
 
 ggsave("../Figures/birth_seasonality_plot_caprines.png", birth_plot,
   dpi = 300,
