@@ -3,33 +3,25 @@ isodata_path <- "data/input/isodata"
 isodata_files_paths <- list.files(isodata_path, full.names = T)
 
 # Read data
-specimen_overview_table <- readr::read_csv(
+specimen_overview <- readr::read_csv(
   "data/input/specimen.csv",
   col_types = readr::cols()
 )
-isodata_list_only_measures <- purrr::map(
+isodata_list <- purrr::map(
   isodata_files_paths,
   readr::read_csv,
   col_types = readr::cols(specimen = "c")
-)
-
-# merge isodata with context information
-isodata_list <- purrr::map(
-  isodata_list_only_measures,
-  function(isodata) {
-    dplyr::left_join(
-      isodata,
-      specimen_overview_table,
-      by = "specimen"
-    )
-  }
 )
 
 # Correct for Seuss effect if sample is modern
 isodata_list_seuss_corrected <- purrr::map(
   isodata_list, 
   function(isodata) {
-    if (!is.na(isodata$chronology[1]) & isodata$chronology[1] == "modern") {
+    chron <- dplyr::filter(
+      specimen_overview,
+      specimen == isodata$specimen[1]
+    )$chronology[1]
+    if (!is.na(chron) & chron == "modern") {
       isodata$d13C <- isodata$d13C + 1.5
     }
     return(isodata)
@@ -46,7 +38,8 @@ fitted_curves <- furrr::future_map(
     # for debugging with a sequential purrr::map
     #message("Trying to fit specimen: ", isodata$specimen[1]) 
     fit_curve(isodata)
-  }
+  },
+  .options = furrr::furrr_options(seed = TRUE)
 )
 
 # plot fitted curves
@@ -100,6 +93,7 @@ time_and_birth <- purrr::map2(
     )
     # compile output
     list(
+      specimen = isodata$specimen[1],
       julian = julian,
       birth = birth,
       birth_season = birth_season
@@ -108,15 +102,21 @@ time_and_birth <- purrr::map2(
 )
 
 # merge intermediate results
-isodata_time_and_birth <- purrr::map2(
+specimen_overview_birth <- dplyr::left_join(
+  specimen_overview,
+  purrr::map_df(
+    time_and_birth, function(x) { 
+    tibble::tibble(specimen = x$specimen, birth = x$birth, birth_season = x$birth_season)
+  }),
+  by = "specimen"
+)
+isodata_julian <- purrr::map2(
   isodata_list_seuss_corrected,
   time_and_birth,
   function(isodata, time_and_birth) {
     dplyr::mutate(
       isodata,
-      julian = time_and_birth$julian,
-      birth = time_and_birth$birth,
-      birth_season = time_and_birth$birth_season
+      julian = time_and_birth$julian
     )
   }
 )
