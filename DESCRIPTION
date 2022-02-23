@@ -12,6 +12,6 @@ Imports:
     nlstools (>= 2.0-0),
     purrr (>= 0.3.4),
     readr (>= 2.1.2),
-    stats (>= 4.1.2),
+    stats (>= 4.1.0),
     tibble (>= 3.1.6),
     tidyr (>= 1.1.4)
