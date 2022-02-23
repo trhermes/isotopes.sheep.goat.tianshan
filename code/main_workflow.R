@@ -49,9 +49,9 @@ purrr::walk2(
   }
 )
 
-# Calculate how much tooth distance is represented in the period of the fitted curve
-# If data point do not include min and max values, they must be obtained by extrapolation
-
+# derive some core output parameters:
+# the julian calendar equivalent of each sample position
+# and the birth season proxy
 time_and_birth <- purrr::map2(
   isodata_list_seuss_corrected,
   fitted_curves,
@@ -60,7 +60,7 @@ time_and_birth <- purrr::map2(
     period <- fitted_curve$fit$m$getPars()[["z"]] # identical to the length of one year in mm
     phase_shift <- fitted_curve$fit$m$getPars()[["x_0"]]
     oldest_meas_point <- min(-isodata$measure)
-    # adjust curve to year by equating the minimum value of the curve with the 15th of january
+    # adjust curve to year by equating the minimum value of the curve with the 15th of January
     one_min_pos <- -period / 2 + phase_shift
     multi_min_pos <- one_min_pos + seq(-5,3,1) * period
     fift_jan_before_birth <- multi_min_pos[
@@ -77,10 +77,18 @@ time_and_birth <- purrr::map2(
       tail(which(multi_max_pos < 0), n = 1)
     ]
     birth <- abs(last_max) / period
+    # translate birth value to a season
+    birth_season <- dplyr::case_when(
+      birth <  0.13 | birth >= 0.87 ~ "winter",
+      birth >= 0.13 & birth <  0.38 ~ "spring",
+      birth >= 0.38 & birth <  0.63 ~ "summer",
+      birth >= 0.63 & birth <  0.87 ~ "fall",
+    )
     # compile output
     list(
       julian = julian,
-      birth = birth
+      birth = birth,
+      birth_season = birth_season
     )
   }
 )
