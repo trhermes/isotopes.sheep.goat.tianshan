@@ -3,10 +3,23 @@ isodata_path <- "data/input/isodata"
 isodata_files_paths <- list.files(isodata_path, full.names = T)
 
 # Read data
-isodata_list <- purrr::map(
+specimen_overview_table <- readr::read_csv("data/input/specimen.csv")
+isodata_list_only_measures <- purrr::map(
   isodata_files_paths,
   readr::read_csv,
-  col_types = readr::cols(specimen = "c", phase = "c")
+  col_types = readr::cols(specimen = "c")
+)
+
+# merge isodata with context information
+isodata_list <- purrr::map(
+  isodata_list_only_measures,
+  function(isodata) {
+    dplyr::left_join(
+      isodata,
+      specimen_overview_table,
+      by = "specimen"
+    )
+  }
 )
 
 # Correct for Seuss effect if sample is modern
@@ -21,12 +34,14 @@ isodata_list_seuss_corrected <- purrr::map(
 )
 
 # Fit curve for every isodata file
+# parallelized with furrr
 source("code/fit_curve.R")
-fitted_curves <- purrr::map2(
-  isodata_files_paths,
+future::plan(future::multisession, workers = 6) # workers is the number of CPU cores
+fitted_curves <- furrr::future_map(
   isodata_list_seuss_corrected,
-  function(filepath, isodata) {
-    message("Trying to fit: ", filepath)
+  function(isodata) {
+    # for debugging with a sequential purrr::map
+    #message("Trying to fit specimen: ", isodata$specimen[1]) 
     fit_curve(isodata)
   }
 )
