@@ -48,9 +48,17 @@ purrr::walk2(
   isodata_list_seuss_corrected,
   fitted_curves,
   function(isodata, fitted_curve) {
-    p <- plot_single_curve_with_fitted_curve(isodata, fitted_curve$estim_mat)
+    isodata_merged <- dplyr::left_join(
+      isodata,
+      specimen_overview_table,
+      by = "specimen"
+    )
+    p <- plot_single_curve_with_fitted_curve(isodata_merged, fitted_curve$estim_mat)
     ggsave(
-      file.path("plots", paste("tooth_seq_FINAL_", isodata$specimen[1], ".pdf", sep = "")),
+      file.path(
+        "plots", "isodata_specimen",
+        paste("tooth_seq_FINAL_", isodata_merged$specimen[1], ".pdf", sep = "")
+      ),
       p, width = 55, height = 40, units = c("cm"), scale = .35, useDingbats = FALSE
     )
   }
@@ -125,6 +133,8 @@ isodata_julian <- purrr::map2(
 
 #write.csv(isodata, file = paste("julian/", isodata$specimen[1], "-julian.csv", sep = ""), row.names = FALSE)
 
+library(magrittr)
+
 all_data_comp <- dplyr::bind_rows(isodata_time_and_birth)
 
 #######################################
@@ -139,7 +149,7 @@ all_data_comp <- dplyr::bind_rows(isodata_time_and_birth)
 # Write table (Table 1)
 write.csv(all_data_comp, "tables/Table_S3.csv", row.names = F, quote = F) # TODO: long floats should be rounded
 
-library(magrittr)
+
 # Make df with only Chap data
 all_data <- all_data_comp %>% filter(site == "Chap" | site == "Jeti-Oguz")
 # Generate summary stats figures and tables
