@@ -1,3 +1,8 @@
+#### Part I ####
+# The first part of this script focusses on fitting the theoretical seasonality
+# model to the empirical data and deriving julian calender days and birth season
+# estimates
+
 # Find data
 isodata_path <- "data/input/isodata"
 isodata_files_paths <- list.files(isodata_path, full.names = T)
@@ -29,7 +34,7 @@ isodata_list_seuss_corrected <- purrr::map(
 )
 
 # Fit curve for every isodata file
-# parallelized with furrr
+# (parallelized with furrr)
 source("code/fit_curve.R")
 future::plan(future::multisession, workers = 6) # workers is the number of CPU cores
 fitted_curves <- furrr::future_map(
@@ -42,7 +47,7 @@ fitted_curves <- furrr::future_map(
   .options = furrr::furrr_options(seed = TRUE)
 )
 
-# plot fitted curves
+# Plot fitted curves
 source("code/plot_single_tooth_with_fitted_curve.R")
 purrr::walk2(
   isodata_list_seuss_corrected,
@@ -64,8 +69,8 @@ purrr::walk2(
   }
 )
 
-# derive some core output parameters:
-# the julian calendar equivalent of each sample position
+# Derive some core output parameters:
+# The julian calendar equivalent of each sample position
 # and the birth season proxy
 time_and_birth <- purrr::map2(
   isodata_list_seuss_corrected,
@@ -129,13 +134,20 @@ isodata_julian <- purrr::map2(
   }
 )
 
-###
+# write.csv(
+#   isodata,
+#   file = paste("julian/", isodata$specimen[1], "-julian.csv", sep = ""), 
+#   row.names = FALSE
+# )
 
-#write.csv(isodata, file = paste("julian/", isodata$specimen[1], "-julian.csv", sep = ""), row.names = FALSE)
+#### Part II ####
+# In the second part of this script we derive meaningful summary statistics and
+# create some plots from and for the data prepared in part I
 
 library(magrittr)
 library(ggplot2)
 
+# Create a super-dataset from the prepared data
 all_data_comp <- isodata_julian %>%
   dplyr::bind_rows() %>%
   dplyr::left_join(
@@ -143,8 +155,18 @@ all_data_comp <- isodata_julian %>%
     by = "specimen"
   )
 
-# Write table (Table 1)
-#write.csv(all_data_comp, "tables/Table_S3.csv", row.names = F, quote = F) # TODO: long floats should be rounded
+# Write Table S3
+write.csv(
+  all_data_comp %>%
+    dplyr::mutate(
+      dplyr::across(
+        tidyselect:::where(is.numeric),
+        round, digits = 2
+      )
+    ),
+  "tables/Table_S3.csv",
+  row.names = F, quote = F
+)
 
 # Make df with only Chap data
 all_data <- all_data_comp %>% dplyr::filter(site %in% c("Chap", "Jeti-Oguz"))
@@ -194,8 +216,12 @@ sum_stats_final <- sum_stats %>%
     )
   )
 
-# Write table (Table 1)
-#write.csv(sum_stats_final, "../Figures/Chap_tooth_summary_stats.txt", row.names = F, quote = F)
+# Write Chap summary stats
+write.csv(
+  sum_stats_final,
+  "tables/Chap_tooth_summary_stats.csv",
+  row.names = F, quote = F
+)
 
 # Average isotopic change per tooth
 iso_change <- all_data_comp %>%
@@ -221,7 +247,12 @@ site_iso_change <- iso_change %>%
     )
   )
 
-#write.csv(site_iso_change, "../Figures/Table S4 - individual min and max d13C ranges per site.csv", row.names = F, quote = F)
+# Write Table S4
+write.csv(
+  site_iso_change,
+  "tables/Table_S4.csv",
+  row.names = F, quote = F
+)
 
 # Pearson's r correlation test between d13C and d18O values for each tooth
 # Informed from https://dominicroye.github.io/en/2019/tidy-correlation-tests-in-r/
@@ -251,10 +282,16 @@ corr_tests <- all_data_comp %>%
     )
   )
 
-#write.csv(corr_tests, "../Figures/Table S5 - pearsons r between d13C and d18O values per tooth.csv", row.names = F, quote = F)
+# Write Table S5
+write.csv(
+  corr_tests,
+  "tables/Table_S5.csv",
+  row.names = F,
+  quote = F
+)
 
 # Count pass and fail
-corr_tests %>% dplyr::count(significant)
+# corr_tests %>% dplyr::count(significant)
 
 # Plot the isotopic data per tooth x~y
 corr_tests_plot <- all_data_comp %>%
@@ -266,12 +303,13 @@ corr_tests_plot <- all_data_comp %>%
     coord_fixed() +
     facet_wrap(~ specimen + site)
 
-# ggsave("../Figures/Fig S1 - scatter plots of d13C and d18O values by tooth.pdf", corr_tests_plot,
-#   dpi = 300,
-#   width = 20, height = 30, units = c("cm"), scale = .85
-# )
+ggsave(
+  "plots/Fig_S1.pdf",
+  corr_tests_plot,
+  dpi = 300, width = 20, height = 30, units = c("cm"), scale = .85
+)
 
-# Birth seasonality chart for all sites -- all_data_comp
+# Birth seasonality chart for all sites
 birth <- specimen_overview_birth %>%
   dplyr::filter(element == "M/2") %>%
   dplyr::mutate(
@@ -293,7 +331,9 @@ birth_plot <- ggplot(birth, aes(site, birth)) +
   ) +
   scale_x_discrete(limits = rev(levels(birth$site)), name = "")
 
-ggsave("../Figures/birth_seasonality_plot_caprines.png", birth_plot,
+ggsave(
+  "plots/birth_seasonality_plot_caprines.png",
+  birth_plot,
   dpi = 300,
   width = 40, height = 30, units = c("cm"), scale = .35
 )
