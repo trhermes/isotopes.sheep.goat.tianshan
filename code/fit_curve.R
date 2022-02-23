@@ -5,60 +5,53 @@ fit_curve <- function(isodata) {
   d <<- data.frame(X = -isodata$measure, Y = isodata$d18O)
   
   # # Exploration of plausible parameter ranges
+  # source("code/simple_iso_plot.R")
   # FD1 <- function(x, A, x_0, z, M) {
   #   A * cos(2 * pi * ((x - x_0) / z)) + M
   # }
-  # 
-  # x <- -50:0
-  # 
+  # x <- seq(50,0,0.5)
   # # A: Amplitude
   # # x_0: phase
   # # z: period
   # # M: y-axis offset
-  # plot(x, FD1(x, 5, 10, 45, -5))
-  # points(d, col = "red")
-  # plot(x, FD1(x, 5, -10, 45, -5))
+  # 
+  # FD <- function(x) { FD1(
+  #   x,
+  #   #1,0,10,-15 # low_1
+  #   #5,10,45,-5 # start_1
+  #   #5,30,45,-5 # start_2
+  #   #3,22,16,-8 # start3
+  #   #15,45,90,10 #up_1
+  #   fit$m$getPars()[["A"]], fit$m$getPars()[["x_0"]], fit$m$getPars()[["z"]], fit$m$getPars()[["M"]]
+  # )}
+  # simple_iso_plot(d$X, d$Y, isodata$d13C, FD)
   
   # cos curve fitting starting parameters and search range
-  low_1   <- low2 <- list(A = 0,  x_0 = 0,  z = 20, M = -20)
-  start_1 <-         list(A = 5,  x_0 = 10, z = 45, M = -5 )
-  start_2 <-         list(A = 5,  x_0 = 30, z = 45, M = -5 )
-  up_1    <- up2  <- list(A = 15, x_0 = 45, z = 90, M =  10)
-  
-  # first fitting attempt
-  fit1 <- try(
-    stats::nls(
-      Y ~ A * cos(2 * pi * ((X - x_0) / z)) + M,
-      data = d,
-      lower = low_1, start = start_1, upper = up_1,
-      algorithm = "port",
-      control = nls.control(maxiter = 100000)
-    ),
-    silent = T
+  low     <-  list(A = 1,  x_0 = 0,  z = 10, M = -15)
+  starts <- list(
+    start_1 = list(A = 3,  x_0 = 22, z = 16, M = -8 ),
+    start_2 = list(A = 5,  x_0 = 10, z = 45, M = -5 ),
+    start_3 = list(A = 5,  x_0 = 30, z = 45, M = -5 )
   )
+  up      <-  list(A = 15, x_0 = 45, z = 90, M =  10)
   
-  # second fitting attempt after moving the starting curve
-  fit2 <- try(
+  # fitting attempts
+  potential_fits <- purrr::map(starts, function(start) {
+    try(
       stats::nls(
-      Y ~ A * cos(2 * pi * ((X - x_0) / z)) + M,
-      data = d,
-      lower = low_1, start = start_2, upper = up_1,
-      algorithm = "port",
-      control = nls.control(maxiter = 100000)
-    ),
-    silent = T
-  )
-
-  fit <- if (class(fit1) == "try-error" & class(fit2) == "try-error") {
-    stop("No fitting modell found")
-  } else if (class(fit1) != "try-error" & class(fit2) != "try-error") {
-    # return the model with the smaller residual sum-of-squares
-    if (fit1$m$deviance() <= fit2$m$deviance()) { fit1 } else { fit2 }
-  } else if (class(fit1) != "try-error") {
-    fit1
-  } else {
-    fit2
-  }
+        Y ~ A * cos(2 * pi * ((X - x_0) / z)) + M,
+        data = d,
+        lower = low, start = start, upper = up,
+        algorithm = "port",
+        control = nls.control(maxiter = 100000)
+      ),
+      silent = T
+    )
+  })
+  # remove failed fits
+  working_fits <- purrr::discard(potential_fits, function(x) {class(x) == "try-error"})
+  # select best fit
+  fit <- working_fits[[which.min(purrr::map_dbl(working_fits, function(x) {x$m$deviance()}))]]
 
   # get error bar for the fitted curve
   # adapted from https://stackoverflow.com/questions/32613119/plot-the-median-confidence-interval-of-a-bootstrap-output-in-ggplot2
