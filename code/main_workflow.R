@@ -6,7 +6,7 @@ isodata_files_paths <- list.files(isodata_path, full.names = T)
 isodata_list <- purrr::map(
   isodata_files_paths,
   readr::read_csv,
-  col_types = readr::cols()
+  col_types = readr::cols(specimen = "c", phase = "c")
 )
 
 # Correct for Seuss effect if sample is modern
@@ -93,23 +93,39 @@ time_and_birth <- purrr::map2(
   }
 )
 
+# merge intermediate results
+isodata_time_and_birth <- purrr::map2(
+  isodata_list_seuss_corrected,
+  time_and_birth,
+  function(isodata, time_and_birth) {
+    dplyr::mutate(
+      isodata,
+      julian = time_and_birth$julian,
+      birth = time_and_birth$birth,
+      birth_season = time_and_birth$birth_season
+    )
+  }
+)
+
 ###
 
-write.csv(isodata, file = paste("julian/", isodata$specimen[1], "-julian.csv", sep = ""), row.names = FALSE)
+#write.csv(isodata, file = paste("julian/", isodata$specimen[1], "-julian.csv", sep = ""), row.names = FALSE)
 
+all_data_comp <- dplyr::bind_rows(isodata_time_and_birth)
 
 #######################################
 #######################################
 #######################################
 
 # Combine julian CSVs into one file for Chap and comparative data
-all_data_comp <- list.files(path = "~/Dropbox (MPI SHH)/Margins or Nodes/Chap tooth SIA/01-data/julian/", full.names = TRUE) %>%
-  lapply(read_csv, col_types = cols(specimen = "c", phase = "c")) %>%
-  bind_rows()
+# all_data_comp <- list.files(path = "~/Dropbox (MPI SHH)/Margins or Nodes/Chap tooth SIA/01-data/julian/", full.names = TRUE) %>%
+#   lapply(read_csv, col_types = cols(specimen = "c", phase = "c")) %>%
+#   bind_rows()
 
 # Write table (Table 1)
-write.csv(all_data_comp, "../Figures/Table S3 - all sites isotope data.csv", row.names = F, quote = F)
+write.csv(all_data_comp, "tables/Table_S3.csv", row.names = F, quote = F) # TODO: long floats should be rounded
 
+library(magrittr)
 # Make df with only Chap data
 all_data <- all_data_comp %>% filter(site == "Chap" | site == "Jeti-Oguz")
 # Generate summary stats figures and tables
