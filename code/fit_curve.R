@@ -58,15 +58,13 @@ fit_curve <- function(isodata) {
   curveBoot <- nlstools::nlsBoot(fit, niter = 1000)
   theta_mat <- curveBoot$coefboot # Matrix with the bootstrapped parameter estimates
   
-  fun <- function(x, theta) {
-    theta["A"] * cos(2 * pi * ((x - theta["x_0"]) / theta["z"])) + theta["M"]
-  }
-  
   # Points where to evaluate the model
   x_eval <- seq(min(d$X), max(d$X), length.out = 100)
   
   # Matrix with the predictions
-  pred_mat <- apply(theta_mat, 1, function(theta) { fun(x_eval, theta) })
+  pred_mat <- apply(theta_mat, 1, function(theta) { 
+    theta["A"] * cos(2 * pi * ((x_eval - theta["x_0"]) / theta["z"])) + theta["M"]
+  })
   
   # Pack the estimates in an output data.frame
   estim_mat <- dplyr::bind_cols(
