@@ -3,17 +3,15 @@
 # model to the empirical data and deriving julian calender days and birth season
 # estimates
 
-# Find data
-isodata_path <- "data/input/isodata"
-isodata_files_paths <- list.files(isodata_path, full.names = T)
-
 # Read data
+# specimen overview table
 specimen_overview <- readr::read_csv(
   "data/input/specimen.csv",
   col_types = readr::cols()
 )
+# measurements per tooth
 isodata_list <- purrr::map(
-  isodata_files_paths,
+  list.files("data/input/isodata", full.names = T),
   readr::read_csv,
   col_types = readr::cols(specimen = "c")
 )
@@ -51,7 +49,7 @@ purrr::walk2(
   function(isodata, fitted_curve) {
     isodata_merged <- dplyr::left_join(
       isodata,
-      specimen_overview_table,
+      specimen_overview,
       by = "specimen"
     )
     p <- plot_single_curve_with_fitted_curve(isodata_merged, fitted_curve$estim_mat)
