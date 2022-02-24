@@ -17,7 +17,7 @@ The files at the URL above will generate the results as found in the publication
 
 ### Overview of contents:
 
-This repository contains the directories `code` and `data` to reproduce the data preparation, calculations and figure renderings in this paper. The `plots` directory contains readily rendered versions of the plots, with the figure captions in another README.md file in this folder.
+This repository contains the directories `code` and `data` to reproduce the data preparation, calculations and figure renderings in this paper. The `plots` and `tables` directories contain readily rendered versions of plots and tables.
 
 ### How to reproduce:
 

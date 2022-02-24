@@ -145,7 +145,7 @@ birth_proxy_for_each_specimen <- purrr::map_df(
   }
 )
 
-# merge intermediate results
+# Merge birth info into specimen overview table 
 specimen_overview_birth <- dplyr::left_join(
   specimen_overview,
   birth_proxy_for_each_specimen,
