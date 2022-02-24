@@ -80,8 +80,10 @@ fit_curve <- function(isodata) {
   
   # prepare output list
   return(list(
+    specimen = isodata$specimen[1],
     fit = fit,
-    estim_mat = estim_mat
+    estim_mat = estim_mat,
+    theta_mat = tibble::as_tibble(theta_mat) # plausible fittings from nlstools::nlsBoot
   ))
 
 }

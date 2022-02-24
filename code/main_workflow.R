@@ -63,10 +63,8 @@ purrr::walk2(
   }
 )
 
-# Derive some core output parameters:
-# The julian calendar equivalent of each sample position
-# and the birth season proxy
-time_and_birth <- purrr::map2(
+# Derive the julian calendar equivalent of each sampling position on each tooth
+julian_for_each_specimen <- purrr::map2(
   isodata_list_seuss_corrected,
   fitted_curves,
   function(isodata, fitted_curve) {
@@ -84,26 +82,65 @@ time_and_birth <- purrr::map2(
     distance_to_fift_jan <- abs(fift_jan_before_birth - (-isodata$measure))
     day_sampled_in_julian_calender <- -365 + 15 + distance_to_fift_jan/period * 365
     julian <- day_sampled_in_julian_calender %% 365 # recycle year
-    # calculate birth value (proxy for birth season)
-    one_max_pos <- phase_shift
-    multi_max_pos <- one_max_pos + seq(-5,3,1) * period
-    last_max <- multi_max_pos[
-      tail(which(multi_max_pos < 0), n = 1)
-    ]
-    birth <- abs(last_max) / period
-    # translate birth value to a season
-    birth_season <- dplyr::case_when(
-      birth <  0.13 | birth >= 0.87 ~ "winter",
-      birth >= 0.13 & birth <  0.38 ~ "spring",
-      birth >= 0.38 & birth <  0.63 ~ "summer",
-      birth >= 0.63 & birth <  0.87 ~ "fall",
+    return(julian)
+  }
+)
+
+# Merge julian into isodata tables
+isodata_julian <- purrr::map2(
+  isodata_list_seuss_corrected,
+  julian_for_each_specimen,
+  function(isodata, julian) {
+    dplyr::mutate(
+      isodata,
+      julian = julian
     )
+  }
+)
+
+# Helper function to calculate birth value (proxy for birth season)
+derive_birth <- function(period, phase_shift) {
+  one_max_pos <- phase_shift
+  multi_max_pos <- one_max_pos + seq(-5,3,1) * period
+  last_max <- multi_max_pos[
+    tail(which(multi_max_pos < 0), n = 1)
+  ]
+  birth <- abs(last_max) / period
+  return(birth)
+}
+
+# Helper function to get the birth season from a birth value
+determine_birth_season <- function(birth) {
+  birth_season_from_default_fit <- dplyr::case_when(
+    birth <  0.13 | birth >= 0.87 ~ "winter",
+    birth >= 0.13 & birth <  0.38 ~ "spring",
+    birth >= 0.38 & birth <  0.63 ~ "summer",
+    birth >= 0.63 & birth <  0.87 ~ "fall",
+  )
+}
+
+# Derive the birth season proxy
+birth_proxy_for_each_specimen <- purrr::map_df(
+  fitted_curves,
+  function(fitted_curve) {
+    # Calculate mean birth estimate based on simple curve fit
+    period <- fitted_curve$fit$m$getPars()[["z"]] # identical to the length of one year in mm
+    phase_shift <- fitted_curve$fit$m$getPars()[["x_0"]]
+    birth_simple_fit <- derive_birth(period, phase_shift)
+    # Calculate birth estimate based on fits obtained via bootstrap resampling
+    periods <- fitted_curve$theta_mat$z
+    phase_shifts <- fitted_curve$theta_mat$x_0
+    births_resampling <- purrr::map2_dbl(periods, phase_shifts, derive_birth)
+    birth_resampling_mean <- mean(births_resampling)
+    birth_resampling_sd <- sd(births_resampling)
     # compile output
-    list(
-      specimen = isodata$specimen[1],
-      julian = julian,
-      birth = birth,
-      birth_season = birth_season
+    tibble::tibble(
+      specimen = fitted_curve$specimen,
+      birth_simple_fit = birth_simple_fit,
+      birth_season_simple_fit = determine_birth_season(birth_simple_fit),
+      birth_resampling_mean = birth_resampling_mean,
+      birth_resampling_sd = birth_resampling_sd,
+      birth_season_resampling_mean = determine_birth_season(birth_resampling_mean)
     )
   }
 )
@@ -111,22 +148,10 @@ time_and_birth <- purrr::map2(
 # merge intermediate results
 specimen_overview_birth <- dplyr::left_join(
   specimen_overview,
-  purrr::map_df(
-    time_and_birth, function(x) { 
-    tibble::tibble(specimen = x$specimen, birth = x$birth, birth_season = x$birth_season)
-  }),
+  birth_proxy_for_each_specimen,
   by = "specimen"
 )
-isodata_julian <- purrr::map2(
-  isodata_list_seuss_corrected,
-  time_and_birth,
-  function(isodata, time_and_birth) {
-    dplyr::mutate(
-      isodata,
-      julian = time_and_birth$julian
-    )
-  }
-)
+
 
 # write.csv(
 #   isodata,
@@ -310,20 +335,46 @@ birth <- specimen_overview_birth %>%
     site = factor(
       site,
       levels = c("Chap", "Jeti-Oguz", "Bayan-Zherek", "Begash", "Dali", "Kent", "Turgen")
-    )
+    ),
+    specimen = forcats::fct_reorder(specimen, birth_resampling_mean)
   )
 
-birth_plot <- ggplot(birth, aes(site, birth)) +
-  geom_point(size = 2) +
-  ggrepel::geom_label_repel(aes(label = specimen), force = 10, nudge_x = 0.3, size = 1.8) +
-  coord_flip() +
+birth_plot <- birth %>%
+  ggplot() +
+  facet_grid(
+    rows = dplyr::vars(site),
+    space = "free",
+    scales = "free_y"
+  ) +
+  geom_errorbarh(
+    mapping = aes(
+      y = specimen,
+      xmin = birth_resampling_mean - birth_resampling_sd/2,
+      xmax = birth_resampling_mean + birth_resampling_sd/2
+    ),
+    size = 0.3, height = 0.3
+  ) +
+  geom_point(
+    aes(birth_resampling_mean, specimen),
+    size = 2, shape = 4
+  ) +
+  # geom_point(
+  #   aes(birth_simple_fit, specimen),
+  #   size = 2,
+  #   colour = "red"
+  # ) +
   theme_bw() +
-  scale_y_continuous(
-    limits = c(0, 1), expand = c(0, 0),
+  theme(
+    strip.text.y = element_text(angle = 0)
+  ) +
+  scale_x_continuous(
+    expand = c(0, 0),
     breaks = seq(0, 1, by = .1), name = "Birth Seasonality",
     minor_breaks = NULL
   ) +
-  scale_x_discrete(limits = rev(levels(birth$site)), name = "")
+  coord_cartesian(
+    xlim = c(0, 1)
+  )
 
 ggsave(
   "plots/birth_seasonality_plot_caprines.png",
