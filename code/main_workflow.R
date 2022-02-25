@@ -111,7 +111,7 @@ derive_birth <- function(period, phase_shift) {
 
 # Helper function to get the birth season from a birth value
 determine_birth_season <- function(birth) {
-  birth_season_from_default_fit <- dplyr::case_when(
+  dplyr::case_when(
     birth <  0.13 | birth >= 0.87 ~ "winter",
     birth >= 0.13 & birth <  0.38 ~ "spring",
     birth >= 0.38 & birth <  0.63 ~ "summer",
