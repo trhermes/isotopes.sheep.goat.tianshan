@@ -59,9 +59,9 @@ purrr::walk2(
     ggsave(
       file.path(
         "plots", "isodata_specimen",
-        paste("tooth_seq_FINAL_", isodata_merged$specimen[1], ".pdf", sep = "")
+        paste("isotope_tooth_seq_", isodata_merged$specimen[1], ".pdf", sep = "")
       ),
-      p, width = 55, height = 40, units = c("cm"), scale = .35, useDingbats = FALSE
+      p, width = 55, height = 40, units = c("cm"), scale = .35, device = cairo_pdf
     )
   }
 )
