@@ -3,6 +3,9 @@
 # model to the empirical data and deriving julian calender days and birth season
 # estimates
 
+# Download comparative data
+#source("code/fetch_comparative_data.R")
+
 # Read data
 # specimen overview table
 specimen_overview <- readr::read_csv(

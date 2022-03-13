@@ -16,8 +16,8 @@ library(readr)
 
 # name of dir and file
 #
-dir.create("../data/comparative/vm", recursive = T)
-vm_supp_files <- "../data/comparative/vm/vm_supp_data.zip"
+dir.create("data/comparative/vm", recursive = T)
+vm_supp_files <- "data/comparative/vm/vm_supp_data.zip"
 
 
 # download file (Web server does not like wget or curl request, but can be overcome with unique User-Agent)
@@ -29,7 +29,7 @@ download.file("https://www.tandfonline.com/doi/suppl/10.1080/20548923.2020.17593
 
 # directory to hold files in zip archive
 #
-vm_dir <- "../data/comparative/vm"
+vm_dir <- "data/comparative/vm"
 dir.create(vm_dir, recursive = T)
 
 # unzip
@@ -71,7 +71,7 @@ h_supp_data <- "h_supp_data.csv"
 
 # directory to hold data
 #
-h_dir <- "../data/comparative/h"
+h_dir <- "data/comparative/h"
 dir.create(h_dir, recursive = T)
 
 # download file (Webserver does not like wget or curl request, but can be overcome with unique User-Agent)
@@ -147,7 +147,7 @@ comp_data <- rbindlist(list(h_comp_data_, vm_comp_data_), fill=T) %>%
 
 # directory to hold final files
 #
-data_dir <- "../data/comparative"
+data_dir <- "data/comparative"
 
 write_csv(comp_data,
           paste0(data_dir,"/all_comparative_data.csv"))
