@@ -357,7 +357,7 @@ birth_plot <- birth %>%
   ) +
   geom_point(
     aes(birth_resampling_mean, specimen),
-    size = 2, shape = 4
+    size = 1.5, shape = 16
   ) +
   # geom_point(
   #   aes(birth_simple_fit, specimen),
@@ -377,9 +377,11 @@ birth_plot <- birth %>%
     xlim = c(0, 1)
   )
 
+print(birth_plot)
+
 ggsave(
   "plots/birth_seasonality_plot_caprines.png",
   birth_plot,
   dpi = 300,
-  width = 40, height = 30, units = c("cm"), scale = .35
+  width = 40, height = 30, units = c("cm"), scale = .4
 )

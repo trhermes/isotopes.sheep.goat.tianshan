@@ -44,3 +44,4 @@ vignettes/*.pdf
 plots/
 tables/
 data/input/.DS_Store
+data/input/isodata/.~lock.all_data.csv#
