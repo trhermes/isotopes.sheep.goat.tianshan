@@ -146,7 +146,7 @@ h_comp_data_ <- read_csv(paste0(h_dir,"/",h_supp_data)) %>%
   filter(element == "M/2" & taxon == "caprine")
 
 
-#### Generate metadata ####
+#### Prepare metadata ####
 #
 
 # columns to keep for metadata
@@ -155,20 +155,24 @@ metadata_cols <- c("specimen",
                    "site",
                    "element",
                    "symmetry",
+                   "individual",
                    "taxon",
                    "period")
 
 new_metadata <- study_data_ %>% left_join(
-  select(new_metadata_, c("specimen",
+  dplyr::select(new_metadata_, c("specimen",
                           "element",
-                          "symmetry")), by = "specimen") %>% 
-  select(all_of(metadata_cols)) %>% 
+                          "symmetry",
+                          "individual")), by = "specimen") %>% 
+  dplyr::select(all_of(metadata_cols)) %>% 
   unique()
 
 # subset h metadata
 #
-h_comp_metadata <- h_comp_data_ %>% 
-  select(all_of(metadata_cols)) %>% 
+h_comp_metadata <- h_comp_data_ %>%
+  dplyr::group_by(specimen) %>% 
+  dplyr::mutate(individual = cur_group_id()) %>% 
+  dplyr::select(all_of(metadata_cols)) %>% 
   unique()
 
 # prepare vm metadata from source publication and subset 
@@ -181,14 +185,16 @@ vm_comp_metadata <- vm_comp_data_ %>%
                   site == "Kent" ~ "Late Bronze Age",
                   site == "Turgen" ~ "Late Bronze Age/Iron Age")
             ) %>% 
-  select(all_of(metadata_cols)) %>% 
+  dplyr::group_by(specimen) %>% 
+  dplyr::mutate(individual = cur_group_id()) %>% 
+  dplyr::select(all_of(metadata_cols)) %>% 
   unique() %>% 
-  mutate(specimen = as.character(specimen))
+  dplyr::mutate(specimen = as.character(specimen))
 
 # merge metadata and create comparative column
 #
 comp_metadata <- base::rbind(vm_comp_metadata, h_comp_metadata) %>% 
-  mutate(comparative = "TRUE") %>% 
+  dplyr::mutate(comparative = "TRUE") %>% 
   rbind(unique(mutate(new_metadata, comparative = "FALSE")))
 
 
@@ -203,13 +209,13 @@ data_cols <- c("increment",
                "measure")
 
 study_data <- study_data_ %>% 
-  select(all_of(data_cols))
+  dplyr::select(all_of(data_cols))
 
 # combine comparative data
 #
 all_data <- rbindlist(list(study_data, h_comp_data_, vm_comp_data_), fill=T) %>% 
-  select(all_of(data_cols)) %>% 
-  as_tibble()
+  dplyr::select(all_of(data_cols)) %>% 
+  tibble::as_tibble()
 
 #### Output ####
 #

@@ -218,11 +218,12 @@ sum_stats <- all_data_comp %>%
 
 # Count unique teeth per site
 counts <- all_data_comp %>%
-  dplyr::select(specimen, site, increment) %>%
+  dplyr::select(specimen, site, increment, individual) %>%
   dplyr::group_by(site) %>%
   dplyr::summarize(
     n_teeth = dplyr::n_distinct(specimen),
-    n_increment = dplyr::n()
+    n_increment = dplyr::n(),
+    n_mni = dplyr::n_distinct(individual)
   )
 
 # Combine sum_stats and counts

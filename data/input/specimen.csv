@@ -1,40 +1,39 @@
-specimen,site,element,symmetry,taxon,period,comparative
-5571,Kent,M/2,left,sheep,Late Bronze Age,TRUE
-5572,Kent,M/2,left,sheep,Late Bronze Age,TRUE
-5573,Kent,M/2,left,sheep,Late Bronze Age,TRUE
-5574,Kent,M/2,left,sheep,Late Bronze Age,TRUE
-5575,Kent,M/2,left,sheep,Late Bronze Age,TRUE
-5576,Kent,M/2,left,sheep,Late Bronze Age,TRUE
-5577,Kent,M/2,left,sheep,Late Bronze Age,TRUE
-5578,Kent,M/2,left,sheep,Late Bronze Age,TRUE
-5579,Kent,M/2,left,sheep,Late Bronze Age,TRUE
-5580,Kent,M/2,left,sheep,Late Bronze Age,TRUE
-5584,Turgen,M/2,left,sheep,Late Bronze Age/Iron Age,TRUE
-5586,Turgen,M/2,left,sheep,Late Bronze Age/Iron Age,TRUE
-5587,Turgen,M/2,left,sheep,Late Bronze Age/Iron Age,TRUE
-5588,Turgen,M/2,left,sheep,Late Bronze Age/Iron Age,TRUE
-5589,Turgen,M/2,left,sheep,Late Bronze Age/Iron Age,TRUE
-T132,Begash,M/2,right,caprine,Early Bronze Age,TRUE
-T115,Begash,M/2,left,caprine,Late Bronze Age,TRUE
-T114,Begash,M/2,right,caprine,Late Bronze Age,TRUE
-T113,Begash,M/2,left,caprine,Late Bronze Age,TRUE
-T032,Begash,M/2,left,caprine,Late Bronze Age,TRUE
-T147,Begash,M/2,left,caprine,Saka/Scythian,TRUE
-T020,Bayan-Zherek,M/2,left,caprine,Modern,TRUE
-T085,Dali,M/2,right,caprine,Early Bronze Age,TRUE
-T033,Dali,M/2,right,caprine,Final Bronze Age,TRUE
-CHP01,Chap,M/2,right,caprine,Final Bronze Age,FALSE
-CHP02,Chap,M/2,right,caprine,Final Bronze Age,FALSE
-CHP03,Chap,M/3,right,caprine,Final Bronze Age,FALSE
-CHP04,Chap,M/2,right,caprine,Final Bronze Age,FALSE
-CHP05,Chap,M/3,left,caprine,Final Bronze Age,FALSE
-CHP06,Chap,M/3,left,caprine,Final Bronze Age,FALSE
-CHP06,Chap,M/3,left,,Final Bronze Age,FALSE
-CHP07,Chap,M/2,left,caprine,Final Bronze Age,FALSE
-CHP08,Chap,M/2,left,caprine,Final Bronze Age,FALSE
-CHP09,Chap,M/3,right,caprine,Final Bronze Age,FALSE
-CHP10,Chap,M/2,right,caprine,Final Bronze Age,FALSE
-IBX01,Jeti-Oguz,M/2,left,ibex,Modern,FALSE
-IBX02,Jeti-Oguz,M/3,left,ibex,Modern,FALSE
-IBX03,Jeti-Oguz,M/3,right,ibex,Modern,FALSE
-IBX04,Jeti-Oguz,M/2,right,ibex,Modern,FALSE
+specimen,site,element,symmetry,individual,taxon,period,comparative
+5571,Kent,M/2,left,1,sheep,Late Bronze Age,TRUE
+5572,Kent,M/2,left,2,sheep,Late Bronze Age,TRUE
+5573,Kent,M/2,left,3,sheep,Late Bronze Age,TRUE
+5574,Kent,M/2,left,4,sheep,Late Bronze Age,TRUE
+5575,Kent,M/2,left,5,sheep,Late Bronze Age,TRUE
+5576,Kent,M/2,left,6,sheep,Late Bronze Age,TRUE
+5577,Kent,M/2,left,7,sheep,Late Bronze Age,TRUE
+5578,Kent,M/2,left,8,sheep,Late Bronze Age,TRUE
+5579,Kent,M/2,left,9,sheep,Late Bronze Age,TRUE
+5580,Kent,M/2,left,10,sheep,Late Bronze Age,TRUE
+5584,Turgen,M/2,left,11,sheep,Late Bronze Age/Iron Age,TRUE
+5586,Turgen,M/2,left,12,sheep,Late Bronze Age/Iron Age,TRUE
+5587,Turgen,M/2,left,13,sheep,Late Bronze Age/Iron Age,TRUE
+5588,Turgen,M/2,left,14,sheep,Late Bronze Age/Iron Age,TRUE
+5589,Turgen,M/2,left,15,sheep,Late Bronze Age/Iron Age,TRUE
+T132,Begash,M/2,right,8,caprine,Early Bronze Age,TRUE
+T115,Begash,M/2,left,7,caprine,Late Bronze Age,TRUE
+T114,Begash,M/2,right,6,caprine,Late Bronze Age,TRUE
+T113,Begash,M/2,left,5,caprine,Late Bronze Age,TRUE
+T032,Begash,M/2,left,2,caprine,Late Bronze Age,TRUE
+T147,Begash,M/2,left,9,caprine,Saka/Scythian,TRUE
+T020,Bayan-Zherek,M/2,left,1,caprine,Modern,TRUE
+T085,Dali,M/2,right,4,caprine,Early Bronze Age,TRUE
+T033,Dali,M/2,right,3,caprine,Final Bronze Age,TRUE
+CHP01,Chap,M/2,right,1,caprine,Final Bronze Age,FALSE
+CHP02,Chap,M/2,right,2,caprine,Final Bronze Age,FALSE
+CHP03,Chap,M/3,right,3,caprine,Final Bronze Age,FALSE
+CHP04,Chap,M/2,right,4,caprine,Final Bronze Age,FALSE
+CHP05,Chap,M/3,left,5,caprine,Final Bronze Age,FALSE
+CHP06,Chap,M/3,left,6,caprine,Final Bronze Age,FALSE
+CHP07,Chap,M/2,left,6,caprine,Final Bronze Age,FALSE
+CHP08,Chap,M/2,left,7,caprine,Final Bronze Age,FALSE
+CHP09,Chap,M/3,right,8,caprine,Final Bronze Age,FALSE
+CHP10,Chap,M/2,right,8,caprine,Final Bronze Age,FALSE
+IBX01,Jeti-Oguz,M/2,left,9,ibex,Modern,FALSE
+IBX02,Jeti-Oguz,M/3,left,9,ibex,Modern,FALSE
+IBX03,Jeti-Oguz,M/3,right,10,ibex,Modern,FALSE
+IBX04,Jeti-Oguz,M/2,right,10,ibex,Modern,FALSE
