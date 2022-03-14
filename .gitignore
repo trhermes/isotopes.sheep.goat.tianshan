@@ -43,3 +43,4 @@ vignettes/*.pdf
 !/data/input/
 plots/
 tables/
+data/input/.DS_Store
