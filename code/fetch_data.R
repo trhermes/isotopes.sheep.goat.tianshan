@@ -1,7 +1,10 @@
-# This script will download comparative isotope data from 
+# This script will import isotope data from an Excel spreadsheet prepared by
+# the Leibniz labor at Kiel University
+# This script also downloads comparative isotope data from 
 # Ventresca-Miller et al. 2020, doi:10.1080/20548923.2020.1759316
 # Hermes et al. 2019, doi:10.1098/rspb.2019.1273
-# and generate two CSV files to hold 1) data and 2) metadata (linked by specimen ID)
+# and generate two CSV files to hold 1) data and 2) metadata (linked by specimen ID),
+# which is then combined with the new data
 
 library(data.table)
 library(dplyr)
@@ -10,6 +13,61 @@ library(stringr)
 library(docxtractr)
 library(tibble)
 library(readr)
+library(readxl)
+library(janitor)
+
+#### import new data from Leibniz Labor Kiel Univeristy ####
+# data sheet prepared by Dr. Nils Andersen
+
+leibniz_data <- readxl::read_excel("data/raw/zTHEC2007_IV_data.xlsx",
+                                   range = "A10:X231") %>% 
+  clean_names() %>% 
+  rename(
+    run_counter = 1,
+    specimen = tooth_id,
+    measure = meas,
+    period = chronology,
+    run_ID = 15,
+    subsample_analyzed = 16,
+    d13C = 18,
+    errorc = 19,
+    d18O = 20,
+    erroro = 21) %>% 
+  select(-10,-11) %>% 
+  remove_empty("rows") %>% 
+  mutate(specimen = gsub('-', '', specimen)) %>% 
+  mutate(site = gsub('-I', '', site))
+
+print(leibniz_data)
+
+# split up isotope data from animal teeth and isotope data for lab standards 
+#
+n = 163   # line to cut df
+study_data_ <- leibniz_data[row.names(leibniz_data) %in% 1:n, ] 
+
+#### Produce summary stats for isotope lab runs of standards ####
+standards_stats <- leibniz_data[row.names(leibniz_data) %in% (n+2):nrow(leibniz_data), ] %>% 
+  remove_empty("cols") %>% 
+  filter(x44_m_v_pr_1_cycle>1000) %>% 
+  group_by(run_ID) %>% 
+  summarize(mean_d13C = mean(d13C),
+            sd_d13C = sd(d13C),
+            mean_d18O = mean(d18O),
+            sd_d18O = sd(d18O),
+            n = n()
+  )
+
+dir.create("tables")
+write_csv(standards_stats, "tables/isotope_lab_run_standards_THEC2007_Kiel_Leibniz_labor.csv")
+
+
+#### Import new metadata for samples ####
+
+new_metadata_ <- readxl::read_excel("data/raw/Chap_analyzed_teeth.xlsx") %>% 
+  clean_names() %>% 
+  rename(specimen = 1) %>% 
+  mutate(specimen = gsub('Chap-', "CHP", specimen)) %>% 
+  mutate(specimen = gsub('Ibex-', "IBX", specimen))
 
 #### Download comparative data from Ventresca-Miller et al. 2020 ####
 # This data set is archived as two tables embedded in Microsoft Word documents
@@ -100,6 +158,13 @@ metadata_cols <- c("specimen",
                    "taxon",
                    "period")
 
+new_metadata <- study_data %>% left_join(
+  select(new_metadata_, c("specimen",
+                          "element",
+                          "symmetry")), by = "specimen") %>% 
+  select(all_of(metadata_cols)) %>% 
+  unique()
+
 # subset h metadata
 #
 h_comp_metadata <- h_comp_data_ %>% 
@@ -122,10 +187,11 @@ vm_comp_metadata <- vm_comp_data_ %>%
 # merge metadata and create comparative column
 #
 comp_metadata <- rbind(vm_comp_metadata, h_comp_metadata) %>% 
-  mutate(comparative = "TRUE")
+  mutate(comparative = "TRUE") %>% 
+  rbind(unique(mutate(new_metadata, comparative = "FALSE")))
 
 
-#### Prepare comparative data file ####
+#### Prepare comparative isotope data file ####
 
 # columns to keep for data
 #
@@ -135,22 +201,25 @@ data_cols <- c("increment",
                "d18O",
                "measure")
 
-# combine data
-#
-comp_data <- rbindlist(list(h_comp_data_, vm_comp_data_), fill=T) %>% 
-  select(all_of(data_cols)) %>% 
-  as_tibble()
+study_data <- study_data_ %>% 
+  select(all_of(data_cols))
 
+# combine comparative data
+#
+comp_data <- rbindlist(list(study_data, h_comp_data_, vm_comp_data_), fill=T) %>% 
+  select(all_of(data_cols)) %>% 
+  as_tibble() %>% 
+  mutate(`Sampled Quantity` = format(3:4))
 
 #### Output ####
 #
 
 # directory to hold final files
 #
-data_dir <- "data/comparative"
+out_data_dir <- "data/input/"
 
-write_csv(comp_data,
-          paste0(data_dir,"/all_comparative_data.csv"))
+group_by(comp_data, specimen) %>%
+  do(write_csv(., paste0(out_data_dir, "isodata/", unique(.$specimen), "_C_O_meas.csv")))
 
-write_csv(comp_metadata,
-          paste0(data_dir,"/all_comparative_metadata.csv"))
+fwrite(comp_metadata,
+          paste0(out_data_dir,"specimen.csv"))
