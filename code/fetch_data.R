@@ -38,12 +38,11 @@ leibniz_data <- readxl::read_excel("data/raw/zTHEC2007_IV_data.xlsx",
   mutate(specimen = gsub('-', '', specimen)) %>% 
   mutate(site = gsub('-I', '', site))
 
-print(leibniz_data)
-
 # split up isotope data from animal teeth and isotope data for lab standards 
 #
 n = 163   # line to cut df
-study_data_ <- leibniz_data[row.names(leibniz_data) %in% 1:n, ] 
+study_data_ <- leibniz_data[row.names(leibniz_data) %in% 1:n, ] %>% 
+  mutate(period = stringr::str_to_title(period))
 
 #### Produce summary stats for isotope lab runs of standards ####
 standards_stats <- leibniz_data[row.names(leibniz_data) %in% (n+2):nrow(leibniz_data), ] %>% 
@@ -116,9 +115,10 @@ vm_comp_data_ <- list.files(vm_dir, full.names = T, pattern = "\\.docx$") %>%
                 specimen = `Sample.number`,
                 d13C = `δ13C..permil.VPDB.`,
                 d18O = `δ18O..permil.VPDB.`,
-                measure = `Distance.from.ERJ..mm.`) %>% 
+                measure = `Distance.from.ERJ..mm.`) %>%
+  group_by(specimen) %>% 
+  filter(n() > 4) %>%             # specimens 5582 & 5583 have 4 measurements, not enough for curve fitting
   readr::type_convert()
-
 
 #### Download comparative data from Hermes et al. 2019 ####
 #
@@ -182,11 +182,12 @@ vm_comp_metadata <- vm_comp_data_ %>%
                   site == "Turgen" ~ "Late Bronze Age/Iron Age")
             ) %>% 
   select(all_of(metadata_cols)) %>% 
-  unique()
+  unique() %>% 
+  mutate(specimen = as.character(specimen))
 
 # merge metadata and create comparative column
 #
-comp_metadata <- rbind(vm_comp_metadata, h_comp_metadata) %>% 
+comp_metadata <- base::rbind(vm_comp_metadata, h_comp_metadata) %>% 
   mutate(comparative = "TRUE") %>% 
   rbind(unique(mutate(new_metadata, comparative = "FALSE")))
 
@@ -206,7 +207,7 @@ study_data <- study_data_ %>%
 
 # combine comparative data
 #
-comp_data <- rbindlist(list(study_data, h_comp_data_, vm_comp_data_), fill=T) %>% 
+all_data <- rbindlist(list(study_data, h_comp_data_, vm_comp_data_), fill=T) %>% 
   select(all_of(data_cols)) %>% 
   as_tibble()
 
@@ -217,8 +218,16 @@ comp_data <- rbindlist(list(study_data, h_comp_data_, vm_comp_data_), fill=T) %>
 #
 out_data_dir <- "data/input/"
 
-group_by(comp_data, specimen) %>%
-  do(write_csv(., paste0(out_data_dir, "isodata/", unique(.$specimen), "_C_O_meas.csv")))
+# outputs individual CSVs for each tooth sequence
+# group_by(comp_data, specimen) %>%
+#   do(write_csv(., paste0(out_data_dir, "isodata/", unique(.$specimen), "_C_O_meas.csv")))
+
+# makes list of tables
+# comp_data %>% group_split(specimen)
+
+# outputs one CSV for all data
+fwrite(all_data,
+       paste0(out_data_dir,"isodata/all_data.csv"))
 
 fwrite(comp_metadata,
           paste0(out_data_dir,"specimen.csv"))

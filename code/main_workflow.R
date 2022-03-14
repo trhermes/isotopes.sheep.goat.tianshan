@@ -3,21 +3,25 @@
 # model to the empirical data and deriving julian calender days and birth season
 # estimates
 
-# Fetch and prepare data
+# Fetch and prepare data to read in via CSVs
 source("code/fetch_data.R")
 
 # Read data
-# specimen overview table
+# specimen overview table CSV
 specimen_overview <- readr::read_csv(
   "data/input/specimen.csv",
   col_types = readr::cols()
 )
-# measurements per tooth
-isodata_list <- purrr::map(
-  list.files("data/input/isodata", full.names = T),
-  readr::read_csv,
-  col_types = readr::cols(specimen = "c")
-)
+# measurements per tooth table CSV
+isodata_list <- readr::read_csv(
+  "data/input/isodata/all_data.csv") %>% 
+  group_split(specimen)
+  
+#   purrr::map(
+#   list.files("data/input/isodata", full.names = T),
+#   readr::read_csv,
+#   col_types = readr::cols(specimen = "c")
+# )
 
 # Correct for Seuss effect if sample is modern
 isodata_list_seuss_corrected <- purrr::map(
@@ -26,7 +30,7 @@ isodata_list_seuss_corrected <- purrr::map(
     chron <- dplyr::filter(
       specimen_overview,
       specimen == isodata$specimen[1]
-    )$chronology[1]
+    )$period[1]
     if (!is.na(chron) & chron == "modern") {
       isodata$d13C <- isodata$d13C + 1.5
     }
@@ -155,12 +159,6 @@ specimen_overview_birth <- dplyr::left_join(
   by = "specimen"
 )
 
-
-# write.csv(
-#   isodata,
-#   file = paste("julian/", isodata$specimen[1], "-julian.csv", sep = ""), 
-#   row.names = FALSE
-# )
 
 #### Part II ####
 # In the second part of this script we derive meaningful summary statistics and

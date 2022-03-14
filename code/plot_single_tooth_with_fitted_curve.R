@@ -35,7 +35,7 @@ plot_single_curve_with_fitted_curve <- function(isodata, estim_mat) {
       plot.subtitle = element_text(size = 18)
     ) +
     ggtitle(
-      paste(isodata$site[1], " - ", isodata$period[1], " - ", isodata$chronology[1]),
+      paste(isodata$site[1], " - ", isodata$period[1]),
       subtitle = paste(isodata$specimen[1], " - ", isodata$taxon[1], " - ", isodata$element[1])
     ) +
     scale_y_continuous(

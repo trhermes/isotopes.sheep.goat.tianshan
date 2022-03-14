@@ -9,8 +9,6 @@ specimen,site,element,symmetry,taxon,period,comparative
 5578,Kent,M/2,left,sheep,Late Bronze Age,TRUE
 5579,Kent,M/2,left,sheep,Late Bronze Age,TRUE
 5580,Kent,M/2,left,sheep,Late Bronze Age,TRUE
-5582,Turgen,M/2,left,sheep,Late Bronze Age/Iron Age,TRUE
-5583,Turgen,M/2,left,sheep,Late Bronze Age/Iron Age,TRUE
 5584,Turgen,M/2,left,sheep,Late Bronze Age/Iron Age,TRUE
 5586,Turgen,M/2,left,sheep,Late Bronze Age/Iron Age,TRUE
 5587,Turgen,M/2,left,sheep,Late Bronze Age/Iron Age,TRUE
@@ -25,18 +23,18 @@ T147,Begash,M/2,left,caprine,Saka/Scythian,TRUE
 T020,Bayan-Zherek,M/2,left,caprine,Modern,TRUE
 T085,Dali,M/2,right,caprine,Early Bronze Age,TRUE
 T033,Dali,M/2,right,caprine,Final Bronze Age,TRUE
-CHP01,Chap,M/2,right,caprine,final Bronze Age,FALSE
-CHP02,Chap,M/2,right,caprine,final Bronze Age,FALSE
-CHP03,Chap,M/3,right,caprine,final Bronze Age,FALSE
-CHP04,Chap,M/2,right,caprine,final Bronze Age,FALSE
-CHP05,Chap,M/3,left,caprine,final Bronze Age,FALSE
-CHP06,Chap,M/3,left,caprine,final Bronze Age,FALSE
-CHP06,Chap,M/3,left,,final Bronze Age,FALSE
-CHP07,Chap,M/2,left,caprine,final Bronze Age,FALSE
-CHP08,Chap,M/2,left,caprine,final Bronze Age,FALSE
-CHP09,Chap,M/3,right,caprine,final Bronze Age,FALSE
-CHP10,Chap,M/2,right,caprine,final Bronze Age,FALSE
-IBX01,Jeti-Oguz,M/2,left,ibex,modern,FALSE
-IBX02,Jeti-Oguz,M/3,left,ibex,modern,FALSE
-IBX03,Jeti-Oguz,M/3,right,ibex,modern,FALSE
-IBX04,Jeti-Oguz,M/2,right,ibex,modern,FALSE
+CHP01,Chap,M/2,right,caprine,Final Bronze Age,FALSE
+CHP02,Chap,M/2,right,caprine,Final Bronze Age,FALSE
+CHP03,Chap,M/3,right,caprine,Final Bronze Age,FALSE
+CHP04,Chap,M/2,right,caprine,Final Bronze Age,FALSE
+CHP05,Chap,M/3,left,caprine,Final Bronze Age,FALSE
+CHP06,Chap,M/3,left,caprine,Final Bronze Age,FALSE
+CHP06,Chap,M/3,left,,Final Bronze Age,FALSE
+CHP07,Chap,M/2,left,caprine,Final Bronze Age,FALSE
+CHP08,Chap,M/2,left,caprine,Final Bronze Age,FALSE
+CHP09,Chap,M/3,right,caprine,Final Bronze Age,FALSE
+CHP10,Chap,M/2,right,caprine,Final Bronze Age,FALSE
+IBX01,Jeti-Oguz,M/2,left,ibex,Modern,FALSE
+IBX02,Jeti-Oguz,M/3,left,ibex,Modern,FALSE
+IBX03,Jeti-Oguz,M/3,right,ibex,Modern,FALSE
+IBX04,Jeti-Oguz,M/2,right,ibex,Modern,FALSE
