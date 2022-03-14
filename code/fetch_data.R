@@ -158,7 +158,7 @@ metadata_cols <- c("specimen",
                    "taxon",
                    "period")
 
-new_metadata <- study_data %>% left_join(
+new_metadata <- study_data_ %>% left_join(
   select(new_metadata_, c("specimen",
                           "element",
                           "symmetry")), by = "specimen") %>% 
@@ -208,8 +208,7 @@ study_data <- study_data_ %>%
 #
 comp_data <- rbindlist(list(study_data, h_comp_data_, vm_comp_data_), fill=T) %>% 
   select(all_of(data_cols)) %>% 
-  as_tibble() %>% 
-  mutate(`Sampled Quantity` = format(3:4))
+  as_tibble()
 
 #### Output ####
 #
