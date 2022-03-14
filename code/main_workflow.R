@@ -3,7 +3,7 @@
 # model to the empirical data and deriving julian calender days and birth season
 # estimates
 
-# Download comparative data
+# Fetch and prepare data
 source("code/fetch_data.R")
 
 # Read data
