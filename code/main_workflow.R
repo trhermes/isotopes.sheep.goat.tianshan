@@ -4,7 +4,7 @@
 # estimates
 
 # Download comparative data
-#source("code/fetch_comparative_data.R")
+#source("code/fetch_data.R")
 
 # Read data
 # specimen overview table
