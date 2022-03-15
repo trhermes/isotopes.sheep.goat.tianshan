@@ -5,10 +5,11 @@ library(ggmap)          # ggmap() get_stamenmap()
 library(ggrepel)        # geom_label_repel()
 library(rgdal)          # readOGR()
 library(broom)          # tidy()
-library(ggsn)           # scalebar() north2()
+library(ggsn)           # scalebar()
 library(grDevices)      # cairo_pdf()
 library(rgeos)          # gCentroid()
 library(sf)             # st_coordinates()
+library(ggspatial)      # annotation_north_arrow()
 
 # Read in site location data in csv format: site name, latitude, longitude - (decimal degrees)
 arch_sites <- read.csv("data/input/site_coords.csv", sep=",")
@@ -54,7 +55,7 @@ map_borders <- c(bottom  = min(all_sites$lat) - 4,
                  right   = max(all_sites$long) + 11)
 
 # Download map tiles
-map <- get_stamenmap(map_borders, zoom = 6, maptype = "terrain-background", force=T)
+map <- get_stamenmap(map_borders, zoom = 9, maptype = "terrain-background", force=T)
 
 # Map it
 figure1 <- ggmap(map) +
@@ -64,11 +65,11 @@ figure1 <- ggmap(map) +
   #geom_sf(data = j_o_centroid, inherit.aes = F) +
   xlab(expression(paste("Longitude (", degree,"E)"))) + 
   ylab(expression(paste("Latitude (", degree,"N)"))) +
-  scalebar(x.min=81.7, x.max=90, y.min=39, y.max=81.5, dist = 250, height = 0.007, 
+  scalebar(x.min=81, x.max=90, y.min=38.6, y.max=81, dist = 250, height = 0.007, 
            st.dist = 0.008, st.size=6, dist_unit = "km",
            transform = TRUE, model = "WGS84", location = "bottomleft") +
   annotate("text", label= "Kyrgyzstan", x=73.9, y=42.18, size=6, color="black", fontface="italic") +
-  annotate("text", label= "Uzbekistan", x=67.6, y=40.4, size=6, color="black", fontface="italic") +
+  annotate("text", label= "Uzbekistan", x=67.4, y=40.4, size=6, color="black", fontface="italic") +
   annotate("text", label= "Tajikistan", x=70, y=38.9, size=6, color="black", fontface="italic") +
   annotate("text", label= "Kazakhstan", x=70, y=48, size=6, color="black", fontface="italic") + 
   annotate("text", label= "China", x=85.5, y=45.5, size=6, color="black", fontface="italic") +
@@ -79,15 +80,11 @@ figure1 <- ggmap(map) +
                    #nudge_x = 1,
                    #nudge_y = .6,
                    label.padding = 0.4) +
-  theme(axis.text = element_text(size = 20), axis.title = element_text(size = 20))  
+  annotation_north_arrow(location = "br", width = unit(1.2, "cm")) +
+  theme(axis.text = element_text(size = 20), 
+        axis.title = element_text(size = 20),
+        plot.margin=grid::unit(c(0,0,0,0), "mm"))  
+
+ggsave("plots/Figure1.pdf", figure1, scale = 1.6)
 
 #print(figure1)
-
-# north2() insets a north arrow onto the ggplot while also printing the plot, thus it cannot be used with ggsave()
-# One must use base R graphics technique to save output: open device, print, close/save device
-# grDevices::cairo_pdf() is preferred to avoid issues with dingbats
-grDevices::cairo_pdf(file="plots/Figure1.pdf",
-                     width=11.5,height=11.5)
-north2(figure1, symbol=12, 0.90, 0.90, scale = 0.07)
-dev.off()
-
