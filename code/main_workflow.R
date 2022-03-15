@@ -3,8 +3,11 @@
 # model to the empirical data and deriving julian calender days and birth season
 # estimates
 
-# Fetch and prepare data to read in via CSVs
+# Fetch and prepare isotope data to read in via CSVs
 source("code/fetch_data.R")
+
+# Produce map
+source("code/map.R")
 
 # Read data
 # specimen overview table CSV
@@ -50,7 +53,7 @@ fitted_curves <- purrr::map(
 
 # Plot fitted curves
 source("code/plot_single_tooth_with_fitted_curve.R")
-purrr::walk2(
+plot_list <- purrr::map2(
   isodata_list_seuss_corrected,
   fitted_curves,
   function(isodata, fitted_curve) {
@@ -67,8 +70,23 @@ purrr::walk2(
       ),
       p, width = 55, height = 40, units = c("cm"), scale = .35, device = cairo_pdf
     )
-  }
+  return(p)}
 )
+
+# Arrange cowplot for new data plots (Chap & Jeti-Orguz)
+library(cowplot)
+# Understand order of plots to pass to cowplot
+new_data_plot_nums <- specimen_overview %>% 
+  group_by(specimen) %>% 
+  dplyr::mutate(position = cur_group_id()) %>% 
+  select(specimen, position, site) %>% 
+  filter(site %in% c("Chap", "Jeti-Oguz")) %>% 
+  pull(position)
+# Cowplot
+plot_grid(plotlist = plot_list[min(new_data_plot_nums):max(new_data_plot_nums)],
+          ncol = 2)
+# Extract legend
+legend <- get_legend(plot_list[[min(new_data_plot_nums)]])
 
 # Derive the julian calendar equivalent of each sampling position on each tooth
 julian_for_each_specimen <- purrr::map2(
@@ -351,8 +369,8 @@ birth_plot <- birth %>%
   geom_errorbarh(
     mapping = aes(
       y = specimen,
-      xmin = birth_resampling_mean - birth_resampling_sd/2,
-      xmax = birth_resampling_mean + birth_resampling_sd/2
+      xmin = birth_resampling_mean - birth_resampling_sd,    # 2-sigma, for 1-sigma insert /2
+      xmax = birth_resampling_mean + birth_resampling_sd     # 2-sigma, for 1-sigma insert /2
     ),
     size = 0.3, height = 0.3
   ) +
