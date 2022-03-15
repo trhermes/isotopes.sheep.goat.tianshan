@@ -167,8 +167,25 @@ specimen_overview_birth <- dplyr::left_join(
 library(magrittr)
 library(ggplot2)
 
+# Summarize (mean) duplicate entries per increment
+isodata_julian_summarized <- purrr::map(
+  isodata_julian,
+  function(isodata) {
+    isodata %>%
+    dplyr::group_by(increment) %>%
+    dplyr::summarise(
+      increment = dplyr::first(increment),
+      specimen = dplyr::first(specimen),
+      d13C = mean(d13C),
+      d18O = mean(d18O),
+      measure = mean(measure),
+      julian = mean(julian)
+    )
+  }
+)
+
 # Create a super-dataset from the prepared data
-all_data_comp <- isodata_julian %>%
+all_data_comp <- isodata_julian_summarized %>%
   dplyr::bind_rows() %>%
   dplyr::left_join(
     specimen_overview_birth,
