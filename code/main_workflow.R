@@ -68,25 +68,55 @@ plot_list <- purrr::map2(
         "plots", "isodata_specimen",
         paste("isotope_tooth_seq_", isodata_merged$specimen[1], ".pdf", sep = "")
       ),
-      p, width = 55, height = 40, units = c("cm"), scale = .35, device = cairo_pdf
+      p, width = 55, height = 40, units = c("cm"), scale = .35, 
+      device = grDevices::cairo_pdf
     )
   return(p)}
 )
 
-# Arrange cowplot for new data plots (Chap & Jeti-Orguz)
-library(cowplot)
-# Understand order of plots to pass to cowplot
-new_data_plot_nums <- specimen_overview %>% 
-  group_by(specimen) %>% 
+# Create plot matrix for new data plots (Chap & Jeti-Orguz)
+
+# Select and order the desired plots
+new_data_plot_nums <- specimen_overview %>%
+  dplyr::group_by(specimen) %>% 
   dplyr::mutate(position = cur_group_id()) %>% 
-  select(specimen, position, site) %>% 
-  filter(site %in% c("Chap", "Jeti-Oguz")) %>% 
-  pull(position)
-# Cowplot
-plot_grid(plotlist = plot_list[min(new_data_plot_nums):max(new_data_plot_nums)],
-          ncol = 2)
-# Extract legend
-legend <- get_legend(plot_list[[min(new_data_plot_nums)]])
+  dplyr::select(specimen, position, site) %>% 
+  dplyr::filter(site %in% c("Chap", "Jeti-Oguz")) %>% 
+  dplyr::pull(position)
+
+plot_list_selection <- plot_list[min(new_data_plot_nums):max(new_data_plot_nums)]
+
+# Create a hacky "legend" plot
+legend_plot <- tibble::tibble(
+  x = c(1,1,1),
+  y = 3:1,
+  label = c("Isotopic values", "δ13C", "δ18O")
+) %>% 
+  ggplot() +
+  geom_point(aes(x - 1, y, color = label), size = 12) +
+  geom_text(aes(x + 1, y, label = label), size = 12) +
+  scale_color_manual(
+    values = c("δ18O" = "blue", "δ13C" = "green4"),
+    na.translate = FALSE
+  ) +
+  coord_cartesian(xlim = c(-4,8), ylim = c(-3,5)) +
+  theme_nothing()
+
+# Merge plot components and write to a file
+q <- cowplot::plot_grid(
+  plotlist = append(plot_list_selection, list(legend_plot)),
+  ncol = 3
+)
+
+ggsave(
+  "plots/cows.pdf", q, 
+  scale = 4, 
+  width = 16, 
+  height = 19, 
+  units = "cm", 
+  bg = "white",
+  device = grDevices::cairo_pdf
+)
 
 # Derive the julian calendar equivalent of each sampling position on each tooth
 julian_for_each_specimen <- purrr::map2(
