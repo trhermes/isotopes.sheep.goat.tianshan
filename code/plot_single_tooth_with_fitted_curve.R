@@ -3,7 +3,7 @@ library(ggplot2)
 plot_single_curve_with_fitted_curve <- function(isodata, estim_mat) {
 
   cols <- c("c1" = "dark blue", "c2" = "#488957", "c3" = "#3399ff")
-  shapes <- c("s1" = 16, "s2" = 16)
+  shapes <- c("s1" = 20, "s2" = 20)
   
   ggplot() +
     geom_ribbon(
@@ -13,7 +13,7 @@ plot_single_curve_with_fitted_curve <- function(isodata, estim_mat) {
     ) +
     geom_point(
       data = isodata,
-      aes(x = -measure, y = d18O), size = rel(2),
+      aes(x = -measure, y = d18O), size = rel(3.6),
       color = "blue", alpha = 0.8, inherit.aes = FALSE
     ) +
     geom_line(
@@ -23,7 +23,7 @@ plot_single_curve_with_fitted_curve <- function(isodata, estim_mat) {
     ) +
     geom_point(
       data = isodata,
-      aes(x = -measure, y = d13C), size = rel(3.3),
+      aes(x = -measure, y = d13C), size = rel(3.6),
       colour = "green4", inherit.aes = FALSE
     ) +
     theme_bw() +

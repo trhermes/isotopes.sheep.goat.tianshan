@@ -90,11 +90,11 @@ plot_list_selection <- plot_list[min(new_data_plot_nums):max(new_data_plot_nums)
 legend_plot <- tibble::tibble(
   x = c(1,1,1),
   y = 3:1,
-  label = c("Isotopic values", "δ13C", "δ18O")
+  label = c("Isotope values", "δ13C", "δ18O")
 ) %>% 
   ggplot() +
-  geom_point(aes(x - 1, y, color = label), size = 12) +
-  geom_text(aes(x + 1, y, label = label), size = 12) +
+  geom_point(aes(x - 1, y, color = label), size = 8) +
+  geom_text(aes(x + 1, y, label = label), size = 8) +
   scale_color_manual(
     values = c("δ18O" = "blue", "δ13C" = "green4"),
     na.translate = FALSE
@@ -103,13 +103,13 @@ legend_plot <- tibble::tibble(
   theme_nothing()
 
 # Merge plot components and write to a file
-q <- cowplot::plot_grid(
+grid_plot <- cowplot::plot_grid(
   plotlist = append(plot_list_selection, list(legend_plot)),
   ncol = 3
 )
 
 ggsave(
-  "plots/cows.pdf", q, 
+  "plots/Figure2.pdf", grid_plot, 
   scale = 4, 
   width = 16, 
   height = 19, 
@@ -446,7 +446,7 @@ birth_plot <- birth %>%
 print(birth_plot)
 
 ggsave(
-  "plots/birth_seasonality_plot_caprines.png",
+  "plots/Figure3.png",
   birth_plot,
   dpi = 300,
   width = 40, height = 30, units = c("cm"), scale = .4
