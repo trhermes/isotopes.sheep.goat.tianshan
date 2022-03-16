@@ -77,16 +77,42 @@ plot_list <- purrr::map2(
 library(cowplot)
 # Understand order of plots to pass to cowplot
 new_data_plot_nums <- specimen_overview %>% 
-  group_by(specimen) %>% 
+  dplyr::group_by(specimen) %>% 
   dplyr::mutate(position = cur_group_id()) %>% 
-  select(specimen, position, site) %>% 
-  filter(site %in% c("Chap", "Jeti-Oguz")) %>% 
-  pull(position)
+  dplyr::select(specimen, position, site) %>% 
+  dplyr::filter(site %in% c("Chap", "Jeti-Oguz")) %>% 
+  dplyr::pull(position)
+
 # Cowplot
-plot_grid(plotlist = plot_list[min(new_data_plot_nums):max(new_data_plot_nums)],
-          ncol = 2)
+q <- cowplot::plot_grid(plotlist = plot_list[min(new_data_plot_nums):max(new_data_plot_nums)],
+          ncol = 3)
+
+# Make dummy plot for legend in cowplot()
+legend_plot <- ggplot(data = isodata_list_seuss_corrected[[1]]) +
+  geom_point(aes(x = measure, y = d13C, color = "d13C")) +
+  geom_point(aes(x = measure, y = d18O, color = "d18O")) +
+  scale_color_manual(
+    name = "Isotopic values",
+    breaks = c("δ13C", "δ18O"),
+    values = c("δ18O" = "blue", "δ13C" = "green4")) +
+  theme_bw()
+  
+print(legend_plot)
+
 # Extract legend
-legend <- get_legend(plot_list[[min(new_data_plot_nums)]])
+legend <- cowplot::get_legend(legend_plot)
+
+# Insert legend
+q_legend <- append(plot_list, list(legend))
+
+print(q_legend)
+
+ggsave("plots/cows.pdf", q_legend, 
+       scale = 4, 
+       width = 16, 
+       height = 19, 
+       units = "cm",
+       device = cairo_pdf)
 
 # Derive the julian calendar equivalent of each sampling position on each tooth
 julian_for_each_specimen <- purrr::map2(
