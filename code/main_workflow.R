@@ -68,51 +68,55 @@ plot_list <- purrr::map2(
         "plots", "isodata_specimen",
         paste("isotope_tooth_seq_", isodata_merged$specimen[1], ".pdf", sep = "")
       ),
-      p, width = 55, height = 40, units = c("cm"), scale = .35, device = cairo_pdf
+      p, width = 55, height = 40, units = c("cm"), scale = .35, 
+      device = grDevices::cairo_pdf
     )
   return(p)}
 )
 
-# Arrange cowplot for new data plots (Chap & Jeti-Orguz)
-library(cowplot)
-# Understand order of plots to pass to cowplot
-new_data_plot_nums <- specimen_overview %>% 
+# Create plot matrix for new data plots (Chap & Jeti-Orguz)
+
+# Select and order the desired plots
+new_data_plot_nums <- specimen_overview %>%
   dplyr::group_by(specimen) %>% 
   dplyr::mutate(position = cur_group_id()) %>% 
   dplyr::select(specimen, position, site) %>% 
   dplyr::filter(site %in% c("Chap", "Jeti-Oguz")) %>% 
   dplyr::pull(position)
 
-# Cowplot
-q <- cowplot::plot_grid(plotlist = plot_list[min(new_data_plot_nums):max(new_data_plot_nums)],
-          ncol = 3)
+plot_list_selection <- plot_list[min(new_data_plot_nums):max(new_data_plot_nums)]
 
-# Make dummy plot for legend in cowplot()
-legend_plot <- ggplot(data = isodata_list_seuss_corrected[[1]]) +
-  geom_point(aes(x = measure, y = d13C, color = "d13C")) +
-  geom_point(aes(x = measure, y = d18O, color = "d18O")) +
+# Create a hacky "legend" plot
+legend_plot <- tibble::tibble(
+  x = c(1,1,1),
+  y = 3:1,
+  label = c("Isotopic values", "δ13C", "δ18O")
+) %>% 
+  ggplot() +
+  geom_point(aes(x - 1, y, color = label), size = 12) +
+  geom_text(aes(x + 1, y, label = label), size = 12) +
   scale_color_manual(
-    name = "Isotopic values",
-    breaks = c("δ13C", "δ18O"),
-    values = c("δ18O" = "blue", "δ13C" = "green4")) +
-  theme_bw()
-  
-print(legend_plot)
+    values = c("δ18O" = "blue", "δ13C" = "green4"),
+    na.translate = FALSE
+  ) +
+  coord_cartesian(xlim = c(-4,8), ylim = c(-3,5)) +
+  theme_nothing()
 
-# Extract legend
-legend <- cowplot::get_legend(legend_plot)
+# Merge plot components and write to a file
+q <- cowplot::plot_grid(
+  plotlist = append(plot_list_selection, list(legend_plot)),
+  ncol = 3
+)
 
-# Insert legend
-q_legend <- append(plot_list, list(legend))
-
-print(q_legend)
-
-ggsave("plots/cows.pdf", q_legend, 
-       scale = 4, 
-       width = 16, 
-       height = 19, 
-       units = "cm",
-       device = cairo_pdf)
+ggsave(
+  "plots/cows.pdf", q, 
+  scale = 4, 
+  width = 16, 
+  height = 19, 
+  units = "cm", 
+  bg = "white",
+  device = grDevices::cairo_pdf
+)
 
 # Derive the julian calendar equivalent of each sampling position on each tooth
 julian_for_each_specimen <- purrr::map2(
