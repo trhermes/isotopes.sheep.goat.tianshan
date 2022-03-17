@@ -1,3 +1,5 @@
+library(magrittr)
+
 #### Part 0 ####
 # Fetch and prepare isotope data to read in via CSVs
 
@@ -18,14 +20,8 @@ specimen_overview <- readr::read_csv(
 # measurements per tooth table CSV
 isodata_list <- readr::read_csv(
   "data/input/all_data.csv") %>% 
-  group_split(specimen)
+  dplyr::group_split(specimen)
   
-#   purrr::map(
-#   list.files("data/input/isodata", full.names = T),
-#   readr::read_csv,
-#   col_types = readr::cols(specimen = "c")
-# )
-
 # Correct for Seuss effect if sample is modern
 isodata_list_seuss_corrected <- purrr::map(
   isodata_list, 
@@ -50,10 +46,11 @@ fitted_curves <- purrr::map(
     fit_curve(isodata)
   }
 )
+# save(fitted_curves, file = "data/intermediate/fitted_curves.RData")
 
-# Plot fitted curves
+# prepare individual plots of the fitted curves
 source("code/plot_single_tooth_with_fitted_curve.R")
-plot_list <- purrr::map2(
+plot_table <- purrr::map2_df(
   isodata_list_seuss_corrected,
   fitted_curves,
   function(isodata, fitted_curve) {
@@ -62,30 +59,21 @@ plot_list <- purrr::map2(
       specimen_overview,
       by = "specimen"
     )
-    p <- plot_single_curve_with_fitted_curve(isodata_merged, fitted_curve$estim_mat)
-    ggsave(
-      file.path(
-        "plots", "isodata_specimen",
-        paste("isotope_tooth_seq_", isodata_merged$specimen[1], ".pdf", sep = "")
-      ),
-      p, width = 55, height = 40, units = c("cm"), scale = .35, 
-      device = grDevices::cairo_pdf
+    tibble::tibble(
+      specimen = unique(isodata_merged$specimen),
+      site = unique(isodata_merged$site),
+      plot = list(plot_single_curve_with_fitted_curve(isodata_merged, fitted_curve$estim_mat))
     )
-  return(p)}
+  }
 )
 
-# Create plot matrix for new data plots (Chap & Jeti-Orguz)
+# Create the desired plot list subsets
+plots_fig2  <- plot_table$plot[plot_table$site %in% c("Chap", "Jeti-Oguz")]
+plots_figS1 <- plot_table$plot[plot_table$site == "Kent"]
+plots_figS2 <- plot_table$plot[plot_table$site == "Turgen"]
+plots_figS3 <- plot_table$plot[plot_table$site %in% c("Begash", "Dali", "Bayan-Zherek")]
 
-# Select and order the desired plots for Fig. 2
-new_data_plot_nums <- specimen_overview %>%
-  dplyr::group_by(specimen) %>% 
-  dplyr::mutate(position = cur_group_id()) %>% 
-  dplyr::select(specimen, position, site) %>% 
-  dplyr::filter(site %in% c("Chap", "Jeti-Oguz")) %>% 
-  dplyr::pull(position)
-plot_list_selection <- plot_list[min(new_data_plot_nums):max(new_data_plot_nums)]
-
-# Create a hack-y "legend" plot
+# Create a hack-y "legend" plot for the plot matrices
 legend_plot <- tibble::tibble(
   x = c(1,1,1),
   y = 3:1,
@@ -101,20 +89,36 @@ legend_plot <- tibble::tibble(
   coord_cartesian(xlim = c(-4,8), ylim = c(-3,5)) +
   ggmap::theme_nothing()
 
-# Merge plot components and write to a file
-grid_plot <- cowplot::plot_grid(
-  plotlist = append(plot_list_selection, list(legend_plot)),
-  ncol = 3
-)
+# Merge plot components and render them
+make_plot_grid <- function(x) {
+  cowplot::plot_grid(plotlist = append(x, list(legend_plot)), ncol = 3)
+}
+plot_grid_fig2  <- make_plot_grid(plots_fig2)
+plot_grid_figS1 <- make_plot_grid(plots_figS1)
+plot_grid_figS2 <- make_plot_grid(plots_figS2)
+plot_grid_figS3 <- make_plot_grid(plots_figS3)
 
+height_per_row <- 3.8
+get_plot_height <- function(x) { (length(x)+1) / 3 * height_per_row }
 ggsave(
-  "plots/Figure2.pdf", grid_plot, 
-  scale = 4, 
-  width = 16, 
-  height = 19, 
-  units = "cm", 
-  bg = "white",
-  device = grDevices::cairo_pdf
+  "plots/Figure2.pdf", plot_grid_fig2,
+  scale = 4, width = 16, height = get_plot_height(plots_fig2), units = "cm",
+  bg = "white", device = grDevices::cairo_pdf
+)
+ggsave(
+  "plots/FigureS1.pdf", plot_grid_figS1,
+  scale = 4, width = 16, height = get_plot_height(plots_figS1), units = "cm",
+  bg = "white", device = grDevices::cairo_pdf
+)
+ggsave(
+  "plots/FigureS2.pdf", plot_grid_figS2,
+  scale = 4, width = 16, height = get_plot_height(plots_figS2), units = "cm",
+  bg = "white", device = grDevices::cairo_pdf
+)
+ggsave(
+  "plots/FigureS3.pdf", plot_grid_figS3,
+  scale = 4, width = 16, height = get_plot_height(plots_figS3), units = "cm",
+  bg = "white", device = grDevices::cairo_pdf
 )
 
 # Derive the julian calendar equivalent of each sampling position on each tooth

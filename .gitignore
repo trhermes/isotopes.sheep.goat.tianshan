@@ -70,6 +70,7 @@ Temporary Items
 
 # Actually project-related 
 /data/comparative
+/data/intermediate
 plots/
 tables/
 tmp/
