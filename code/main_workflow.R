@@ -7,6 +7,9 @@ library(ggplot2)
 # We ran this once and stored the intermediate data files in this repository
 #source("code/fetch_data.R")
 
+# You may generate the map displayed in Figure 1 with this
+#source("code/map.R")
+
 #### Part I ####
 # The first part of this script focuses on fitting the theoretical seasonality
 # model to the empirical data and deriving "julian" calender days and birth season
@@ -102,22 +105,22 @@ plot_grid_figS3 <- make_plot_grid(plots_figS3)
 height_per_row <- 3.8
 get_plot_height <- function(x) { (length(x)+1) / 3 * height_per_row }
 ggsave(
-  "plots/Figure2.pdf", plot_grid_fig2,
+  "plots/Figure_2.pdf", plot_grid_fig2,
   scale = 4, width = 16, height = get_plot_height(plots_fig2), units = "cm",
   bg = "white", device = grDevices::cairo_pdf
 )
 ggsave(
-  "plots/FigureS1.pdf", plot_grid_figS1,
+  "plots/Figure_S1.pdf", plot_grid_figS1,
   scale = 4, width = 16, height = get_plot_height(plots_figS1), units = "cm",
   bg = "white", device = grDevices::cairo_pdf
 )
 ggsave(
-  "plots/FigureS2.pdf", plot_grid_figS2,
+  "plots/Figure_S2.pdf", plot_grid_figS2,
   scale = 4, width = 16, height = get_plot_height(plots_figS2), units = "cm",
   bg = "white", device = grDevices::cairo_pdf
 )
 ggsave(
-  "plots/FigureS3.pdf", plot_grid_figS3,
+  "plots/Figure_S3.pdf", plot_grid_figS3,
   scale = 4, width = 16, height = get_plot_height(plots_figS3), units = "cm",
   bg = "white", device = grDevices::cairo_pdf
 )
@@ -446,7 +449,7 @@ birth_plot <- birth %>%
   )
 
 ggsave(
-  "plots/Figure3.png",
+  "plots/Figure_3.png",
   birth_plot,
   dpi = 300,
   width = 40, height = 30, units = c("cm"), scale = .4
