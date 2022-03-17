@@ -56,7 +56,13 @@ standards_stats <- leibniz_data[row.names(leibniz_data) %in% (n+2):nrow(leibniz_
             n = n()
   )
 dir.create("tables")
-readr::write_csv(standards_stats, "tables/Table_S2_isotope_lab_run_standards_THEC2007_Kiel_Leibniz_labor.csv")
+readr::write_csv(standards_stats %>% 
+                   dplyr::mutate(
+                     dplyr::across(
+                       tidyselect:::where(is.numeric),
+                       round, digits = 4
+                     )
+                   ), "tables/Table_S2_isotope_lab_run_standards_THEC2007_Kiel_Leibniz_labor.csv")
 
 
 #### Import new metadata for samples ####
@@ -216,7 +222,7 @@ study_data <- study_data_ %>%
 
 # combine comparative data
 #
-all_data <- rbindlist(list(study_data, h_comp_data_, vm_comp_data_), fill=T) %>% 
+all_data <- data.table::rbindlist(list(study_data, h_comp_data_, vm_comp_data_), fill=T) %>% 
   dplyr::select(all_of(data_cols)) %>% 
   tibble::as_tibble()
 
@@ -235,8 +241,8 @@ out_data_dir <- "data/input/"
 # comp_data %>% group_split(specimen)
 
 # outputs one CSV for all data
-fwrite(all_data,
+data.table::fwrite(all_data,
        paste0(out_data_dir,"all_data.csv"))
 
-fwrite(comp_metadata,
+data.table::fwrite(comp_metadata,
           paste0(out_data_dir,"specimen.csv"))
