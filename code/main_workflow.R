@@ -1,15 +1,13 @@
-library(dplyr)
+#### Part 0 ####
+# Fetch and prepare isotope data to read in via CSVs
+
+# We ran this once and stored the intermediate data files in this repository
+#source("code/fetch_data.R")
 
 #### Part I ####
 # The first part of this script focuses on fitting the theoretical seasonality
 # model to the empirical data and deriving "julian" calender days and birth season
 # estimates
-
-# Fetch and prepare isotope data to read in via CSVs
-source("code/fetch_data.R")
-
-# Produce map
-source("code/map.R")
 
 # Read data
 # specimen overview table CSV
