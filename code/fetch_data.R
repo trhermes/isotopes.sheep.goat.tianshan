@@ -21,8 +21,8 @@ library(janitor)
 
 leibniz_data <- readxl::read_excel("data/raw/zTHEC2007_IV_data.xlsx",
                                    range = "A10:X231") %>% 
-  clean_names() %>% 
-  rename(
+  janitor::clean_names() %>% 
+  dplyr::rename(
     run_counter = 1,
     specimen = tooth_id,
     measure = meas,
@@ -33,16 +33,16 @@ leibniz_data <- readxl::read_excel("data/raw/zTHEC2007_IV_data.xlsx",
     errorc = 19,
     d18O = 20,
     erroro = 21) %>% 
-  select(-10,-11) %>% 
-  remove_empty("rows") %>% 
-  mutate(specimen = gsub('-', '', specimen)) %>% 
-  mutate(site = gsub('-I', '', site))
+  dplyr::select(-10,-11) %>% 
+  janitor::remove_empty("rows") %>% 
+  dplyr::mutate(specimen = gsub('-', '', specimen)) %>% 
+  dplyr::mutate(site = gsub('-I', '', site))
 
 # split up isotope data from animal teeth and isotope data for lab standards 
 #
 n = 163   # line to cut df
 study_data_ <- leibniz_data[row.names(leibniz_data) %in% 1:n, ] %>% 
-  mutate(period = stringr::str_to_title(period))
+  dplyr::mutate(period = stringr::str_to_title(period))
 
 #### Produce summary stats for isotope lab runs of standards ####
 standards_stats <- leibniz_data[row.names(leibniz_data) %in% (n+2):nrow(leibniz_data), ] %>% 
@@ -55,18 +55,18 @@ standards_stats <- leibniz_data[row.names(leibniz_data) %in% (n+2):nrow(leibniz_
             sd_d18O = sd(d18O),
             n = n()
   )
-
 dir.create("tables")
-write_csv(standards_stats, "tables/isotope_lab_run_standards_THEC2007_Kiel_Leibniz_labor.csv")
+readr::write_csv(standards_stats, "tables/Table_S2_isotope_lab_run_standards_THEC2007_Kiel_Leibniz_labor.csv")
 
 
 #### Import new metadata for samples ####
 
-new_metadata_ <- readxl::read_excel("data/raw/Chap_analyzed_teeth.xlsx") %>% 
+new_metadata_ <- readxl::read_excel("data/raw/Chap_analyzed_teeth_2020_07.xlsx") %>% 
   clean_names() %>% 
   rename(specimen = 1) %>% 
   mutate(specimen = gsub('Chap-', "CHP", specimen)) %>% 
   mutate(specimen = gsub('Ibex-', "IBX", specimen))
+readr::write_csv(new_metadata_, "tables/Table_S1_metadata_newly_analyzed_caprine_teeth.csv")
 
 #### Download comparative data from Ventresca-Miller et al. 2020 ####
 # This data set is archived as two tables embedded in Microsoft Word documents
@@ -209,7 +209,10 @@ data_cols <- c("increment",
                "measure")
 
 study_data <- study_data_ %>% 
-  dplyr::select(all_of(data_cols))
+  dplyr::select(all_of(data_cols)) %>% 
+  dplyr::filter(!row_number() %in% c(152, 163))  
+  #                                  ^    ^
+  # Remove final measurement for IBX03-04 due to sharp change in values near root-enamel junction
 
 # combine comparative data
 #
@@ -233,7 +236,7 @@ out_data_dir <- "data/input/"
 
 # outputs one CSV for all data
 fwrite(all_data,
-       paste0(out_data_dir,"isodata/all_data.csv"))
+       paste0(out_data_dir,"all_data.csv"))
 
 fwrite(comp_metadata,
           paste0(out_data_dir,"specimen.csv"))

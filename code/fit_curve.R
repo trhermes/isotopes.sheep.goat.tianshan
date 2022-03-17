@@ -55,11 +55,11 @@ fit_curve <- function(isodata) {
 
   # get error bar for the fitted curve
   # adapted from https://stackoverflow.com/questions/32613119/plot-the-median-confidence-interval-of-a-bootstrap-output-in-ggplot2
-  curveBoot <- nlstools::nlsBoot(fit, niter = 1000)
+  curveBoot <- nlstools::nlsBoot(fit, niter = 10000)
   theta_mat <- curveBoot$coefboot # Matrix with the bootstrapped parameter estimates
   
   # Points where to evaluate the model
-  x_eval <- seq(min(d$X), max(d$X), length.out = 100)
+  x_eval <- seq(min(d$X), max(d$X), length.out = 1000)
   
   # Matrix with the predictions
   pred_mat <- apply(theta_mat, 1, function(theta) { 

@@ -39,8 +39,7 @@ vignettes/*.pdf
 .Renviron
 
 # others
-/data/*
-!/data/input/
+/data/comparative
 plots/
 tables/
 tmp/
@@ -72,3 +71,5 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+.RDataTmp
+data/input/isodata/all_data.csv

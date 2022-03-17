@@ -1,6 +1,8 @@
+library(dplyr)
+
 #### Part I ####
-# The first part of this script focusses on fitting the theoretical seasonality
-# model to the empirical data and deriving julian calender days and birth season
+# The first part of this script focuses on fitting the theoretical seasonality
+# model to the empirical data and deriving "julian" calender days and birth season
 # estimates
 
 # Fetch and prepare isotope data to read in via CSVs
@@ -17,7 +19,7 @@ specimen_overview <- readr::read_csv(
 )
 # measurements per tooth table CSV
 isodata_list <- readr::read_csv(
-  "data/input/isodata/all_data.csv") %>% 
+  "data/input/all_data.csv") %>% 
   group_split(specimen)
   
 #   purrr::map(
@@ -76,17 +78,16 @@ plot_list <- purrr::map2(
 
 # Create plot matrix for new data plots (Chap & Jeti-Orguz)
 
-# Select and order the desired plots
+# Select and order the desired plots for Fig. 2
 new_data_plot_nums <- specimen_overview %>%
   dplyr::group_by(specimen) %>% 
   dplyr::mutate(position = cur_group_id()) %>% 
   dplyr::select(specimen, position, site) %>% 
   dplyr::filter(site %in% c("Chap", "Jeti-Oguz")) %>% 
   dplyr::pull(position)
-
 plot_list_selection <- plot_list[min(new_data_plot_nums):max(new_data_plot_nums)]
 
-# Create a hacky "legend" plot
+# Create a hack-y "legend" plot
 legend_plot <- tibble::tibble(
   x = c(1,1,1),
   y = 3:1,
@@ -100,7 +101,7 @@ legend_plot <- tibble::tibble(
     na.translate = FALSE
   ) +
   coord_cartesian(xlim = c(-4,8), ylim = c(-3,5)) +
-  theme_nothing()
+  ggmap::theme_nothing()
 
 # Merge plot components and write to a file
 grid_plot <- cowplot::plot_grid(
@@ -305,7 +306,7 @@ sum_stats_final <- sum_stats %>%
 # Write Chap summary stats
 write.csv(
   sum_stats_final,
-  "tables/Chap_tooth_summary_stats.csv",
+  "tables/Table_1_all_teeth_isotope_summary_stats.csv",
   row.names = F, quote = F
 )
 

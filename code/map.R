@@ -51,38 +51,59 @@ j_o_border2 <- tidy(j_o_border, group=group)
 # One could also generate the bounds based on min and max lat/long in sites
 map_borders <- c(bottom  = min(all_sites$lat) - 4, 
                  top     = max(all_sites$lat) + 1.5,
-                 left    = min(all_sites$long) - 10,
-                 right   = max(all_sites$long) + 11)
+                 left    = min(all_sites$long) - 12,
+                 right   = max(all_sites$long) + 13)
 
 # Download map tiles
 map <- get_stamenmap(map_borders, zoom = 9, maptype = "terrain-background", force=T)
 
+# Text labels for plotting map features
+mountains <- tibble::tribble(
+  ~name,       ~lat, ~long, ~rotate,
+  "Pamir Mnts.",     38.1,  73,   0,
+  "Tian Shan Mnts.", 40.8,  74.5, 20,
+  "Tian Shan Mnts.", 43,    84,   20,
+  "Dzhungar Mnts.",  44.6,  82.5, -15,
+  "Altai Mnts.",     49.5,  84.8, -39.8
+)
+countries <- tibble::tribble(
+  ~name,        ~lat, ~long,
+  "Kyrgyzstan", 42.1, 73.3,
+  "Uzbekistan", 40.4,  66.2,
+  "Tajikistan", 38.9,  70,
+  "Kazakhstan", 46,    70, 
+  "China",      45.5,  85.5,
+  "Mongolia",   49,    90.4, 
+  "Russia",     50.2,  86.8 
+)
+
 # Map it
+country_size = 5
 figure1 <- ggmap(map) +
   geom_path(data=borders2, aes(x=long, y=lat, group = group), size=0.7, alpha = 0.5) +
   geom_polygon(data=j_o_border2, aes(x=long, y=lat, group = group), size=2, alpha = 0.5) +
   geom_point(data=all_sites, stroke=1, size = 5, aes(x=long, y=lat), shape=21) +
-  #geom_sf(data = j_o_centroid, inherit.aes = F) +
   xlab(expression(paste("Longitude (", degree,"E)"))) + 
   ylab(expression(paste("Latitude (", degree,"N)"))) +
   scalebar(x.min=81, x.max=90, y.min=38.6, y.max=81, dist = 250, height = 0.007, 
            st.dist = 0.008, st.size=6, dist_unit = "km",
            transform = TRUE, model = "WGS84", location = "bottomleft") +
-  annotate("text", label= "Kyrgyzstan", x=73.9, y=42.18, size=6, color="black", fontface="italic") +
-  annotate("text", label= "Uzbekistan", x=67.4, y=40.4, size=6, color="black", fontface="italic") +
-  annotate("text", label= "Tajikistan", x=70, y=38.9, size=6, color="black", fontface="italic") +
-  annotate("text", label= "Kazakhstan", x=70, y=48, size=6, color="black", fontface="italic") + 
-  annotate("text", label= "China", x=85.5, y=45.5, size=6, color="black", fontface="italic") +
-  annotate("text", label= "Mongolia", x=89.2, y=49, size=6, color="black", fontface="italic") +
-  annotate("text", label= "Russia", x=86.8, y=50.2, size=6, color="black", fontface="italic") +
-  geom_label_repel(data=all_sites, aes(x=long, y=lat, label=site), size=8, 
+  geom_text(data = countries, 
+            aes(x = long, y = lat, label = name),
+            fontface="italic",
+            size = country_size) +
+  geom_text(data = mountains,
+            aes(x = long, y = lat, label = name, angle = rotate),
+            fontface="italic",
+            alpha = 0.5) +
+  geom_label_repel(data=all_sites, aes(x=long, y=lat, label=site), size=5.5, 
                    box.padding = 1, 
                    #nudge_x = 1,
                    #nudge_y = .6,
                    label.padding = 0.4) +
   annotation_north_arrow(location = "br", width = unit(1.2, "cm")) +
-  theme(axis.text = element_text(size = 20), 
-        axis.title = element_text(size = 20),
+  theme(axis.text = element_text(size = 18), 
+        axis.title = element_text(size = 18),
         plot.margin=grid::unit(c(0,0,0,0), "mm"))  
 
 ggsave("plots/Figure1.pdf", figure1, scale = 1.6)
