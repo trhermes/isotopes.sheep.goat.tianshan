@@ -241,7 +241,7 @@ all_data_comp <- isodata_julian_summarized %>%
     by = "specimen"
   )
 
-# Write Table S3
+# Write Table S5
 write.csv(
   all_data_comp %>%
     dplyr::mutate(
@@ -250,7 +250,7 @@ write.csv(
         round, digits = 2
       )
     ),
-  "tables/Table_S3.csv",
+  "tables/Table_S5_all_data_processed.csv",
   row.names = F, quote = F
 )
 
@@ -337,7 +337,7 @@ site_iso_change <- iso_change %>%
 # Write Table S4
 write.csv(
   site_iso_change,
-  "tables/Table_S4.csv",
+  "tables/Table_S4_seasonal_change.csv",
   row.names = F, quote = F
 )
 
@@ -369,10 +369,10 @@ corr_tests <- all_data_comp %>%
     )
   )
 
-# Write Table S5
+# Write Table S3
 write.csv(
   corr_tests,
-  "tables/Table_S5.csv",
+  "tables/Table_S3_correlations.csv",
   row.names = F,
   quote = F
 )
@@ -390,13 +390,14 @@ corr_tests_plot <- all_data_comp %>%
     coord_fixed() +
     facet_wrap(~ specimen + site)
 
+# Save plot Fig. S4
 ggsave(
-  "plots/Fig_S1.pdf",
+  "plots/Fig_S4.pdf",
   corr_tests_plot,
   dpi = 300, width = 20, height = 30, units = c("cm"), scale = .85
 )
 
-# Birth seasonality chart for all sites
+# Birth seasonality plot for all sites
 birth <- specimen_overview_birth %>%
   dplyr::filter(element == "M/2") %>%
   dplyr::mutate(
@@ -443,8 +444,6 @@ birth_plot <- birth %>%
   coord_cartesian(
     xlim = c(0, 1)
   )
-
-print(birth_plot)
 
 ggsave(
   "plots/Figure3.png",
