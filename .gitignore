@@ -38,17 +38,12 @@ vignettes/*.pdf
 # R Environment Variables
 .Renviron
 
-# others
-/data/comparative
-plots/
-tables/
-tmp/
-*.~lock.*
-
+# MacOS specifics
 # General
 .DS_Store
 .AppleDouble
 .LSOverride
+*.~lock.*
 
 # Icon must end with two \r
 Icon
@@ -72,4 +67,10 @@ Network Trash Folder
 Temporary Items
 .apdisk
 .RDataTmp
+
+# Actually project-related 
+/data/comparative
+plots/
+tables/
+tmp/
 data/input/isodata/all_data.csv
