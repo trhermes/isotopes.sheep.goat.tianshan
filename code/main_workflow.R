@@ -1,4 +1,5 @@
 library(magrittr)
+library(ggplot2)
 
 #### Part 0 ####
 # Fetch and prepare isotope data to read in via CSVs
@@ -75,18 +76,18 @@ plots_figS3 <- plot_table$plot[plot_table$site %in% c("Begash", "Dali", "Bayan-Z
 
 # Create a hack-y "legend" plot for the plot matrices
 legend_plot <- tibble::tibble(
-  x = c(1,1,1),
+  x = c(0.2,1,1),
   y = 3:1,
   label = c("Isotope values", "δ13C", "δ18O")
 ) %>% 
   ggplot() +
-  geom_point(aes(x - 1, y, color = label), size = 8) +
-  geom_text(aes(x + 1, y, label = label), size = 8) +
+  geom_point(aes(x - 1, y, color = label), size = 9) +
+  geom_text(aes(x + 1, y, label = label), size = 9) +
   scale_color_manual(
     values = c("δ18O" = "blue", "δ13C" = "green4"),
     na.translate = FALSE
   ) +
-  coord_cartesian(xlim = c(-4,8), ylim = c(-3,5)) +
+  coord_cartesian(xlim = c(-4,10), ylim = c(-4,6)) +
   ggmap::theme_nothing()
 
 # Merge plot components and render them
@@ -214,9 +215,6 @@ specimen_overview_birth <- dplyr::left_join(
 #### Part II ####
 # In the second part of this script we derive meaningful summary statistics and
 # create some plots from and for the data prepared in part I
-
-library(magrittr)
-library(ggplot2)
 
 # Summarize (mean) duplicate entries per increment
 isodata_julian_summarized <- purrr::map(
@@ -446,7 +444,7 @@ birth_plot <- birth %>%
     xlim = c(0, 1)
   )
 
-print(birth_plot)
+#print(birth_plot)
 
 ggsave(
   "plots/Figure3.png",
