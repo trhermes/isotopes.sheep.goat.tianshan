@@ -1,4 +1,4 @@
-# Modified from https://github.com/trhermes/Ust-Biyke-R-Map
+# Adapted from https://github.com/trhermes/Ust-Biyke-R-Map
 
 library(dplyr)
 library(ggmap)          # ggmap() get_stamenmap()
@@ -60,7 +60,7 @@ map <- get_stamenmap(map_borders, zoom = 9, maptype = "terrain-background", forc
 # Text labels for plotting map features
 mountains <- tibble::tribble(
   ~name,       ~lat, ~long, ~rotate,
-  "Pamir Mnts.",     38.1,  73,   0,
+  "Pamir Mnts.",     38.1,  73.1,   0,
   "Tian Shan Mnts.", 40.8,  74.5, 20,
   "Tian Shan Mnts.", 43,    84,   20,
   "Dzhungar Mnts.",  44.6,  82.5, -15,
@@ -78,34 +78,34 @@ countries <- tibble::tribble(
 )
 
 # Map it
-country_size = 5
 figure1 <- ggmap(map) +
-  geom_path(data=borders2, aes(x=long, y=lat, group = group), size=0.7, alpha = 0.5) +
+  geom_path(data=borders2, aes(x=long, y=lat, group = group), size=0.5, alpha = 0.5) +
   geom_polygon(data=j_o_border2, aes(x=long, y=lat, group = group), size=2, alpha = 0.5) +
   geom_point(data=all_sites, stroke=1, size = 5, aes(x=long, y=lat), shape=21) +
   xlab(expression(paste("Longitude (", degree,"E)"))) + 
   ylab(expression(paste("Latitude (", degree,"N)"))) +
   scalebar(x.min=81, x.max=90, y.min=38.6, y.max=81, dist = 250, height = 0.007, 
-           st.dist = 0.008, st.size=6, dist_unit = "km",
+           st.dist = 0.008, st.size=4, dist_unit = "km",
            transform = TRUE, model = "WGS84", location = "bottomleft") +
   geom_text(data = countries, 
             aes(x = long, y = lat, label = name),
             fontface="italic",
-            size = country_size) +
+            size = 4) +
   geom_text(data = mountains,
             aes(x = long, y = lat, label = name, angle = rotate),
             fontface="italic",
-            alpha = 0.5) +
-  geom_label_repel(data=all_sites, aes(x=long, y=lat, label=site), size=5.5, 
-                   box.padding = 1, 
+            alpha = 0.5,
+            size = 3.2) +
+  geom_label_repel(data=all_sites, aes(x=long, y=lat, label=site), size=4.5, 
+                   box.padding = 0.5, 
                    #nudge_x = 1,
                    #nudge_y = .6,
-                   label.padding = 0.4) +
+                   label.padding = 0.2) +
   annotation_north_arrow(location = "br", width = unit(1.2, "cm")) +
-  theme(axis.text = element_text(size = 18), 
-        axis.title = element_text(size = 18),
+  theme(axis.text = element_text(size = 12), 
+        axis.title = element_text(size = 12),
         plot.margin=grid::unit(c(0,0,0,0), "mm"))  
 
-ggsave("plots/Figure1.pdf", figure1, scale = 1.6)
+ggsave("plots/Figure_1.pdf", figure1, scale = 3, device = grDevices::cairo_pdf)
 
 #print(figure1)
