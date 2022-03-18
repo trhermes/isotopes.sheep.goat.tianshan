@@ -103,7 +103,7 @@ plot_grid_figS2 <- make_plot_grid(plots_figS2)
 plot_grid_figS3 <- make_plot_grid(plots_figS3)
 
 height_per_row <- 3.8
-get_plot_height <- function(x) { (length(x)+1) / 3 * height_per_row }
+get_plot_height <- function(x) { ceiling((length(x)+1) / 3) * height_per_row }
 ggsave(
   "plots/Figure_2.pdf", plot_grid_fig2,
   scale = 4, width = 16, height = get_plot_height(plots_fig2), units = "cm",
