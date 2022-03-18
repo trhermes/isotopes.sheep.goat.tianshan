@@ -1,0 +1,381 @@
+increment,specimen,d13C,d18O,measure,julian,site,element,symmetry,individual,taxon,period,comparative,birth_simple_fit,birth_season_simple_fit
+1,5571,-10.18,-11.7,24.49,104.88,Kent,M/2,left,1,sheep,Late Bronze Age,TRUE,0.35,spring
+2,5571,-10.16,-10.05,23.11,117.24,Kent,M/2,left,1,sheep,Late Bronze Age,TRUE,0.35,spring
+3,5571,-10.16,-9.15,20.72,138.64,Kent,M/2,left,1,sheep,Late Bronze Age,TRUE,0.35,spring
+4,5571,-10.15,-7.46,19.32,151.18,Kent,M/2,left,1,sheep,Late Bronze Age,TRUE,0.35,spring
+6,5571,-8.89,-7.13,10.53,229.9,Kent,M/2,left,1,sheep,Late Bronze Age,TRUE,0.35,spring
+7,5571,-8.76,-8.14,8.08,251.84,Kent,M/2,left,1,sheep,Late Bronze Age,TRUE,0.35,spring
+8,5571,-9.07,-9.45,6.86,262.76,Kent,M/2,left,1,sheep,Late Bronze Age,TRUE,0.35,spring
+9,5571,-9,-10.67,4.68,282.29,Kent,M/2,left,1,sheep,Late Bronze Age,TRUE,0.35,spring
+2,5572,-8.93,-14.87,30.69,14.94,Kent,M/2,left,2,sheep,Late Bronze Age,TRUE,0.34,spring
+4,5572,-8.95,-13.78,26.13,60.35,Kent,M/2,left,2,sheep,Late Bronze Age,TRUE,0.34,spring
+6,5572,-9.19,-11.14,22.71,94.41,Kent,M/2,left,2,sheep,Late Bronze Age,TRUE,0.34,spring
+8,5572,-9.54,-7.17,18.88,132.55,Kent,M/2,left,2,sheep,Late Bronze Age,TRUE,0.34,spring
+10,5572,-10.06,-5.12,15.29,168.3,Kent,M/2,left,2,sheep,Late Bronze Age,TRUE,0.34,spring
+12,5572,-10.28,-4.94,11.53,205.74,Kent,M/2,left,2,sheep,Late Bronze Age,TRUE,0.34,spring
+14,5572,-9.57,-6.52,7.84,242.49,Kent,M/2,left,2,sheep,Late Bronze Age,TRUE,0.34,spring
+16,5572,-9.2,-9.14,4.33,277.44,Kent,M/2,left,2,sheep,Late Bronze Age,TRUE,0.34,spring
+18,5572,-8.51,-10.9,1.27,307.91,Kent,M/2,left,2,sheep,Late Bronze Age,TRUE,0.34,spring
+2,5573,-7.66,-12.51,23.15,24.39,Kent,M/2,left,3,sheep,Late Bronze Age,TRUE,0.21,spring
+4,5573,-7.93,-11,19.38,64.9,Kent,M/2,left,3,sheep,Late Bronze Age,TRUE,0.21,spring
+6,5573,-8.45,-8.72,16.35,97.46,Kent,M/2,left,3,sheep,Late Bronze Age,TRUE,0.21,spring
+8,5573,-8.77,-6.99,13.31,130.12,Kent,M/2,left,3,sheep,Late Bronze Age,TRUE,0.21,spring
+10,5573,-9.18,-4.54,10.27,162.79,Kent,M/2,left,3,sheep,Late Bronze Age,TRUE,0.21,spring
+12,5573,-9.24,-3.56,7.42,193.41,Kent,M/2,left,3,sheep,Late Bronze Age,TRUE,0.21,spring
+14,5573,-9.49,-4.9,4.61,223.61,Kent,M/2,left,3,sheep,Late Bronze Age,TRUE,0.21,spring
+16,5573,-9.12,-6.05,1.24,259.82,Kent,M/2,left,3,sheep,Late Bronze Age,TRUE,0.21,spring
+1,5574,-9.28,-12.72,28.42,41.12,Kent,M/2,left,4,sheep,Late Bronze Age,TRUE,0.44,summer
+2,5574,-9.36,-11.81,26.5,62.47,Kent,M/2,left,4,sheep,Late Bronze Age,TRUE,0.44,summer
+4,5574,-9.73,-9.86,24.17,88.38,Kent,M/2,left,4,sheep,Late Bronze Age,TRUE,0.44,summer
+6,5574,-10.25,-8.11,20.41,130.18,Kent,M/2,left,4,sheep,Late Bronze Age,TRUE,0.44,summer
+8,5574,-10.46,-5.67,17,168.1,Kent,M/2,left,4,sheep,Late Bronze Age,TRUE,0.44,summer
+10,5574,-10.69,-4.87,14.02,201.23,Kent,M/2,left,4,sheep,Late Bronze Age,TRUE,0.44,summer
+12,5574,-10.61,-6.24,10.97,235.15,Kent,M/2,left,4,sheep,Late Bronze Age,TRUE,0.44,summer
+1,5575,-7.85,-12.9,32.43,360.22,Kent,M/2,left,5,sheep,Late Bronze Age,TRUE,0.45,summer
+3,5575,-7.89,-12,28.13,43.79,Kent,M/2,left,5,sheep,Late Bronze Age,TRUE,0.45,summer
+5,5575,-8.14,-11.05,25.05,78.59,Kent,M/2,left,5,sheep,Late Bronze Age,TRUE,0.45,summer
+7,5575,-8.78,-8.45,20.47,130.33,Kent,M/2,left,5,sheep,Late Bronze Age,TRUE,0.45,summer
+9,5575,-9.13,-5.54,16.34,176.98,Kent,M/2,left,5,sheep,Late Bronze Age,TRUE,0.45,summer
+11,5575,-8.65,-6.09,11.99,226.13,Kent,M/2,left,5,sheep,Late Bronze Age,TRUE,0.45,summer
+13,5575,-8.34,-8.38,8.21,268.83,Kent,M/2,left,5,sheep,Late Bronze Age,TRUE,0.45,summer
+15,5575,-7.9,-10.57,4.54,310.29,Kent,M/2,left,5,sheep,Late Bronze Age,TRUE,0.45,summer
+1,5576,-10.18,-3.83,28.39,182.79,Kent,M/2,left,6,sheep,Late Bronze Age,TRUE,0.58,summer
+3,5576,-10.33,-4.2,24.33,215.15,Kent,M/2,left,6,sheep,Late Bronze Age,TRUE,0.58,summer
+7,5576,-9.74,-6.75,16.24,279.62,Kent,M/2,left,6,sheep,Late Bronze Age,TRUE,0.58,summer
+9,5576,-9.4,-8.2,12.32,310.86,Kent,M/2,left,6,sheep,Late Bronze Age,TRUE,0.58,summer
+11,5576,-9.44,-10.58,9.69,331.82,Kent,M/2,left,6,sheep,Late Bronze Age,TRUE,0.58,summer
+13,5576,-8.62,-10.38,6.58,356.61,Kent,M/2,left,6,sheep,Late Bronze Age,TRUE,0.58,summer
+1,5577,-9.49,-2.89,13.41,218.36,Kent,M/2,left,7,sheep,Late Bronze Age,TRUE,0.38,summer
+2,5577,-9.66,-3.15,11.85,232.18,Kent,M/2,left,7,sheep,Late Bronze Age,TRUE,0.38,summer
+4,5577,-9.42,-4.77,9.16,256.03,Kent,M/2,left,7,sheep,Late Bronze Age,TRUE,0.38,summer
+5,5577,-9.26,-5.45,7.66,269.33,Kent,M/2,left,7,sheep,Late Bronze Age,TRUE,0.38,summer
+6,5577,-9.15,-6.69,5.97,284.31,Kent,M/2,left,7,sheep,Late Bronze Age,TRUE,0.38,summer
+7,5577,-8.82,-7.45,4.67,295.83,Kent,M/2,left,7,sheep,Late Bronze Age,TRUE,0.38,summer
+8,5577,-8.45,-8.84,2.69,313.39,Kent,M/2,left,7,sheep,Late Bronze Age,TRUE,0.38,summer
+1,5578,-10.17,-11.75,37.85,7.39,Kent,M/2,left,8,sheep,Late Bronze Age,TRUE,0.78,fall
+3,5578,-10.23,-11.17,34,55.63,Kent,M/2,left,8,sheep,Late Bronze Age,TRUE,0.78,fall
+5,5578,-10.18,-8.67,30.81,95.6,Kent,M/2,left,8,sheep,Late Bronze Age,TRUE,0.78,fall
+7,5578,-10.16,-6.63,28,130.81,Kent,M/2,left,8,sheep,Late Bronze Age,TRUE,0.78,fall
+9,5578,-10.22,-5.34,24.62,173.16,Kent,M/2,left,8,sheep,Late Bronze Age,TRUE,0.78,fall
+11,5578,-9.9,-4.97,21.67,210.13,Kent,M/2,left,8,sheep,Late Bronze Age,TRUE,0.78,fall
+13,5578,-9.29,-6.78,17.53,262.01,Kent,M/2,left,8,sheep,Late Bronze Age,TRUE,0.78,fall
+15,5578,-9.04,-8.82,14.76,296.72,Kent,M/2,left,8,sheep,Late Bronze Age,TRUE,0.78,fall
+17,5578,-8.94,-10.29,11.66,335.56,Kent,M/2,left,8,sheep,Late Bronze Age,TRUE,0.78,fall
+19,5578,-9.02,-10.98,8.37,11.79,Kent,M/2,left,8,sheep,Late Bronze Age,TRUE,0.78,fall
+1,5579,-9.43,-13.09,30.58,362.5,Kent,M/2,left,9,sheep,Late Bronze Age,TRUE,0.52,summer
+3,5579,-9.73,-12.32,27.06,42.34,Kent,M/2,left,9,sheep,Late Bronze Age,TRUE,0.52,summer
+5,5579,-10.14,-10.1,22.82,96.35,Kent,M/2,left,9,sheep,Late Bronze Age,TRUE,0.52,summer
+7,5579,-10.52,-6.93,19.23,142.07,Kent,M/2,left,9,sheep,Late Bronze Age,TRUE,0.52,summer
+9,5579,-10.54,-5.21,16.13,181.56,Kent,M/2,left,9,sheep,Late Bronze Age,TRUE,0.52,summer
+11,5579,-10.35,-5.57,13.12,219.9,Kent,M/2,left,9,sheep,Late Bronze Age,TRUE,0.52,summer
+13,5579,-9.94,-7.82,9.14,270.59,Kent,M/2,left,9,sheep,Late Bronze Age,TRUE,0.52,summer
+15,5579,-9.43,-10.24,6.51,304.09,Kent,M/2,left,9,sheep,Late Bronze Age,TRUE,0.52,summer
+17,5579,-9.18,-12.52,3.53,342.05,Kent,M/2,left,9,sheep,Late Bronze Age,TRUE,0.52,summer
+2,5580,-9.8,-4.34,18.65,179.05,Kent,M/2,left,10,sheep,Late Bronze Age,TRUE,0.4,summer
+4,5580,-10.13,-3.49,16.19,200.55,Kent,M/2,left,10,sheep,Late Bronze Age,TRUE,0.4,summer
+6,5580,-9.78,-4.82,13.38,225.11,Kent,M/2,left,10,sheep,Late Bronze Age,TRUE,0.4,summer
+8,5580,-8.79,-6.81,8.62,266.71,Kent,M/2,left,10,sheep,Late Bronze Age,TRUE,0.4,summer
+10,5580,-8.71,-9.72,4.66,301.32,Kent,M/2,left,10,sheep,Late Bronze Age,TRUE,0.4,summer
+12,5580,-8.62,-11.96,1.06,332.79,Kent,M/2,left,10,sheep,Late Bronze Age,TRUE,0.4,summer
+2,5584,-10.21,-11.07,22.26,31.16,Turgen,M/2,left,11,sheep,Late Bronze Age/Iron Age,TRUE,0.4,summer
+4,5584,-10.38,-8.42,18.88,78.57,Turgen,M/2,left,11,sheep,Late Bronze Age/Iron Age,TRUE,0.4,summer
+6,5584,-10.71,-5.22,15.01,132.86,Turgen,M/2,left,11,sheep,Late Bronze Age/Iron Age,TRUE,0.4,summer
+8,5584,-10.52,-2.46,12.19,172.42,Turgen,M/2,left,11,sheep,Late Bronze Age/Iron Age,TRUE,0.4,summer
+10,5584,-10.7,-2.77,8.6,222.77,Turgen,M/2,left,11,sheep,Late Bronze Age/Iron Age,TRUE,0.4,summer
+12,5584,-10.54,-4.94,5.22,270.18,Turgen,M/2,left,11,sheep,Late Bronze Age/Iron Age,TRUE,0.4,summer
+14,5584,-10.35,-8.68,2.4,309.74,Turgen,M/2,left,11,sheep,Late Bronze Age/Iron Age,TRUE,0.4,summer
+2,5586,-7.25,-5.19,16.89,183.35,Turgen,M/2,left,12,sheep,Late Bronze Age/Iron Age,TRUE,0.31,spring
+4,5586,-6.3,-4.81,13.52,209.08,Turgen,M/2,left,12,sheep,Late Bronze Age/Iron Age,TRUE,0.31,spring
+5,5586,-6.11,-5.91,11.71,222.9,Turgen,M/2,left,12,sheep,Late Bronze Age/Iron Age,TRUE,0.31,spring
+6,5586,-5.48,-6.93,10.39,232.98,Turgen,M/2,left,12,sheep,Late Bronze Age/Iron Age,TRUE,0.31,spring
+8,5586,-5.95,-9.44,7.27,256.8,Turgen,M/2,left,12,sheep,Late Bronze Age/Iron Age,TRUE,0.31,spring
+10,5586,-4.53,-13.68,4.14,280.7,Turgen,M/2,left,12,sheep,Late Bronze Age/Iron Age,TRUE,0.31,spring
+1,5587,-10.21,-6.51,27.59,309.6,Turgen,M/2,left,13,sheep,Late Bronze Age/Iron Age,TRUE,0.8,fall
+3,5587,-10.14,-9.34,23.71,334.81,Turgen,M/2,left,13,sheep,Late Bronze Age/Iron Age,TRUE,0.8,fall
+5,5587,-10.05,-10.47,20.02,358.78,Turgen,M/2,left,13,sheep,Late Bronze Age/Iron Age,TRUE,0.8,fall
+7,5587,-10.07,-10.89,17.15,12.43,Turgen,M/2,left,13,sheep,Late Bronze Age/Iron Age,TRUE,0.8,fall
+9,5587,-10.37,-10.79,13.73,34.65,Turgen,M/2,left,13,sheep,Late Bronze Age/Iron Age,TRUE,0.8,fall
+11,5587,-10.78,-9.8,10.25,57.26,Turgen,M/2,left,13,sheep,Late Bronze Age/Iron Age,TRUE,0.8,fall
+13,5587,-11.26,-7.43,7.25,76.75,Turgen,M/2,left,13,sheep,Late Bronze Age/Iron Age,TRUE,0.8,fall
+15,5587,-11.61,-4.73,4.05,97.54,Turgen,M/2,left,13,sheep,Late Bronze Age/Iron Age,TRUE,0.8,fall
+17,5587,-11.41,-3.06,1.24,115.8,Turgen,M/2,left,13,sheep,Late Bronze Age/Iron Age,TRUE,0.8,fall
+1,5588,-6.44,-6.81,23.59,143.48,Turgen,M/2,left,14,sheep,Late Bronze Age/Iron Age,TRUE,0.25,spring
+4,5588,-8.15,-3.66,17.88,178.37,Turgen,M/2,left,14,sheep,Late Bronze Age/Iron Age,TRUE,0.25,spring
+6,5588,-8.41,-2.34,13.91,202.62,Turgen,M/2,left,14,sheep,Late Bronze Age/Iron Age,TRUE,0.25,spring
+8,5588,-6.67,-3.36,11.16,219.42,Turgen,M/2,left,14,sheep,Late Bronze Age/Iron Age,TRUE,0.25,spring
+10,5588,-6.28,-5.26,7.92,239.21,Turgen,M/2,left,14,sheep,Late Bronze Age/Iron Age,TRUE,0.25,spring
+12,5588,-5.37,-7.91,4.91,257.6,Turgen,M/2,left,14,sheep,Late Bronze Age/Iron Age,TRUE,0.25,spring
+14,5588,-3.83,-11.34,1.79,276.66,Turgen,M/2,left,14,sheep,Late Bronze Age/Iron Age,TRUE,0.25,spring
+1,5589,-10.48,-3.68,9.26,133.6,Turgen,M/2,left,15,sheep,Late Bronze Age/Iron Age,TRUE,0.45,summer
+2,5589,-9.88,-2.32,7.42,178.84,Turgen,M/2,left,15,sheep,Late Bronze Age/Iron Age,TRUE,0.45,summer
+3,5589,-9.37,-2.64,5.67,221.88,Turgen,M/2,left,15,sheep,Late Bronze Age/Iron Age,TRUE,0.45,summer
+4,5589,-9.31,-3.83,3.94,264.42,Turgen,M/2,left,15,sheep,Late Bronze Age/Iron Age,TRUE,0.45,summer
+5,5589,-9.08,-4.77,2.66,295.9,Turgen,M/2,left,15,sheep,Late Bronze Age/Iron Age,TRUE,0.45,summer
+6,5589,-9.4,-6.33,1.02,336.23,Turgen,M/2,left,15,sheep,Late Bronze Age/Iron Age,TRUE,0.45,summer
+1,CHP01,-9.63,-10.13,30.1,345.2,Chap,M/2,right,1,caprine,Final Bronze Age,FALSE,0.22,spring
+2,CHP01,-9.74,-10.76,27.3,7.83,Chap,M/2,right,1,caprine,Final Bronze Age,FALSE,0.22,spring
+3,CHP01,-9.83,-10.32,24.6,34.47,Chap,M/2,right,1,caprine,Final Bronze Age,FALSE,0.22,spring
+4,CHP01,-9.78,-9.52,21.9,61.12,Chap,M/2,right,1,caprine,Final Bronze Age,FALSE,0.22,spring
+5,CHP01,-9.63,-7.8,19.4,85.79,Chap,M/2,right,1,caprine,Final Bronze Age,FALSE,0.22,spring
+6,CHP01,-9.63,-4.92,16.7,112.43,Chap,M/2,right,1,caprine,Final Bronze Age,FALSE,0.22,spring
+7,CHP01,-9.95,-3.26,14.4,135.13,Chap,M/2,right,1,caprine,Final Bronze Age,FALSE,0.22,spring
+8,CHP01,-10.02,-1.13,11.9,159.8,Chap,M/2,right,1,caprine,Final Bronze Age,FALSE,0.22,spring
+9,CHP01,-10.06,-0.59,9.7,181.51,Chap,M/2,right,1,caprine,Final Bronze Age,FALSE,0.22,spring
+10,CHP01,-10.04,-0.56,7.2,206.18,Chap,M/2,right,1,caprine,Final Bronze Age,FALSE,0.22,spring
+11,CHP01,-9.63,-1.17,4.6,231.84,Chap,M/2,right,1,caprine,Final Bronze Age,FALSE,0.22,spring
+1,CHP02,-7.15,-6.6,34.2,294.63,Chap,M/2,right,2,caprine,Final Bronze Age,FALSE,0.11,winter
+2,CHP02,-7,-7.93,31.5,318.88,Chap,M/2,right,2,caprine,Final Bronze Age,FALSE,0.11,winter
+3,CHP02,-7.1,-9.46,28.7,344.02,Chap,M/2,right,2,caprine,Final Bronze Age,FALSE,0.11,winter
+4,CHP02,-7.1,-10.36,25.9,4.17,Chap,M/2,right,2,caprine,Final Bronze Age,FALSE,0.11,winter
+5,CHP02,-7.51,-10.74,23,30.21,Chap,M/2,right,2,caprine,Final Bronze Age,FALSE,0.11,winter
+6,CHP02,-7.86,-10.23,20.5,52.66,Chap,M/2,right,2,caprine,Final Bronze Age,FALSE,0.11,winter
+7,CHP02,-8.26,-8.11,17.8,76.91,Chap,M/2,right,2,caprine,Final Bronze Age,FALSE,0.11,winter
+8,CHP02,-8.77,-6.42,15.1,101.15,Chap,M/2,right,2,caprine,Final Bronze Age,FALSE,0.11,winter
+9,CHP02,-9.33,-3.19,12.5,124.5,Chap,M/2,right,2,caprine,Final Bronze Age,FALSE,0.11,winter
+10,CHP02,-9.77,-1.49,10.1,146.05,Chap,M/2,right,2,caprine,Final Bronze Age,FALSE,0.11,winter
+11,CHP02,-9.74,-1.2,8.2,163.11,Chap,M/2,right,2,caprine,Final Bronze Age,FALSE,0.11,winter
+1,CHP03,-8.54,-9.56,27.1,343.74,Chap,M/3,right,3,caprine,Final Bronze Age,FALSE,0.55,summer
+2,CHP03,-8.5,-9.4,24.1,25.19,Chap,M/3,right,3,caprine,Final Bronze Age,FALSE,0.55,summer
+3,CHP03,-8.98,-8.4,21.2,70.09,Chap,M/3,right,3,caprine,Final Bronze Age,FALSE,0.55,summer
+4,CHP03,-9.45,-6.03,18.4,113.45,Chap,M/3,right,3,caprine,Final Bronze Age,FALSE,0.55,summer
+5,CHP03,-9.96,-2.5,15.4,159.9,Chap,M/3,right,3,caprine,Final Bronze Age,FALSE,0.55,summer
+6,CHP03,-10.17,-1.75,13,197.06,Chap,M/3,right,3,caprine,Final Bronze Age,FALSE,0.55,summer
+7,CHP03,-9.55,-3.18,10,243.52,Chap,M/3,right,3,caprine,Final Bronze Age,FALSE,0.55,summer
+8,CHP03,-8.71,-5.66,7.4,283.78,Chap,M/3,right,3,caprine,Final Bronze Age,FALSE,0.55,summer
+1,CHP04,-8.68,-3.32,31.3,319.87,Chap,M/2,right,4,caprine,Final Bronze Age,FALSE,0.8,fall
+2,CHP04,-8.18,-4.61,29,332.44,Chap,M/2,right,4,caprine,Final Bronze Age,FALSE,0.8,fall
+3,CHP04,-8.22,-5.95,26.7,345.01,Chap,M/2,right,4,caprine,Final Bronze Age,FALSE,0.8,fall
+4,CHP04,-8.02,-7.12,24.2,358.68,Chap,M/2,right,4,caprine,Final Bronze Age,FALSE,0.8,fall
+5,CHP04,-7.92,-8.31,21.7,7.34,Chap,M/2,right,4,caprine,Final Bronze Age,FALSE,0.8,fall
+6,CHP04,-8.02,-8.78,19,22.1,Chap,M/2,right,4,caprine,Final Bronze Age,FALSE,0.8,fall
+7,CHP04,-8.18,-8.78,16.7,34.67,Chap,M/2,right,4,caprine,Final Bronze Age,FALSE,0.8,fall
+8,CHP04,-8.57,-7.39,14.4,47.24,Chap,M/2,right,4,caprine,Final Bronze Age,FALSE,0.8,fall
+9,CHP04,-9,-5.46,12.2,59.26,Chap,M/2,right,4,caprine,Final Bronze Age,FALSE,0.8,fall
+10,CHP04,-9.38,-2.44,10.3,69.65,Chap,M/2,right,4,caprine,Final Bronze Age,FALSE,0.8,fall
+11,CHP04,-9.54,-0.37,8.1,81.67,Chap,M/2,right,4,caprine,Final Bronze Age,FALSE,0.8,fall
+12,CHP04,-9.58,0.88,6.2,92.06,Chap,M/2,right,4,caprine,Final Bronze Age,FALSE,0.8,fall
+1,CHP05,-9.61,-7.16,21.4,137.21,Chap,M/3,left,5,caprine,Final Bronze Age,FALSE,0.29,spring
+2,CHP05,-10.13,-5.13,18.5,159.51,Chap,M/3,left,5,caprine,Final Bronze Age,FALSE,0.29,spring
+3,CHP05,-10.39,-3.2,15.8,180.28,Chap,M/3,left,5,caprine,Final Bronze Age,FALSE,0.29,spring
+4,CHP05,-10.27,-2.32,12.7,204.11,Chap,M/3,left,5,caprine,Final Bronze Age,FALSE,0.29,spring
+5,CHP05,-9.56,-3.45,9.8,226.42,Chap,M/3,left,5,caprine,Final Bronze Age,FALSE,0.29,spring
+6,CHP05,-9.06,-6.31,6.9,248.72,Chap,M/3,left,5,caprine,Final Bronze Age,FALSE,0.29,spring
+7,CHP05,-8.84,-9.96,4,271.02,Chap,M/3,left,5,caprine,Final Bronze Age,FALSE,0.29,spring
+1,CHP06,-7.57,-5.55,37.1,282.61,Chap,M/3,left,6,caprine,Final Bronze Age,FALSE,0.35,spring
+2,CHP06,-7.67,-7.61,34.4,312.23,Chap,M/3,left,6,caprine,Final Bronze Age,FALSE,0.35,spring
+3,CHP06,-8,-8.63,32,338.56,Chap,M/3,left,6,caprine,Final Bronze Age,FALSE,0.35,spring
+4,CHP06,-8.11,-9.67,29.7,363.8,Chap,M/3,left,6,caprine,Final Bronze Age,FALSE,0.35,spring
+5,CHP06,-8.39,-9.73,27.2,26.22,Chap,M/3,left,6,caprine,Final Bronze Age,FALSE,0.35,spring
+6,CHP06,-8.83,-9.32,24.9,51.46,Chap,M/3,left,6,caprine,Final Bronze Age,FALSE,0.35,spring
+7,CHP06,-8.96,-7.34,22.5,77.79,Chap,M/3,left,6,caprine,Final Bronze Age,FALSE,0.35,spring
+8,CHP06,-9.45,-6.16,20.1,104.12,Chap,M/3,left,6,caprine,Final Bronze Age,FALSE,0.35,spring
+9,CHP06,-9.54,-4.63,17.7,130.45,Chap,M/3,left,6,caprine,Final Bronze Age,FALSE,0.35,spring
+10,CHP06,-9.43,-2.85,15.6,153.49,Chap,M/3,left,6,caprine,Final Bronze Age,FALSE,0.35,spring
+11,CHP06,-9.52,-1.85,13.5,176.52,Chap,M/3,left,6,caprine,Final Bronze Age,FALSE,0.35,spring
+12,CHP06,-9.54,-1.77,11.4,199.56,Chap,M/3,left,6,caprine,Final Bronze Age,FALSE,0.35,spring
+13,CHP06,-9.24,-2.65,9.3,222.6,Chap,M/3,left,6,caprine,Final Bronze Age,FALSE,0.35,spring
+1,CHP07,-10.41,-0.18,23.9,188.1,Chap,M/2,left,6,caprine,Final Bronze Age,FALSE,0.66,fall
+2,CHP07,-9.6,-0.31,21.5,213.27,Chap,M/2,left,6,caprine,Final Bronze Age,FALSE,0.66,fall
+3,CHP07,-9.26,-1.8,19.2,237.39,Chap,M/2,left,6,caprine,Final Bronze Age,FALSE,0.66,fall
+4,CHP07,-8.87,-2.54,16.4,266.76,Chap,M/2,left,6,caprine,Final Bronze Age,FALSE,0.66,fall
+5,CHP07,-8.65,-4.27,14.2,289.83,Chap,M/2,left,6,caprine,Final Bronze Age,FALSE,0.66,fall
+6,CHP07,-8.36,-6.1,11.7,316.05,Chap,M/2,left,6,caprine,Final Bronze Age,FALSE,0.66,fall
+7,CHP07,-8.41,-7.75,9.6,338.08,Chap,M/2,left,6,caprine,Final Bronze Age,FALSE,0.66,fall
+8,CHP07,-8.63,-9.01,6.7,3.49,Chap,M/2,left,6,caprine,Final Bronze Age,FALSE,0.66,fall
+9,CHP07,-9.1,-8.16,4.2,29.71,Chap,M/2,left,6,caprine,Final Bronze Age,FALSE,0.66,fall
+1,CHP08,-8.81,-8.43,31.7,348.67,Chap,M/2,left,7,caprine,Final Bronze Age,FALSE,0.25,spring
+2,CHP08,-8.61,-8.94,29.2,7.68,Chap,M/2,left,7,caprine,Final Bronze Age,FALSE,0.25,spring
+3,CHP08,-8.72,-8.83,26.7,31.69,Chap,M/2,left,7,caprine,Final Bronze Age,FALSE,0.25,spring
+4,CHP08,-8.66,-7.7,24,57.62,Chap,M/2,left,7,caprine,Final Bronze Age,FALSE,0.25,spring
+5,CHP08,-8.9,-6.69,21.5,81.63,Chap,M/2,left,7,caprine,Final Bronze Age,FALSE,0.25,spring
+6,CHP08,-9.24,-5.12,19.1,104.68,Chap,M/2,left,7,caprine,Final Bronze Age,FALSE,0.25,spring
+7,CHP08,-9.68,-3.25,16.5,129.65,Chap,M/2,left,7,caprine,Final Bronze Age,FALSE,0.25,spring
+8,CHP08,-10.22,-1.71,14.1,152.7,Chap,M/2,left,7,caprine,Final Bronze Age,FALSE,0.25,spring
+9,CHP08,-10.5,-1.11,12.1,171.91,Chap,M/2,left,7,caprine,Final Bronze Age,FALSE,0.25,spring
+10,CHP08,-10.53,-0.83,10.1,191.12,Chap,M/2,left,7,caprine,Final Bronze Age,FALSE,0.25,spring
+1,CHP09,-9.52,-7.26,22.2,313.77,Chap,M/3,right,8,caprine,Final Bronze Age,FALSE,0.32,spring
+2,CHP09,-9.53,-8.39,19.7,354.98,Chap,M/3,right,8,caprine,Final Bronze Age,FALSE,0.32,spring
+3,CHP09,-9.45,-8.61,17,34.49,Chap,M/3,right,8,caprine,Final Bronze Age,FALSE,0.32,spring
+4,CHP09,-9.6,-7.04,14.5,75.71,Chap,M/3,right,8,caprine,Final Bronze Age,FALSE,0.32,spring
+5,CHP09,-9.71,-4.87,12.2,113.62,Chap,M/3,right,8,caprine,Final Bronze Age,FALSE,0.32,spring
+6,CHP09,-9.64,-2.72,10.1,148.24,Chap,M/3,right,8,caprine,Final Bronze Age,FALSE,0.32,spring
+7,CHP09,-9.8,-0.28,7.9,184.51,Chap,M/3,right,8,caprine,Final Bronze Age,FALSE,0.32,spring
+8,CHP09,-9.75,-0.27,6.1,214.19,Chap,M/3,right,8,caprine,Final Bronze Age,FALSE,0.32,spring
+9,CHP09,-9.22,-2.49,4.2,245.51,Chap,M/3,right,8,caprine,Final Bronze Age,FALSE,0.32,spring
+10,CHP09,-8.38,-4.96,2,281.78,Chap,M/3,right,8,caprine,Final Bronze Age,FALSE,0.32,spring
+1,CHP10,-8.98,-8.65,17.9,29.83,Chap,M/2,right,8,caprine,Final Bronze Age,FALSE,0.31,spring
+2,CHP10,-9.13,-6.76,15.4,69.18,Chap,M/2,right,8,caprine,Final Bronze Age,FALSE,0.31,spring
+3,CHP10,-9.3,-4.52,13,106.96,Chap,M/2,right,8,caprine,Final Bronze Age,FALSE,0.31,spring
+4,CHP10,-9.37,-2.34,10.2,151.04,Chap,M/2,right,8,caprine,Final Bronze Age,FALSE,0.31,spring
+5,CHP10,-9.35,-0.26,7.8,188.81,Chap,M/2,right,8,caprine,Final Bronze Age,FALSE,0.31,spring
+6,CHP10,-9.6,-1.13,5.4,226.59,Chap,M/2,right,8,caprine,Final Bronze Age,FALSE,0.31,spring
+7,CHP10,-9.43,-3.6,2.7,269.09,Chap,M/2,right,8,caprine,Final Bronze Age,FALSE,0.31,spring
+1,IBX01,-11.83,-4.65,30.8,141.67,Jeti-Oguz,M/2,left,9,ibex,Modern,FALSE,0.29,spring
+2,IBX01,-11.86,-3.93,27.9,191.16,Jeti-Oguz,M/2,left,9,ibex,Modern,FALSE,0.29,spring
+3,IBX01,-11.15,-5.15,25.1,238.95,Jeti-Oguz,M/2,left,9,ibex,Modern,FALSE,0.29,spring
+4,IBX01,-10.71,-6.99,22.1,290.15,Jeti-Oguz,M/2,left,9,ibex,Modern,FALSE,0.29,spring
+5,IBX01,-10.24,-10.04,19.3,337.93,Jeti-Oguz,M/2,left,9,ibex,Modern,FALSE,0.29,spring
+6,IBX01,-9.98,-12.57,16.7,17.31,Jeti-Oguz,M/2,left,9,ibex,Modern,FALSE,0.29,spring
+7,IBX01,-10,-10.99,14.3,58.27,Jeti-Oguz,M/2,left,9,ibex,Modern,FALSE,0.29,spring
+8,IBX01,-10.59,-8.16,11.5,106.05,Jeti-Oguz,M/2,left,9,ibex,Modern,FALSE,0.29,spring
+9,IBX01,-11.2,-4.15,8.7,153.84,Jeti-Oguz,M/2,left,9,ibex,Modern,FALSE,0.29,spring
+10,IBX01,-10.91,-5.43,6,199.92,Jeti-Oguz,M/2,left,9,ibex,Modern,FALSE,0.29,spring
+1,IBX02,-10.03,-10.72,39.5,24.63,Jeti-Oguz,M/3,left,9,ibex,Modern,FALSE,0.14,spring
+2,IBX02,-10.42,-8.54,37,62.02,Jeti-Oguz,M/3,left,9,ibex,Modern,FALSE,0.14,spring
+3,IBX02,-10.81,-6.3,34,106.88,Jeti-Oguz,M/3,left,9,ibex,Modern,FALSE,0.14,spring
+4,IBX02,-11.13,-3.78,31.3,147.25,Jeti-Oguz,M/3,left,9,ibex,Modern,FALSE,0.14,spring
+5,IBX02,-11.31,-2.59,28.1,195.1,Jeti-Oguz,M/3,left,9,ibex,Modern,FALSE,0.14,spring
+6,IBX02,-10.95,-3.85,25.2,238.47,Jeti-Oguz,M/3,left,9,ibex,Modern,FALSE,0.14,spring
+7,IBX02,-10.8,-5.25,22.5,278.84,Jeti-Oguz,M/3,left,9,ibex,Modern,FALSE,0.14,spring
+8,IBX02,-10.3,-7.62,20,316.22,Jeti-Oguz,M/3,left,9,ibex,Modern,FALSE,0.14,spring
+9,IBX02,-10.15,-9.94,17,361.08,Jeti-Oguz,M/3,left,9,ibex,Modern,FALSE,0.14,spring
+10,IBX02,-10.36,-10.35,14.3,36.46,Jeti-Oguz,M/3,left,9,ibex,Modern,FALSE,0.14,spring
+11,IBX02,-10.56,-8.33,11.8,73.84,Jeti-Oguz,M/3,left,9,ibex,Modern,FALSE,0.14,spring
+12,IBX02,-11.25,-4.67,8.5,123.18,Jeti-Oguz,M/3,left,9,ibex,Modern,FALSE,0.14,spring
+1,IBX03,-11.67,-7.99,39.4,225.62,Jeti-Oguz,M/3,right,10,ibex,Modern,FALSE,0.99,winter
+2,IBX03,-11.51,-10.14,36.8,295.86,Jeti-Oguz,M/3,right,10,ibex,Modern,FALSE,0.99,winter
+3,IBX03,-11.11,-12.12,33.8,11.9,Jeti-Oguz,M/3,right,10,ibex,Modern,FALSE,0.99,winter
+4,IBX03,-11.12,-9.87,31.1,84.83,Jeti-Oguz,M/3,right,10,ibex,Modern,FALSE,0.99,winter
+5,IBX03,-11.49,-5.47,28.5,155.06,Jeti-Oguz,M/3,right,10,ibex,Modern,FALSE,0.99,winter
+6,IBX03,-11.76,-3.62,25.6,233.4,Jeti-Oguz,M/3,right,10,ibex,Modern,FALSE,0.99,winter
+7,IBX03,-11.5,-5.32,22.9,306.34,Jeti-Oguz,M/3,right,10,ibex,Modern,FALSE,0.99,winter
+8,IBX03,-10.99,-9.05,20.2,14.27,Jeti-Oguz,M/3,right,10,ibex,Modern,FALSE,0.99,winter
+9,IBX03,-10.41,-10.04,17.7,81.8,Jeti-Oguz,M/3,right,10,ibex,Modern,FALSE,0.99,winter
+10,IBX03,-11.15,-5.47,14.9,157.44,Jeti-Oguz,M/3,right,10,ibex,Modern,FALSE,0.99,winter
+11,IBX03,-11.28,-6.23,12.3,227.67,Jeti-Oguz,M/3,right,10,ibex,Modern,FALSE,0.99,winter
+12,IBX03,-10.03,-9.95,9.7,297.91,Jeti-Oguz,M/3,right,10,ibex,Modern,FALSE,0.99,winter
+1,IBX04,-11.55,-11.05,28.3,300.47,Jeti-Oguz,M/2,right,10,ibex,Modern,FALSE,0.45,summer
+2,IBX04,-11.13,-12.19,25.3,19.29,Jeti-Oguz,M/2,right,10,ibex,Modern,FALSE,0.45,summer
+3,IBX04,-11.38,-10.14,22.4,100.31,Jeti-Oguz,M/2,right,10,ibex,Modern,FALSE,0.45,summer
+4,IBX04,-12.04,-5.98,19.4,184.13,Jeti-Oguz,M/2,right,10,ibex,Modern,FALSE,0.45,summer
+5,IBX04,-12.17,-4.71,16.9,253.98,Jeti-Oguz,M/2,right,10,ibex,Modern,FALSE,0.45,summer
+6,IBX04,-11.63,-8.11,14.4,323.83,Jeti-Oguz,M/2,right,10,ibex,Modern,FALSE,0.45,summer
+7,IBX04,-11.26,-11.12,11.9,28.67,Jeti-Oguz,M/2,right,10,ibex,Modern,FALSE,0.45,summer
+8,IBX04,-11.03,-7.32,9.4,98.52,Jeti-Oguz,M/2,right,10,ibex,Modern,FALSE,0.45,summer
+9,IBX04,-11.31,-4.83,6.9,168.37,Jeti-Oguz,M/2,right,10,ibex,Modern,FALSE,0.45,summer
+1,T020,-10.46,-7.27,28.08,296.07,Bayan-Zherek,M/2,left,1,caprine,Modern,TRUE,0.36,spring
+2,T020,-10.56,-7.88,27.21,308.37,Bayan-Zherek,M/2,left,1,caprine,Modern,TRUE,0.36,spring
+3,T020,-10.61,-8.67,26.16,323.21,Bayan-Zherek,M/2,left,1,caprine,Modern,TRUE,0.36,spring
+4,T020,-10.55,-8.6,24.95,340.32,Bayan-Zherek,M/2,left,1,caprine,Modern,TRUE,0.36,spring
+5,T020,-10.55,-9.56,23.88,355.44,Bayan-Zherek,M/2,left,1,caprine,Modern,TRUE,0.36,spring
+6,T020,-10.28,-9.19,22.34,12.21,Bayan-Zherek,M/2,left,1,caprine,Modern,TRUE,0.36,spring
+7,T020,-10.29,-9.78,21.04,30.59,Bayan-Zherek,M/2,left,1,caprine,Modern,TRUE,0.36,spring
+8,T020,-10.29,-9.62,19.81,47.97,Bayan-Zherek,M/2,left,1,caprine,Modern,TRUE,0.36,spring
+9,T020,-10.56,-9.09,18.32,69.04,Bayan-Zherek,M/2,left,1,caprine,Modern,TRUE,0.36,spring
+10,T020,-10.7,-8.25,17.14,85.72,Bayan-Zherek,M/2,left,1,caprine,Modern,TRUE,0.36,spring
+11,T020,-10.98,-6.55,15.9,103.24,Bayan-Zherek,M/2,left,1,caprine,Modern,TRUE,0.36,spring
+12,T020,-11.41,-5.16,14.44,123.88,Bayan-Zherek,M/2,left,1,caprine,Modern,TRUE,0.36,spring
+13,T020,-11.74,-3.41,13.19,141.55,Bayan-Zherek,M/2,left,1,caprine,Modern,TRUE,0.36,spring
+14,T020,-12,-1.41,11.7,162.61,Bayan-Zherek,M/2,left,1,caprine,Modern,TRUE,0.36,spring
+15,T020,-12.38,-0.92,10.16,184.38,Bayan-Zherek,M/2,left,1,caprine,Modern,TRUE,0.36,spring
+16,T020,-12.26,-0.97,8.59,206.57,Bayan-Zherek,M/2,left,1,caprine,Modern,TRUE,0.36,spring
+17,T020,-11.98,-2.02,7.07,228.06,Bayan-Zherek,M/2,left,1,caprine,Modern,TRUE,0.36,spring
+18,T020,-11.74,-3.13,5.7,247.43,Bayan-Zherek,M/2,left,1,caprine,Modern,TRUE,0.36,spring
+19,T020,-11.3,-4.43,4.41,265.66,Bayan-Zherek,M/2,left,1,caprine,Modern,TRUE,0.36,spring
+20,T020,-11.13,-5.91,3.08,284.46,Bayan-Zherek,M/2,left,1,caprine,Modern,TRUE,0.36,spring
+21,T020,-10.77,-6.9,1.92,300.86,Bayan-Zherek,M/2,left,1,caprine,Modern,TRUE,0.36,spring
+1,T032,-7.06,-6.57,40.02,291.31,Begash,M/2,left,2,caprine,Late Bronze Age,TRUE,0.96,winter
+2,T032,-6.64,-7.85,37.26,308.98,Begash,M/2,left,2,caprine,Late Bronze Age,TRUE,0.96,winter
+3,T032,-6.86,-8.83,34.66,325.62,Begash,M/2,left,2,caprine,Late Bronze Age,TRUE,0.96,winter
+4,T032,-6.95,-9.85,31.79,343.99,Begash,M/2,left,2,caprine,Late Bronze Age,TRUE,0.96,winter
+5,T032,-7.2,-10.91,29.12,361.08,Begash,M/2,left,2,caprine,Late Bronze Age,TRUE,0.96,winter
+6,T032,-7.37,-11.31,26.73,11.38,Begash,M/2,left,2,caprine,Late Bronze Age,TRUE,0.96,winter
+7,T032,-8.05,-11.7,23.69,30.84,Begash,M/2,left,2,caprine,Late Bronze Age,TRUE,0.96,winter
+8,T032,-8.36,-11.17,21.28,46.27,Begash,M/2,left,2,caprine,Late Bronze Age,TRUE,0.96,winter
+9,T032,-8.43,-10,18.33,65.15,Begash,M/2,left,2,caprine,Late Bronze Age,TRUE,0.96,winter
+10,T032,-9.29,-7.88,15.46,83.52,Begash,M/2,left,2,caprine,Late Bronze Age,TRUE,0.96,winter
+11,T032,-10.16,-6.26,12.83,100.36,Begash,M/2,left,2,caprine,Late Bronze Age,TRUE,0.96,winter
+12,T032,-10.72,-3.2,9.47,121.86,Begash,M/2,left,2,caprine,Late Bronze Age,TRUE,0.96,winter
+13,T032,-11.17,-2.67,6.38,141.64,Begash,M/2,left,2,caprine,Late Bronze Age,TRUE,0.96,winter
+1,T033,-9.52,-12.14,39.91,329.85,Dali,M/2,right,3,caprine,Final Bronze Age,TRUE,0.41,summer
+2,T033,-9.59,-12.37,38.46,343.69,Dali,M/2,right,3,caprine,Final Bronze Age,TRUE,0.41,summer
+3,T033,-9.48,-12.77,37.18,355.9,Dali,M/2,right,3,caprine,Final Bronze Age,TRUE,0.41,summer
+4,T033,-9.59,-12.98,35.87,3.4,Dali,M/2,right,3,caprine,Final Bronze Age,TRUE,0.41,summer
+5,T033,-9.62,-12.9,34.43,17.14,Dali,M/2,right,3,caprine,Final Bronze Age,TRUE,0.41,summer
+6,T033,-9.75,-13,33.07,30.12,Dali,M/2,right,3,caprine,Final Bronze Age,TRUE,0.41,summer
+7,T033,-9.91,-12.38,31.45,45.57,Dali,M/2,right,3,caprine,Final Bronze Age,TRUE,0.41,summer
+8,T033,-10.09,-12.36,30.3,56.55,Dali,M/2,right,3,caprine,Final Bronze Age,TRUE,0.41,summer
+9,T033,-10.02,-11.21,28.89,70,Dali,M/2,right,3,caprine,Final Bronze Age,TRUE,0.41,summer
+10,T033,-10.29,-10.99,27.62,82.12,Dali,M/2,right,3,caprine,Final Bronze Age,TRUE,0.41,summer
+11,T033,-10.47,-9.77,26.29,94.81,Dali,M/2,right,3,caprine,Final Bronze Age,TRUE,0.41,summer
+12,T033,-10.34,-8.85,25.02,106.93,Dali,M/2,right,3,caprine,Final Bronze Age,TRUE,0.41,summer
+13,T033,-10.57,-8.78,23.74,119.14,Dali,M/2,right,3,caprine,Final Bronze Age,TRUE,0.41,summer
+14,T033,-10.63,-7.82,22.37,132.21,Dali,M/2,right,3,caprine,Final Bronze Age,TRUE,0.41,summer
+15,T033,-10.55,-6.8,20.98,145.48,Dali,M/2,right,3,caprine,Final Bronze Age,TRUE,0.41,summer
+16,T033,-10.48,-5.59,19.53,159.31,Dali,M/2,right,3,caprine,Final Bronze Age,TRUE,0.41,summer
+17,T033,-10.23,-4.76,18.15,172.48,Dali,M/2,right,3,caprine,Final Bronze Age,TRUE,0.41,summer
+18,T033,-10.12,-4.46,16.76,185.74,Dali,M/2,right,3,caprine,Final Bronze Age,TRUE,0.41,summer
+19,T033,-10.25,-4.82,15.4,198.72,Dali,M/2,right,3,caprine,Final Bronze Age,TRUE,0.41,summer
+20,T033,-9.88,-4.94,14.06,211.5,Dali,M/2,right,3,caprine,Final Bronze Age,TRUE,0.41,summer
+21,T033,-9.83,-5.84,12.8,223.53,Dali,M/2,right,3,caprine,Final Bronze Age,TRUE,0.41,summer
+22,T033,-9.72,-6.1,11.49,236.03,Dali,M/2,right,3,caprine,Final Bronze Age,TRUE,0.41,summer
+23,T033,-9.37,-6.37,10.26,247.76,Dali,M/2,right,3,caprine,Final Bronze Age,TRUE,0.41,summer
+24,T033,-9.1,-7.13,8.93,260.45,Dali,M/2,right,3,caprine,Final Bronze Age,TRUE,0.41,summer
+1,T085,-11.17,-2.53,27.24,165.8,Dali,M/2,right,4,caprine,Early Bronze Age,TRUE,0.57,summer
+2,T085,-10.94,-2.67,23.87,195.65,Dali,M/2,right,4,caprine,Early Bronze Age,TRUE,0.57,summer
+3,T085,-10.86,-2.85,20.31,227.17,Dali,M/2,right,4,caprine,Early Bronze Age,TRUE,0.57,summer
+4,T085,-10.37,-4.29,16.72,258.97,Dali,M/2,right,4,caprine,Early Bronze Age,TRUE,0.57,summer
+5,T085,-9.74,-6.37,12.98,292.09,Dali,M/2,right,4,caprine,Early Bronze Age,TRUE,0.57,summer
+6,T085,-9.48,-8.97,9.44,323.44,Dali,M/2,right,4,caprine,Early Bronze Age,TRUE,0.57,summer
+7,T085,-9.67,-10.96,6.28,351.43,Dali,M/2,right,4,caprine,Early Bronze Age,TRUE,0.57,summer
+8,T085,-10.03,-10.47,3.12,14.42,Dali,M/2,right,4,caprine,Early Bronze Age,TRUE,0.57,summer
+1,T113,-8.69,-4.6,36.76,284.15,Begash,M/2,left,5,caprine,Late Bronze Age,TRUE,0.93,winter
+2,T113,-8.65,-6.7,33.64,305.65,Begash,M/2,left,5,caprine,Late Bronze Age,TRUE,0.93,winter
+3,T113,-8.98,-8.75,30.48,327.41,Begash,M/2,left,5,caprine,Late Bronze Age,TRUE,0.93,winter
+4,T113,-9.1,-9.94,27.23,349.8,Begash,M/2,left,5,caprine,Late Bronze Age,TRUE,0.93,winter
+5,T113,-9.35,-10.59,23.39,11.26,Begash,M/2,left,5,caprine,Late Bronze Age,TRUE,0.93,winter
+6,T113,-9.64,-10.87,21.07,27.24,Begash,M/2,left,5,caprine,Late Bronze Age,TRUE,0.93,winter
+7,T113,-10.21,-10.22,18.49,45.01,Begash,M/2,left,5,caprine,Late Bronze Age,TRUE,0.93,winter
+8,T113,-10.49,-8.71,15.52,65.47,Begash,M/2,left,5,caprine,Late Bronze Age,TRUE,0.93,winter
+9,T113,-10.85,-7.11,12.8,84.21,Begash,M/2,left,5,caprine,Late Bronze Age,TRUE,0.93,winter
+10,T113,-11.06,-4.99,9.45,107.29,Begash,M/2,left,5,caprine,Late Bronze Age,TRUE,0.93,winter
+1,T114,-10.14,-9.03,36.06,73.85,Begash,M/2,right,6,caprine,Late Bronze Age,TRUE,0.49,summer
+2,T114,-10.37,-8.6,34.43,87.54,Begash,M/2,right,6,caprine,Late Bronze Age,TRUE,0.49,summer
+3,T114,-10.47,-7.84,32.69,102.16,Begash,M/2,right,6,caprine,Late Bronze Age,TRUE,0.49,summer
+4,T114,-10.74,-6.52,31.04,116.02,Begash,M/2,right,6,caprine,Late Bronze Age,TRUE,0.49,summer
+5,T114,-10.87,-5.13,29.09,132.4,Begash,M/2,right,6,caprine,Late Bronze Age,TRUE,0.49,summer
+6,T114,-10.94,-4.2,27.41,146.52,Begash,M/2,right,6,caprine,Late Bronze Age,TRUE,0.49,summer
+7,T114,-10.98,-2.84,25.19,165.17,Begash,M/2,right,6,caprine,Late Bronze Age,TRUE,0.49,summer
+8,T114,-10.91,-2.15,23.3,181.05,Begash,M/2,right,6,caprine,Late Bronze Age,TRUE,0.49,summer
+9,T114,-10.82,-2.03,20.79,202.13,Begash,M/2,right,6,caprine,Late Bronze Age,TRUE,0.49,summer
+10,T114,-10.52,-2.39,18,225.57,Begash,M/2,right,6,caprine,Late Bronze Age,TRUE,0.49,summer
+11,T114,-10.29,-3.8,15.37,247.66,Begash,M/2,right,6,caprine,Late Bronze Age,TRUE,0.49,summer
+12,T114,-9.9,-5.63,12.15,274.72,Begash,M/2,right,6,caprine,Late Bronze Age,TRUE,0.49,summer
+13,T114,-9.43,-8.13,9.05,300.76,Begash,M/2,right,6,caprine,Late Bronze Age,TRUE,0.49,summer
+14,T114,-9.14,-11.13,5.74,328.56,Begash,M/2,right,6,caprine,Late Bronze Age,TRUE,0.49,summer
+1,T115,-8.08,-7.96,29.41,151.23,Begash,M/2,left,7,caprine,Late Bronze Age,TRUE,0.24,spring
+2,T115,-8.18,-5.6,26.65,163.89,Begash,M/2,left,7,caprine,Late Bronze Age,TRUE,0.24,spring
+3,T115,-8.12,-4.63,23.59,177.93,Begash,M/2,left,7,caprine,Late Bronze Age,TRUE,0.24,spring
+4,T115,-7.65,-4.81,20.7,191.2,Begash,M/2,left,7,caprine,Late Bronze Age,TRUE,0.24,spring
+5,T115,-6.7,-4.12,17.96,203.77,Begash,M/2,left,7,caprine,Late Bronze Age,TRUE,0.24,spring
+6,T115,-5.93,-5.15,14.79,218.32,Begash,M/2,left,7,caprine,Late Bronze Age,TRUE,0.24,spring
+7,T115,-5.55,-6.49,12.03,230.98,Begash,M/2,left,7,caprine,Late Bronze Age,TRUE,0.24,spring
+8,T115,-5.34,-7.2,9.19,244.02,Begash,M/2,left,7,caprine,Late Bronze Age,TRUE,0.24,spring
+1,T132,-3.6,-8.67,37.75,274.72,Begash,M/2,right,8,caprine,Early Bronze Age,TRUE,0.36,spring
+2,T132,-3.38,-9.9,34.75,308.17,Begash,M/2,right,8,caprine,Early Bronze Age,TRUE,0.36,spring
+3,T132,-3.22,-11.23,31.75,341.62,Begash,M/2,right,8,caprine,Early Bronze Age,TRUE,0.36,spring
+4,T132,-3.63,-12.52,28.43,13.64,Begash,M/2,right,8,caprine,Early Bronze Age,TRUE,0.36,spring
+5,T132,-4.74,-12.47,25.34,48.1,Begash,M/2,right,8,caprine,Early Bronze Age,TRUE,0.36,spring
+6,T132,-6,-10.64,21.83,87.23,Begash,M/2,right,8,caprine,Early Bronze Age,TRUE,0.36,spring
+7,T132,-7.53,-7.9,18.73,121.8,Begash,M/2,right,8,caprine,Early Bronze Age,TRUE,0.36,spring
+8,T132,-8.87,-5.05,15.57,157.04,Begash,M/2,right,8,caprine,Early Bronze Age,TRUE,0.36,spring
+9,T132,-8.73,-3.77,12.16,195.06,Begash,M/2,right,8,caprine,Early Bronze Age,TRUE,0.36,spring
+10,T132,-7.65,-5.08,8.75,233.08,Begash,M/2,right,8,caprine,Early Bronze Age,TRUE,0.36,spring
+11,T132,-6.6,-7.67,5.74,266.65,Begash,M/2,right,8,caprine,Early Bronze Age,TRUE,0.36,spring
+1,T147,-8.27,-9.78,28.66,312.43,Begash,M/2,left,9,caprine,Saka/Scythian,TRUE,0.35,spring
+2,T147,-8.41,-10.59,27.27,330.8,Begash,M/2,left,9,caprine,Saka/Scythian,TRUE,0.35,spring
+3,T147,-8.42,-11.68,25.79,350.36,Begash,M/2,left,9,caprine,Saka/Scythian,TRUE,0.35,spring
+4,T147,-8.51,-12.05,24.16,6.9,Begash,M/2,left,9,caprine,Saka/Scythian,TRUE,0.35,spring
+5,T147,-8.74,-11.91,22.6,27.52,Begash,M/2,left,9,caprine,Saka/Scythian,TRUE,0.35,spring
+6,T147,-8.82,-11.29,21.22,45.76,Begash,M/2,left,9,caprine,Saka/Scythian,TRUE,0.35,spring
+7,T147,-8.94,-10.48,19.62,66.9,Begash,M/2,left,9,caprine,Saka/Scythian,TRUE,0.35,spring
+8,T147,-8.94,-9.25,18.11,86.86,Begash,M/2,left,9,caprine,Saka/Scythian,TRUE,0.35,spring
+9,T147,-9.23,-8.08,16.7,105.49,Begash,M/2,left,9,caprine,Saka/Scythian,TRUE,0.35,spring
+10,T147,-9.2,-6.41,15.32,123.73,Begash,M/2,left,9,caprine,Saka/Scythian,TRUE,0.35,spring
+11,T147,-9.47,-5.14,13.86,143.03,Begash,M/2,left,9,caprine,Saka/Scythian,TRUE,0.35,spring
+12,T147,-9.43,-3.74,12.36,162.85,Begash,M/2,left,9,caprine,Saka/Scythian,TRUE,0.35,spring
+13,T147,-9.35,-2.73,10.94,181.62,Begash,M/2,left,9,caprine,Saka/Scythian,TRUE,0.35,spring
+14,T147,-9.1,-2.32,9.42,201.71,Begash,M/2,left,9,caprine,Saka/Scythian,TRUE,0.35,spring
+15,T147,-8.86,-3.25,7.94,221.27,Begash,M/2,left,9,caprine,Saka/Scythian,TRUE,0.35,spring
+16,T147,-8.25,-4.71,6.38,241.89,Begash,M/2,left,9,caprine,Saka/Scythian,TRUE,0.35,spring
+17,T147,-7.85,-6.1,4.41,267.92,Begash,M/2,left,9,caprine,Saka/Scythian,TRUE,0.35,spring

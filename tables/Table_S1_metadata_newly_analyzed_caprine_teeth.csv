@@ -1,0 +1,15 @@
+specimen,year,date,context,square,bucket,occupation,taxon,element,symmetry,wear_stage,crown_height_mm,drilled_loph,samples,individual,notes,reamaining_skeletal_material
+CHP01,2018,2020-08-08T00:00:00Z,C132,NA,NA,main,caprine,M/2,right,6,32.7,posterior,11,1,not fully mineralized,none
+CHP02,2018,2020-08-07T00:00:00Z,C128,A1,B 1077,main,caprine,M/2,right,4,36.9,anterior,11,2,NA,~10 g bone; dp/4; P/4; M/1
+CHP03,2018,NA,C132,NA,B 1087,main,caprine,M/3,right,8,25.7,anterior,8,3,NA,none
+CHP04,2018,2020-08-07T00:00:00Z,C128,NA,C 1077,main,caprine,M/2,right,6,36.2,anterior,12,4,not fully mineralized,none
+CHP05,2018,NA,C132,NA,B 1093,main,caprine,M/3,left,8,23,posterior,7,5,NA,none
+CHP06,2018,2020-08-08T00:00:00Z,C132,NA,NA,main,caprine,M/3,left,4,39.8,medial,13,6,same indiv as Chap-07; not fully mineralized,none
+CHP07,2018,2020-08-08T00:00:00Z,C132,NA,NA,main,caprine,M/2,left,8,26.1,anterior,9,6,same indiv as Chap-06,none
+CHP08,2018,NA,C132,A1,NA,main,caprine,M/2,left,4,36.2,anterior,10,7,not fully mineralized,~4 g bone
+CHP09,2018,2020-08-11T00:00:00Z,C133,7C,NA,main,caprine,M/3,right,9,25,anterior,10,8,same indiv as Chap-10,none
+CHP10,2018,2020-08-11T00:00:00Z,C133,7C,NA,main,caprine,M/2,right,8,21,anterior,7,8,same indiv as Chap-09,~6 g bone; M/1
+IBX01,2018,NA,No coordinates,NA,NA,wild,Siberian ibex,M/2,left,8,34.3,anterior,10,9,same indiv as Ibex-02,NA
+IBX02,2018,NA,No coordinates,NA,NA,wild,Siberian ibex,M/3,left,8,41.8,anterior,12,9,same indiv as Ibex-01,NA
+IBX03,2018,2020-08-22T00:00:00Z,"41.94595, 78.52374",cluster M3.24,NA,wild,Siberian ibex,M/3,right,9,43.7,anterior,13,10,same indiv as Ibex-04,NA
+IBX04,2018,2020-08-22T00:00:00Z,"41.94595, 78.52374",cluster M3.24,NA,wild,Siberian ibex,M/2,right,8,30.7,anterior,10,10,same indiv as Ibex-03,NA
