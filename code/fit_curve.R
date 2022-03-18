@@ -11,7 +11,7 @@ fit_curve <- function(isodata) {
   # }
   # x <- seq(50,0,0.5)
   # # A: Amplitude
-  # # x_0: phase
+  # # x_0: phase shift
   # # z: period
   # # M: y-axis offset
   # 
@@ -27,11 +27,11 @@ fit_curve <- function(isodata) {
   # simple_iso_plot(d$X, d$Y, isodata$d13C, FD)
   
   # cos curve fitting starting parameters and search range
-  low     <-  list(A = 1,  x_0 = 0,  z = 10, M = -15)
+  low     <-  list(A = 1,  x_0 = -45,  z = 10, M = -15)
   starts <- list(
-    start_1 = list(A = 3,  x_0 = 22, z = 16, M = -8 ),
-    start_2 = list(A = 5,  x_0 = 10, z = 45, M = -5 ),
-    start_3 = list(A = 5,  x_0 = 30, z = 45, M = -5 )
+    start_1 = list(A = 3,  x_0 = -25, z = 16, M = -8 ),
+    start_2 = list(A = 5,  x_0 = 0, z = 45, M = -5 ),
+    start_3 = list(A = 5,  x_0 = 25, z = 45, M = -5 )
   )
   up      <-  list(A = 15, x_0 = 45, z = 90, M =  10)
   
