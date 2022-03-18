@@ -204,18 +204,20 @@ birth_proxy_for_each_specimen <- purrr::map_df(
       birth_season_simple_fit = determine_birth_season(birth_simple_fit),
       birth_resampling_mean = birth_resampling_mean,
       birth_resampling_sd = birth_resampling_sd,
-      birth_season_resampling_mean = determine_birth_season(birth_resampling_mean)
+      birth_season_resampling_mean = determine_birth_season(birth_resampling_mean),
+      birth_resampling_distribution = list(births_resampling)
     )
   }
 )
 
 # Merge birth info into specimen overview table 
-specimen_overview_birth <- dplyr::left_join(
+specimen_overview_birth_with_distribution <- dplyr::left_join(
   specimen_overview,
   birth_proxy_for_each_specimen,
   by = "specimen"
 )
-
+specimen_overview_birth <- specimen_overview_birth_with_distribution %>%
+  dplyr::select(-birth_resampling_distribution)
 
 #### Part II ####
 # In the second part of this script we derive meaningful summary statistics and
@@ -403,7 +405,7 @@ ggsave(
 )
 
 # Birth seasonality plot for all sites
-birth <- specimen_overview_birth %>%
+birth <- specimen_overview_birth_with_distribution %>%
   dplyr::filter(element == "M/2") %>%
   dplyr::mutate(
     site = factor(
@@ -412,6 +414,9 @@ birth <- specimen_overview_birth %>%
     ),
     specimen = forcats::fct_reorder(specimen, birth_resampling_mean)
   )
+birth_ridges <- birth %>%
+  dplyr::select(specimen, site, birth_resampling_distribution) %>%
+  tidyr::unnest(cols = birth_resampling_distribution)
 
 birth_plot <- birth %>%
   ggplot() +
@@ -423,20 +428,30 @@ birth_plot <- birth %>%
   geom_errorbarh(
     mapping = aes(
       y = specimen,
-      xmin = birth_resampling_mean - birth_resampling_sd,    # 2-sigma, for 1-sigma insert /2
-      xmax = birth_resampling_mean + birth_resampling_sd     # 2-sigma, for 1-sigma insert /2
+      xmin = birth_resampling_mean - 2*birth_resampling_sd, # (2*) -> 2-sigma
+      xmax = birth_resampling_mean + 2*birth_resampling_sd
     ),
-    size = 0.3, height = 0.3
+    size = 0.3, height = 0.3,
+
+    position = position_nudge(y = -0.2)
   ) +
   geom_point(
     aes(birth_resampling_mean, specimen),
-    size = 1.5, shape = 16
+    size = 1.5, shape = 16,
+
+    position = position_nudge(y = -0.2)
   ) +
   # geom_point(
   #   aes(birth_simple_fit, specimen),
   #   size = 2,
-  #   colour = "red"
+  #   colour = "green"
   # ) +
+  ggridges::geom_density_ridges(
+    data = birth_ridges,
+    mapping = aes(birth_resampling_distribution, specimen),
+    panel_scaling = FALSE,
+    rel_min_height = 0.01
+  ) +
   theme_bw() +
   theme(
     strip.text.y = element_text(angle = 0)
@@ -451,8 +466,9 @@ birth_plot <- birth %>%
   )
 
 ggsave(
-  "plots/Figure_3.png",
+  "plots/Figure_3.pdf",
   birth_plot,
   dpi = 300,
-  width = 40, height = 30, units = c("cm"), scale = .4
+  width = 40, height = 40, units = c("cm"), scale = .45,
+  device = grDevices::cairo_pdf
 )
