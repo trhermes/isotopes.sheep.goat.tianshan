@@ -13,7 +13,7 @@ The files at the URL above will generate the results as found in the publication
 
 ### Published in:
 
-**(in Print)**: ...
+**(in Print)**: *International Journal of Osteoarchaeology*
 
 ### Overview of contents:
 
