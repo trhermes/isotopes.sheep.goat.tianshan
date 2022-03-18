@@ -1,6 +1,8 @@
 library(magrittr)
 library(ggplot2)
 
+set.seed(1357)
+
 #### Part 0 ####
 # Fetch and prepare isotope data to read in via CSVs
 
