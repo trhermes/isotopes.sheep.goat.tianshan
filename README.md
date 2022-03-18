@@ -28,7 +28,7 @@ The actual computation happens in `main_workflow.R`, from which we outsourced va
 As the data and code in this repository are complete and self-contained, it can be reproduced with only an R environment (tested for R v4.1.0). The necessary package dependencies are documented in the `DESCRIPTION` file and can be installed manually or automatically with 
 
 ```r
-devtools::install(repos = "https://mran.microsoft.com/snapshot/2022-02-22")
+devtools::install(repos = "https://mran.microsoft.com/snapshot/2022-03-18")
 ```
 
 ### Licenses:
