@@ -61,9 +61,9 @@ map <- get_stamenmap(map_borders, zoom = 9, maptype = "terrain-background", forc
 mountains <- tibble::tribble(
   ~name,       ~lat, ~long, ~rotate,
   "Pamir Mnts.",     38.1,  73.1,   0,
-  "Tian Shan Mnts.", 40.8,  74.5, 20,
+  "Tian Shan Mnts.", 40.75,  74.5, 20,
   "Tian Shan Mnts.", 43,    84,   20,
-  "Dzhungar Mnts.",  44.6,  82.5, -15,
+  "Dzhungar Mnts.",  44.55,  82.5, -15,
   "Altai Mnts.",     49.5,  84.8, -39.8
 )
 countries <- tibble::tribble(
@@ -106,6 +106,10 @@ figure1 <- ggmap(map) +
         axis.title = element_text(size = 12),
         plot.margin=grid::unit(c(0,0,0,0), "mm"))  
 
-ggsave("plots/Figure_1.pdf", figure1, scale = 3, device = grDevices::cairo_pdf)
+ggsave("plots/Figure_1.pdf", figure1, 
+       width = 21,
+       height = 13,
+       units = "cm",
+       scale = 1.1, device = grDevices::cairo_pdf)
 
 #print(figure1)
