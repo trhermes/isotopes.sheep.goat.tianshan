@@ -191,20 +191,15 @@ birth_proxy_for_each_specimen <- purrr::map_df(
     period <- fitted_curve$fit$m$getPars()[["z"]] # identical to the length of one year in mm
     phase_shift <- fitted_curve$fit$m$getPars()[["x_0"]]
     birth_simple_fit <- derive_birth(period, phase_shift)
-    # Calculate birth estimate based on fits obtained via bootstrap resampling
+    # Calculate birth estimates based on fits obtained via bootstrap resampling
     periods <- fitted_curve$theta_mat$z
     phase_shifts <- fitted_curve$theta_mat$x_0
     births_resampling <- purrr::map2_dbl(periods, phase_shifts, derive_birth)
-    birth_resampling_mean <- mean(births_resampling)
-    birth_resampling_sd <- sd(births_resampling)
     # compile output
     tibble::tibble(
       specimen = fitted_curve$specimen,
       birth_simple_fit = birth_simple_fit,
       birth_season_simple_fit = determine_birth_season(birth_simple_fit),
-      birth_resampling_mean = birth_resampling_mean,
-      birth_resampling_sd = birth_resampling_sd,
-      birth_season_resampling_mean = determine_birth_season(birth_resampling_mean),
       birth_resampling_distribution = list(births_resampling)
     )
   }
@@ -412,7 +407,7 @@ birth <- specimen_overview_birth_with_distribution %>%
       site,
       levels = c("Chap", "Jeti-Oguz", "Bayan-Zherek", "Begash", "Dali", "Kent", "Turgen")
     ),
-    specimen = forcats::fct_reorder(specimen, birth_resampling_mean)
+    specimen = forcats::fct_reorder(specimen, birth_simple_fit)
   )
 birth_ridges <- birth %>%
   dplyr::select(specimen, site, birth_resampling_distribution) %>%
@@ -425,32 +420,18 @@ birth_plot <- birth %>%
     space = "free",
     scales = "free_y"
   ) +
-  geom_errorbarh(
-    mapping = aes(
-      y = specimen,
-      xmin = birth_resampling_mean - 2*birth_resampling_sd, # (2*) -> 2-sigma
-      xmax = birth_resampling_mean + 2*birth_resampling_sd
-    ),
-    size = 0.3, height = 0.3,
-
-    position = position_nudge(y = -0.2)
-  ) +
-  geom_point(
-    aes(birth_resampling_mean, specimen),
-    size = 1.5, shape = 16,
-
-    position = position_nudge(y = -0.2)
-  ) +
-  # geom_point(
-  #   aes(birth_simple_fit, specimen),
-  #   size = 2,
-  #   colour = "green"
-  # ) +
   ggridges::geom_density_ridges(
     data = birth_ridges,
     mapping = aes(birth_resampling_distribution, specimen),
     panel_scaling = FALSE,
-    rel_min_height = 0.01
+    rel_min_height = 0.01,
+    alpha = 0.7
+  ) +
+  geom_point(
+    aes(birth_simple_fit, specimen),
+    size = 1.5, shape = 17,
+    colour = "black",
+    position = position_nudge(y = -0.35)
   ) +
   theme_bw() +
   theme(
