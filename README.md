@@ -2,7 +2,7 @@
 
 ### Compendium DOI:
 
-<http://dx.doi.org/...>
+<http://dx.doi.org/10.17605/OSF.IO/UTNYR>
 
 The files at the URL above will generate the results as found in the publication. The files hosted at <https://github.com/nevrome/isotopes.sheep.goat.tianshan> are the development versions and may have changed since the paper was published.
 
