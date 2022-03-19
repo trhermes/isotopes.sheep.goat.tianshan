@@ -26,8 +26,9 @@ specimen_overview <- readr::read_csv(
 # measurements per tooth table CSV
 isodata_list <- readr::read_csv(
   "data/input/all_data.csv") %>% 
-  dplyr::group_split(specimen)
-  
+#  dplyr::filter(!specimen %in% c(5583, 5584)) %>% 
+  dplyr::group_split(specimen) 
+
 # Correct for Seuss effect if sample is modern
 isodata_list_seuss_corrected <- purrr::map(
   isodata_list, 
