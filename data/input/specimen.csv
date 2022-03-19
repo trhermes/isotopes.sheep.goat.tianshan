@@ -9,11 +9,13 @@ specimen,site,element,symmetry,individual,taxon,period,comparative
 5578,Kent,M/2,left,8,sheep,Late Bronze Age,TRUE
 5579,Kent,M/2,left,9,sheep,Late Bronze Age,TRUE
 5580,Kent,M/2,left,10,sheep,Late Bronze Age,TRUE
-5584,Turgen,M/2,left,11,sheep,Late Bronze Age/Iron Age,TRUE
-5586,Turgen,M/2,left,12,sheep,Late Bronze Age/Iron Age,TRUE
-5587,Turgen,M/2,left,13,sheep,Late Bronze Age/Iron Age,TRUE
-5588,Turgen,M/2,left,14,sheep,Late Bronze Age/Iron Age,TRUE
-5589,Turgen,M/2,left,15,sheep,Late Bronze Age/Iron Age,TRUE
+5582,Turgen,M/2,left,11,sheep,Late Bronze Age/Iron Age,TRUE
+5583,Turgen,M/2,left,12,sheep,Late Bronze Age/Iron Age,TRUE
+5584,Turgen,M/2,left,13,sheep,Late Bronze Age/Iron Age,TRUE
+5586,Turgen,M/2,left,14,sheep,Late Bronze Age/Iron Age,TRUE
+5587,Turgen,M/2,left,15,sheep,Late Bronze Age/Iron Age,TRUE
+5588,Turgen,M/2,left,16,sheep,Late Bronze Age/Iron Age,TRUE
+5589,Turgen,M/2,left,17,sheep,Late Bronze Age/Iron Age,TRUE
 T132,Begash,M/2,right,8,caprine,Early Bronze Age,TRUE
 T115,Begash,M/2,left,7,caprine,Late Bronze Age,TRUE
 T114,Begash,M/2,right,6,caprine,Late Bronze Age,TRUE
