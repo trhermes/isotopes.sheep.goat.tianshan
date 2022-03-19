@@ -123,7 +123,7 @@ vm_comp_data_ <- list.files(vm_dir, full.names = T, pattern = "\\.docx$") %>%
                 d18O = `δ18O..permil.VPDB.`,
                 measure = `Distance.from.ERJ..mm.`) %>%
   group_by(specimen) %>% 
-  filter(n() > 4) %>%             # specimens 5582 & 5583 have 4 measurements, not enough for curve fitting
+#  filter(n() > 4) %>%             # specimens 5582 & 5583 have 4 measurements, not enough for curve fitting
   readr::type_convert()
 
 #### Download comparative data from Hermes et al. 2019 ####

@@ -25,9 +25,10 @@ specimen_overview <- readr::read_csv(
 )
 # measurements per tooth table CSV
 isodata_list <- readr::read_csv(
-  "data/input/all_data.csv") %>% 
+  "data/input/all_data.csv"
+  ) %>% 
   dplyr::group_split(specimen)
-  
+
 # Correct for Seuss effect if sample is modern
 isodata_list_seuss_corrected <- purrr::map(
   isodata_list, 
@@ -49,10 +50,20 @@ fitted_curves <- purrr::map(
   isodata_list_seuss_corrected,
   function(isodata) {
     message("Trying to fit specimen: ", isodata$specimen[1]) 
-    fit_curve(isodata)
+    if (nrow(isodata) < 5) {
+      message("No fitting attempt, because it features less than 5 measurements")
+      list(
+        specimen = isodata$specimen[1],
+        fit = NA,
+        estim_mat = NA,
+        theta_mat = NA
+      )
+    } else {
+      fit_curve(isodata)
+    }
   }
 )
-# save(fitted_curves, file = "data/intermediate/fitted_curves.RData")
+#save(fitted_curves, file = "data/intermediate/fitted_curves.RData")
 
 # prepare individual plots of the fitted curves
 source("code/plot_single_tooth_with_fitted_curve.R")
@@ -60,16 +71,20 @@ plot_table <- purrr::map2_df(
   isodata_list_seuss_corrected,
   fitted_curves,
   function(isodata, fitted_curve) {
-    isodata_merged <- dplyr::left_join(
-      isodata,
-      specimen_overview,
-      by = "specimen"
-    )
-    tibble::tibble(
-      specimen = unique(isodata_merged$specimen),
-      site = unique(isodata_merged$site),
-      plot = list(plot_single_curve_with_fitted_curve(isodata_merged, fitted_curve$estim_mat))
-    )
+    if (!is.data.frame(fitted_curve$estim_mat)) {
+      NULL
+    } else {
+      isodata_merged <- dplyr::left_join(
+        isodata,
+        specimen_overview,
+        by = "specimen"
+      )
+      tibble::tibble(
+        specimen = unique(isodata_merged$specimen),
+        site = unique(isodata_merged$site),
+        plot = list(plot_single_curve_with_fitted_curve(isodata_merged, fitted_curve$estim_mat))
+      )
+    }
   }
 )
 
@@ -132,21 +147,25 @@ julian_for_each_specimen <- purrr::map2(
   isodata_list_seuss_corrected,
   fitted_curves,
   function(isodata, fitted_curve) {
-    # basic parameters
-    period <- fitted_curve$fit$m$getPars()[["z"]] # identical to the length of one year in mm
-    phase_shift <- fitted_curve$fit$m$getPars()[["x_0"]]
-    oldest_meas_point <- min(-isodata$measure)
-    # adjust curve to year by equating the minimum value of the curve with the 15th of January
-    one_min_pos <- -period / 2 + phase_shift
-    multi_min_pos <- one_min_pos + seq(-5,3,1) * period
-    fift_jan_before_birth <- multi_min_pos[
-      tail(which(multi_min_pos < oldest_meas_point), n = 1)
-    ]
-    # derive sampling days in julian calender format
-    distance_to_fift_jan <- abs(fift_jan_before_birth - (-isodata$measure))
-    day_sampled_in_julian_calender <- -365 + 15 + distance_to_fift_jan/period * 365
-    julian <- day_sampled_in_julian_calender %% 365 # recycle year
-    return(julian)
+    if (!is.list(fitted_curve$fit)) {
+      NA_real_
+    } else {
+      # basic parameters
+      period <- fitted_curve$fit$m$getPars()[["z"]] # identical to the length of one year in mm
+      phase_shift <- fitted_curve$fit$m$getPars()[["x_0"]]
+      oldest_meas_point <- min(-isodata$measure)
+      # adjust curve to year by equating the minimum value of the curve with the 15th of January
+      one_min_pos <- -period / 2 + phase_shift
+      multi_min_pos <- one_min_pos + seq(-5,3,1) * period
+      fift_jan_before_birth <- multi_min_pos[
+        tail(which(multi_min_pos < oldest_meas_point), n = 1)
+      ]
+      # derive sampling days in julian calender format
+      distance_to_fift_jan <- abs(fift_jan_before_birth - (-isodata$measure))
+      day_sampled_in_julian_calender <- -365 + 15 + distance_to_fift_jan/period * 365
+      julian <- day_sampled_in_julian_calender %% 365 # recycle year
+      return(julian)
+    }
   }
 )
 
@@ -187,25 +206,34 @@ determine_birth_season <- function(birth) {
 birth_proxy_for_each_specimen <- purrr::map_df(
   fitted_curves,
   function(fitted_curve) {
-    # Calculate mean birth estimate based on simple curve fit
-    period <- fitted_curve$fit$m$getPars()[["z"]] # identical to the length of one year in mm
-    phase_shift <- fitted_curve$fit$m$getPars()[["x_0"]]
-    birth_simple_fit <- derive_birth(period, phase_shift)
-    # Calculate birth estimates based on fits obtained via bootstrap resampling
-    periods <- fitted_curve$theta_mat$z
-    phase_shifts <- fitted_curve$theta_mat$x_0
-    births_resampling <- purrr::map2_dbl(periods, phase_shifts, derive_birth)
-    # compile output
-    tibble::tibble(
-      specimen = fitted_curve$specimen,
-      birth_simple_fit = birth_simple_fit,
-      birth_season_simple_fit = determine_birth_season(birth_simple_fit),
-      birth_resampling_distribution = list(births_resampling)
-    )
+    if (!is.list(fitted_curve$fit)) {
+      tibble::tibble(
+        specimen = fitted_curve$specimen,
+        birth_simple_fit = NA_real_,
+        birth_season_simple_fit = NA_character_,
+        birth_resampling_distribution = NULL
+      )
+    } else {
+      # Calculate mean birth estimate based on simple curve fit
+      period <- fitted_curve$fit$m$getPars()[["z"]] # identical to the length of one year in mm
+      phase_shift <- fitted_curve$fit$m$getPars()[["x_0"]]
+      birth_simple_fit <- derive_birth(period, phase_shift)
+      # Calculate birth estimates based on fits obtained via bootstrap resampling
+      periods <- fitted_curve$theta_mat$z
+      phase_shifts <- fitted_curve$theta_mat$x_0
+      births_resampling <- purrr::map2_dbl(periods, phase_shifts, derive_birth)
+      # compile output
+      tibble::tibble(
+        specimen = fitted_curve$specimen,
+        birth_simple_fit = birth_simple_fit,
+        birth_season_simple_fit = determine_birth_season(birth_simple_fit),
+        birth_resampling_distribution = list(births_resampling)
+      )
+    }
   }
 )
 
-# Merge birth info into specimen overview table 
+# Merge birth info into specimen overview table
 specimen_overview_birth_with_distribution <- dplyr::left_join(
   specimen_overview,
   birth_proxy_for_each_specimen,
@@ -401,7 +429,10 @@ ggsave(
 
 # Birth seasonality plot for all sites
 birth <- specimen_overview_birth_with_distribution %>%
-  dplyr::filter(element == "M/2") %>%
+  dplyr::filter(
+    element == "M/2" &
+    !is.na(birth_simple_fit)
+  ) %>%
   dplyr::mutate(
     site = factor(
       site,
